@@ -1,6 +1,6 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
-import { respond, fonts } from "../styles";
+import { respond, fonts, colors } from "../styles";
 
 export default function GlobalStyles() {
     return <StylesConatiner />;
@@ -40,8 +40,19 @@ const StylesConatiner = createGlobalStyle`
       color:inherit;
   }
   button{
+      cursor: pointer;
       &:active,:focus{
           outline: none;
+      }
+  }
+  button, input, textarea{
+      border: none;
+      border-radius: 5px;
+  }
+  input, textarea{
+      &:active, :focus{
+        outline: none;
+        box-shadow: 0 0 5px ${colors.primary};
       }
   }
 `;

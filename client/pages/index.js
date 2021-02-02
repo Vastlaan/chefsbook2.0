@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Layout from "../globals/Layout";
 import Head from "next/head";
 import Login from "../components/auth/login";
+import About from "../components/landing/loggedout/about";
 import { colors } from "../styles";
 
 function Landing() {
@@ -44,7 +45,7 @@ function Landing() {
             <Header>
                 <ContainerNarrow>
                     <Grid>
-                        <div>About</div>
+                        <About />
                         <Login />
                     </Grid>
                 </ContainerNarrow>
@@ -55,15 +56,25 @@ function Landing() {
 
 const Header = styled.header`
     padding-top: 5.3rem;
-    background-color: ${colors.grey3};
+    background-image: linear-gradient(
+            to bottom,
+            rgba(229, 229, 229, 1),
+            rgba(229, 229, 229, 0.7)
+        ),
+        url("/img/landing-header-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 90%;
 `;
 const ContainerNarrow = styled.div`
-    max-width: 960px;
+    max-width: 1255px;
     margin: 0 auto;
 `;
 const Grid = styled.div`
     display: grid;
     grid-template-columns: 2fr 1fr;
+    padding: 6.7rem 2.7rem;
+    gap: 2.7rem;
 `;
 
 export default Landing;
