@@ -1,6 +1,6 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
-import { respond, fonts, colors } from "../styles";
+import { respond, fonts } from "../styles";
 
 export default function GlobalStyles() {
     return <StylesConatiner />;
@@ -52,7 +52,7 @@ const StylesConatiner = createGlobalStyle`
   input, textarea{
       &:active, :focus{
         outline: none;
-        box-shadow: 0 0 5px ${colors.primary};
+        box-shadow: 0 0 5px ${(p) => p.theme.primary};
       }
   }
 `;

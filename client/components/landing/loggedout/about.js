@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
-import styled from "styled-components";
-import { fonts, colors, Heading3, Text, LinkButton } from "../../../styles";
+import styled, { withTheme } from "styled-components";
+import { Heading3, Text, LinkButton } from "../../../styles";
 import { BsArrowRight } from "react-icons/bs";
 import gsap from "gsap";
 
-export default function About() {
+function About(props) {
     const heading = useRef(null);
     const details = useRef(null);
 
@@ -79,26 +79,6 @@ export default function About() {
         updateState();
     }, 5000);
 
-    // useEffect(() => {
-    //     function triggerAnimation() {
-    //         updateState();
-    //         gsap.set(heading.current, { autoAlpha: 0, y: 100 });
-    //         gsap.to(heading.current, { autoAlpha: 1, y: 0, duration: 0.6 });
-    //         gsap.set(details.current.children, { autoAlpha: 0, x: 100 });
-    //         gsap.to(details.current.children, {
-    //             autoAlpha: 1,
-    //             x: 0,
-    //             stagger: 0.1,
-    //         });
-    //     }
-
-    //     triggerAnimation();
-
-    //     const interval = setInterval(triggerAnimation, 5000);
-
-    //     return () => clearInterval(interval);
-    // }, []);
-
     return (
         <Container>
             <Headline>
@@ -110,13 +90,15 @@ export default function About() {
                 <Text>{data.text2}</Text>
                 <br />
                 <Text>{data.text3}</Text>
-                <LinkButton href="/" color={colors.primaryDark}>
+                <LinkButton href="/" color={props.theme.primaryDark}>
                     Read more about us <BsArrowRight />
                 </LinkButton>
             </Details>
         </Container>
     );
 }
+
+export default withTheme(About);
 
 const Container = styled.div`
     display: flex;

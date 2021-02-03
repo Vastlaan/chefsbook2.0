@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { colors } from "./colors";
 
 export const ButtonPrimary = styled.button`
     padding: 0.9rem 1.4rem;
-    background-color: ${colors.primary};
+    background-color: ${(p) => p.theme.primary};
     position: relative;
     z-index: 2;
     font-size: 1.9rem;
-    color: ${colors.white};
+    color: ${(p) => p.theme.white};
     overflow: hidden;
 
     &::after {
@@ -17,7 +16,7 @@ export const ButtonPrimary = styled.button`
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: ${colors.secondary};
+        background-color: ${(p) => p.theme.secondary};
         border-radius: 5px;
         z-index: -1;
         transition: all 0.3s;
@@ -30,11 +29,11 @@ export const ButtonPrimary = styled.button`
 `;
 export const ButtonSecondary = styled.button`
     padding: 0.9rem 1.4rem;
-    background-color: ${colors.secondary};
+    background-color: ${(p) => p.theme.secondary};
     position: relative;
     z-index: 2;
     font-size: 1.9rem;
-    color: ${colors.white};
+    color: ${(p) => p.theme.white};
     overflow: hidden;
 
     &::after {
@@ -44,7 +43,7 @@ export const ButtonSecondary = styled.button`
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: ${colors.primary};
+        background-color: ${(p) => p.theme.primary};
         border-radius: 5px;
         z-index: -1;
         transition: all 0.3s;
@@ -58,7 +57,7 @@ export const ButtonSecondary = styled.button`
 
 export const LinkButton = styled.a`
     font-size: 1.6rem;
-    color: ${(p) => (p.color ? p.color : colors.grey2)};
+    color: ${(p) => (p.color ? p.color : p.theme.grey2)};
     text-decoration: underline;
     transition: all 0.3s;
 
@@ -67,6 +66,18 @@ export const LinkButton = styled.a`
     }
 
     &:hover {
-        color: ${colors.secondary};
+        color: ${(p) => p.theme.secondary};
+    }
+`;
+
+export const PlainButton = styled.button`
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        font-size: 2.2rem;
+        color: ${(p) => p.theme.primary};
     }
 `;

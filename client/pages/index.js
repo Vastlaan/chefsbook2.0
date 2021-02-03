@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import Layout from "../globals/Layout";
+import Layout from "../globals/layout";
 import Head from "next/head";
 import Login from "../components/auth/login";
 import About from "../components/landing/loggedout/about";
 import { colors } from "../styles";
+import { Context } from "../store";
 
 function Landing() {
+    // const { state, dispatch } = useContext(Context);
+    // console.log(state.user, dispatch);
     return (
         <Layout>
             <Head>
@@ -56,11 +59,11 @@ function Landing() {
 
 const Header = styled.header`
     padding-top: 5.3rem;
-    background-image: linear-gradient(
+    background-image: ${(p) => `linear-gradient(
             to bottom,
-            rgba(229, 229, 229, 1),
-            rgba(229, 229, 229, 0.7)
-        ),
+            rgba(${p.theme.grey1RGB}, 1),
+            rgba(${p.theme.grey1RGB}, 0.7)
+        )`},
         url("/img/landing-header-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
