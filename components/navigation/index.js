@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import { fonts } from "../../styles";
 import ThemeControler from "./themeControler";
@@ -6,7 +7,9 @@ import ThemeControler from "./themeControler";
 export default function Navigation() {
     return (
         <Container>
-            <Name>Chefsbook.org</Name>
+            <Name>
+                <Link href="/">Chefsbook.org</Link>
+            </Name>
             <Controlers>
                 <ThemeControler />
             </Controlers>

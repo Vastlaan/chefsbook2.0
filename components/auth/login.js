@@ -1,11 +1,20 @@
 import React from "react";
+import Link from "next/link";
 import styled, { withTheme } from "styled-components";
-import { ButtonPrimary, ButtonSecondary, LinkButton, Line } from "../../styles";
+import {
+    ButtonPrimary,
+    ButtonSecondary,
+    LinkButton,
+    Line,
+    LoginContainer,
+    Login,
+    Field,
+} from "../../styles";
 import { FcGoogle } from "react-icons/fc";
 
 function LoginComponent() {
     return (
-        <Container>
+        <LoginContainer>
             <Login>
                 <Field>
                     <label htmlFor="email">E-mail:</label>
@@ -28,10 +37,12 @@ function LoginComponent() {
                     />
                 </Field>
                 <Field top="2.7rem">
-                    <ButtonPrimary>Log in</ButtonPrimary>
+                    <ButtonPrimary type="submit">Log in</ButtonPrimary>
                 </Field>
                 <Field>
-                    <LinkButton href="/">Forgot the password?</LinkButton>
+                    <Link href="/">
+                        <LinkButton>Forgot the password?</LinkButton>
+                    </Link>
                 </Field>
                 <Field>
                     <p>or</p>
@@ -43,50 +54,23 @@ function LoginComponent() {
                     </ButtonGoogle>
                 </Field>
                 <Line />
-                <Field>
-                    <ButtonSecondary>Create Account</ButtonSecondary>
-                </Field>
             </Login>
-        </Container>
+            <Register>
+                <Field>
+                    <Link href="/auth/createAccount">
+                        <ButtonSecondary>Create Account</ButtonSecondary>
+                    </Link>
+                </Field>
+            </Register>
+        </LoginContainer>
     );
 }
 
 export default withTheme(LoginComponent);
 
-const Container = styled.div`
+const Register = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: ${(p) => p.theme.black};
-    padding: 2.7rem 2.7rem;
-    border-radius: 5px;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
-`;
-const Login = styled.form`
-    display: flex;
-    flex-direction: column;
-`;
-const Field = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.9rem;
-    margin-top: ${(p) => (p.top ? p.top : "0")};
-
-    label {
-        color: ${(p) => p.theme.grey2};
-        font-size: 1.9rem;
-        margin-bottom: 0.9rem;
-    }
-    input {
-        border: none;
-        background-color: ${(p) => p.theme.white};
-        padding: 0.9rem 1.4rem;
-        font-size: 1.6rem;
-        color: ${(p) => p.theme.black};
-    }
-    p {
-        font-size: 1.4rem;
-        color: ${(p) => p.theme.grey2};
-    }
 `;
 
 const ButtonGoogle = styled(ButtonPrimary)`
