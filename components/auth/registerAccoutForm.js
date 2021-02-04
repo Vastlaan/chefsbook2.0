@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import styled, { withTheme } from "styled-components";
+import { withTheme } from "styled-components";
 import {
     ButtonPrimary,
     ButtonSecondary,
@@ -11,7 +11,6 @@ import {
     Field,
     Text,
 } from "../../styles";
-import { FcGoogle } from "react-icons/fc";
 
 function RegisterAccountForm(props) {
     const [email, setEmail] = useState("");

@@ -8,7 +8,7 @@ import {
     PlainButton,
 } from "./buttons";
 import { Line } from "./decorations";
-import { Heading3, Text } from "./typography";
+import { Heading1, Heading3, Text } from "./typography";
 import { mixins } from "./mixins";
 import {
     Header,
@@ -29,6 +29,7 @@ export {
     LinkButton,
     PlainButton,
     Line,
+    Heading1,
     Heading3,
     Text,
     mixins,

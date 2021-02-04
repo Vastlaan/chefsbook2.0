@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { mixins } from "./mixins";
+import respond from "./respond";
 
 export const Header = styled.header`
     padding-top: ${mixins.padTopNav};
@@ -19,10 +20,21 @@ export const ContainerNarrow = styled.div`
     margin: 0 auto;
 `;
 export const Grid = styled.div`
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    padding: 6.7rem 2.7rem;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 2.7rem 2.7rem;
     gap: 2.7rem;
+
+    ${() =>
+        respond(
+            "m",
+            `
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            `
+        )}
+    ${() => respond("xxl", `padding: 6.7rem 2.7rem;`)}
 `;
 
 export const LoginContainer = styled.div`
@@ -32,6 +44,8 @@ export const LoginContainer = styled.div`
     padding: 2.7rem 2.7rem;
     border-radius: 5px;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    max-width: 50rem;
+    min-width: 40rem;
 `;
 export const Login = styled.form`
     display: flex;
