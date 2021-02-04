@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { withTheme } from "styled-components";
+import validatePassword from "../../validations/password";
+import validateEmail from "../../validations/email";
 import {
     ButtonPrimary,
     ButtonSecondary,
@@ -18,19 +20,28 @@ function RegisterAccountForm(props) {
     const [passwordRepeat, setPasswordRepeat] = useState("");
     const [errors, setErrors] = useState([]);
 
-    console.log("99", errors);
-
     function registerNewUser(e) {
         e.preventDefault();
 
+        setErrors([]);
+
+        // check emails validation
+        const isEmailValid = validateEmail(email);
+        if (isEmailValid.type === "error") {
+            return setErrors((prevState) => [
+                ...prevState,
+                { field: isEmailValid.field, message: isEmailValid.message },
+            ]);
+        }
+
         // check if passwords are correct
-        if (password !== passwordRepeat) {
-            setErrors((prev) => [
-                ...prev,
+        const isPasswordValid = validatePassword(password, passwordRepeat);
+        if (isPasswordValid.type === "error") {
+            return setErrors((prevState) => [
+                ...prevState,
                 {
-                    field: "passwordRepeat",
-                    message:
-                        "The password does not match the one inserted above",
+                    field: isPasswordValid.field,
+                    message: isPasswordValid.message,
                 },
             ]);
         }
@@ -58,6 +69,11 @@ function RegisterAccountForm(props) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    {errors.map((err) =>
+                        err.field === "email" ? (
+                            <small>{err.message}</small>
+                        ) : null
+                    )}
                 </Field>
                 <Field>
                     <label htmlFor="password">Password:</label>
@@ -70,6 +86,11 @@ function RegisterAccountForm(props) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    {errors.map((err) =>
+                        err.field === "password" ? (
+                            <small>{err.message}</small>
+                        ) : null
+                    )}
                 </Field>
                 <Field>
                     <label htmlFor="passwordRepeat">Repeat password:</label>
