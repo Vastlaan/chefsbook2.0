@@ -1,19 +1,24 @@
 import bcrypt from "bcrypt";
-import User from "../../models/user";
+import User from "../../models/User";
+import { db } from "../../models/Connection";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
     const { email, password } = JSON.parse(req.body);
-    console.log(email, password);
 
-    const saltRounds = 10;
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-        if (err) {
-            console.log(err);
-            return res.status(200).json({ name: "John Doe" });
-        } else {
-            const user = new User(email, hash);
-            console.log(user.registerMe());
-            return res.status(200).json({ name: "John Doe" });
-        }
-    });
+    try {
+        const saltRounds = 10;
+        const hash = await bcrypt.hash(password, saltRounds);
+        const user = new User(email, hash);
+
+        const createdUser = await db("users")
+            .insert({
+                ...user.getUser(),
+            })
+            .returning("*");
+
+        return res.status(200).json({ user: createdUser });
+    } catch (err) {
+        console.log(err);
+        return res.status(200).json({ error: err });
+    }
 }

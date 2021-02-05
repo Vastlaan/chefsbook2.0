@@ -24,7 +24,7 @@ function RegisterAccountForm(props) {
         e.preventDefault();
 
         setErrors([]);
-
+        console.log("fired");
         // check emails validation
         const isEmailValid = validateEmail(email);
         if (isEmailValid.type === "error") {
@@ -45,14 +45,27 @@ function RegisterAccountForm(props) {
                 },
             ]);
         }
-
+        console.log("fired");
         fetch("/api/registerNewAccount", {
             method: "POST",
             headers: {
                 ContentType: "application/json",
             },
             body: JSON.stringify({ email, password }),
-        });
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    setErrors((prevState) => [
+                        ...prevState,
+                        { message: data.error },
+                    ]);
+                    console.log(data.error);
+                    return;
+                } else {
+                    console.log(data.user);
+                }
+            });
     }
 
     return (
@@ -69,9 +82,9 @@ function RegisterAccountForm(props) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    {errors.map((err) =>
+                    {errors.map((err, i) =>
                         err.field === "email" ? (
-                            <small>{err.message}</small>
+                            <small key={`error-${i}`}>{err.message}</small>
                         ) : null
                     )}
                 </Field>

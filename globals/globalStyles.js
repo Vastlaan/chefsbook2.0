@@ -19,7 +19,7 @@ const StylesConatiner = createGlobalStyle`
       
   }
   html{
-      font-size: 40%;
+      font-size: 50%;
       box-sizing: border-box;
       font-family: ${fonts.text};
       ${(props) => respond("xs", `font-size:30%;`)}

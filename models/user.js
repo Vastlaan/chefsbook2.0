@@ -14,20 +14,21 @@ export default class User {
         this.schedules = [];
     }
 
-    registerMe() {
+    getUser() {
         return {
             email: this.email,
             password: this.password,
-            googleId: this.googleId,
+            googleid: this.googleId,
             name: this.name,
             surname: this.surname,
-            accountPhotoUrl: this.accountPhotoUrl,
-            backgroundPhotoUrl: this.backgroundPhotoUrl,
-            createdAt: this.createdAt,
-            recipes: this.recipes,
-            events: this.events,
-            preparations: this.preparations,
-            schedules: this.schedules,
+            accountphotourl: this.accountPhotoUrl,
+            backgroungphotourl: this.backgroundPhotoUrl,
+            // backgroundphotourl: this.backgroundPhotoUrl,
+            createdat: this.createdAt,
+            // recipes: this.recipes,
+            // events: this.events,
+            // preparations: this.preparations,
+            // schedules: this.schedules,
         };
     }
 }
