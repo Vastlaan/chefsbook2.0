@@ -1,7 +1,10 @@
-import { db } from "../../models/Connection";
+import Database from "../../database";
 
 export default async (req, res) => {
-    const users = await db.select("*").from("users");
+    const db = new Database();
+    const resultOfCreatingUsersTable = db.createTableUsers();
 
-    res.status(200).json(users);
+    //const users = await db.select("*").from("users");
+
+    res.status(200).json(resultOfCreatingUsersTable);
 };

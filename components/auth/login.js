@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styled, { withTheme } from "styled-components";
 import {
@@ -13,9 +13,40 @@ import {
 import { FcGoogle } from "react-icons/fc";
 
 function LoginComponent() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    function loginUser(e) {
+        e.preventDefault();
+
+        setError("");
+
+        fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    console.log(data.error);
+                    return setError(data.error);
+                } else {
+                    // save token in localStorage
+                    return window.localStorage.setItem(
+                        "chefsbookJWTToken",
+                        data.token
+                    );
+                }
+            });
+    }
+
     return (
         <LoginContainer>
-            <Login>
+            <Login onSubmit={loginUser}>
                 <Field>
                     <label htmlFor="email">E-mail:</label>
                     <input
@@ -24,6 +55,8 @@ function LoginComponent() {
                         id="email"
                         placeholder="e-mail"
                         autoComplete="username"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
                     />
                 </Field>
                 <Field>
@@ -34,7 +67,10 @@ function LoginComponent() {
                         id="password"
                         placeholder="password"
                         autoComplete="current-password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
                     />
+                    {error ? <small>{error}</small> : null}
                 </Field>
                 <Field top="2.7rem">
                     <ButtonPrimary type="submit">Log in</ButtonPrimary>
@@ -77,7 +113,7 @@ const ButtonGoogle = styled(ButtonPrimary)`
     padding: 0.9rem 1.4rem;
     background-color: ${(p) => p.theme.white};
     font-size: 1.9rem;
-    color: ${(p) => p.theme.black};
+    color: ${(p) => p.theme.grey3};
     display: flex;
     justify-content: center;
     align-items: center;

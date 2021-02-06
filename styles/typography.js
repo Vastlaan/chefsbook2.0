@@ -20,6 +20,6 @@ export const Heading3 = styled.h3`
 `;
 export const Text = styled.p`
     font-size: 1.9rem;
-    color: ${(p) => (p.color ? p.color : p.theme.black)};
+    color: ${(p) => (p.color ? p.color : p.theme.grey3)};
     max-width: 45rem;
 `;

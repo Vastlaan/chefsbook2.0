@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { withTheme } from "styled-components";
-import validatePassword from "../../validations/password";
-import validateEmail from "../../validations/email";
+import { validatePassword, validateEmail } from "../../validations";
+
 import {
     ButtonPrimary,
     ButtonSecondary,
@@ -24,7 +24,7 @@ function RegisterAccountForm(props) {
         e.preventDefault();
 
         setErrors([]);
-        console.log("fired");
+
         // check emails validation
         const isEmailValid = validateEmail(email);
         if (isEmailValid.type === "error") {
@@ -45,7 +45,7 @@ function RegisterAccountForm(props) {
                 },
             ]);
         }
-        console.log("fired");
+
         fetch("/api/registerNewAccount", {
             method: "POST",
             headers: {
