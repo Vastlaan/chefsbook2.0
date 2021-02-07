@@ -8,7 +8,7 @@ export const initialState = {
 export const reducer = (state, action) => {
     switch (action.type) {
         case "setUser":
-            return { ...state, user: action.value };
+            return { ...state, user: action.payload };
         case "unsetUser":
             return { ...state, user: {} };
         case "setDarkTheme":

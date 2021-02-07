@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import styled, { withTheme } from "styled-components";
 import {
@@ -16,6 +17,8 @@ function LoginComponent() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+    const router = useRouter();
 
     function loginUser(e) {
         e.preventDefault();
@@ -36,10 +39,12 @@ function LoginComponent() {
                     return setError(data.error);
                 } else {
                     // save token in localStorage
-                    return window.localStorage.setItem(
+                    window.localStorage.setItem(
                         "chefsbookJWTToken",
                         data.token
                     );
+                    // push to landing page
+                    router.push("/");
                 }
             });
     }

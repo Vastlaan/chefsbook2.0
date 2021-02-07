@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Layout from "../globals/layout";
 import Head from "../components/landing/head";
 import LandingUnverified from "../components/landing/loggedout";
+import { Context } from "../store";
 
 function Landing() {
     const [isLogged, setIsLogged] = useState(false);
 
+    const { state, dispatch } = useContext(Context);
+
     useEffect(() => {
+        if (state.user.email) {
+            setIsLogged(true);
+        }
         const token = window.localStorage.getItem("chefsbookJWTToken");
         if (token) {
             fetch("/api/currentUser", {
@@ -22,7 +28,13 @@ function Landing() {
                         return console.log(data.error);
                     }
                     // here sign user data to global store and set isLogged to true
-                    return data.user;
+                    if (data.user) {
+                        return dispatch({
+                            type: "setUser",
+                            payload: data.user,
+                        });
+                    }
+                    return;
                 });
         }
     });
