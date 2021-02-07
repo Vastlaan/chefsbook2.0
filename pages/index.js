@@ -1,43 +1,55 @@
 import React, { useState, useEffect, useContext } from "react";
 import Layout from "../globals/layout";
-import Head from "../components/landing/head";
+import Head from "../globals/head";
+import Loading from "../components/loading";
 import LandingUnverified from "../components/landing/loggedout";
 import { Context } from "../store";
 
 function Landing() {
-    const [isLogged, setIsLogged] = useState(false);
+    const [isLogged, setIsLogged] = useState("pending");
 
     const { state, dispatch } = useContext(Context);
 
     useEffect(() => {
         if (state.user.email) {
-            setIsLogged(true);
+            return setIsLogged(true);
         }
         const token = window.localStorage.getItem("chefsbookJWTToken");
-        if (token) {
-            fetch("/api/currentUser", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.error) {
-                        return console.log(data.error);
-                    }
-                    // here sign user data to global store and set isLogged to true
-                    if (data.user) {
-                        return dispatch({
-                            type: "setUser",
-                            payload: data.user,
-                        });
-                    }
-                    return;
-                });
+        if (!token) {
+            return setIsLogged(false);
         }
-    });
+        fetch("/api/currentUser", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    setIsLogged(false);
+                    return console.log(data.error);
+                }
+                // here sign user data to global store and set isLogged to true
+                if (data.user) {
+                    return dispatch({
+                        type: "setUser",
+                        payload: data.user,
+                    });
+                }
+                return;
+            });
+    }, [state.user]);
+
+    if (isLogged === "pending") {
+        return (
+            <Layout>
+                <Head />
+                <Loading />
+            </Layout>
+        );
+    }
     return (
         <Layout>
             <Head />

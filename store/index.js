@@ -1,6 +1,7 @@
 import React, { createContext } from "react";
 
 export const initialState = {
+    isLogged: false,
     user: {},
     colorTheme: "light",
 };
@@ -15,6 +16,10 @@ export const reducer = (state, action) => {
             return { ...state, colorTheme: "dark" };
         case "setLightTheme":
             return { ...state, colorTheme: "light" };
+        case "loginUser":
+            return { ...state, isLogged: true };
+        case "logoutUser":
+            return { ...state, isLogged: false, user: {} };
         default:
             return { ...state };
     }

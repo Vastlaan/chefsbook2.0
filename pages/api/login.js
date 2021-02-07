@@ -33,7 +33,7 @@ export default async function handler(req, res) {
             expiresIn: 60 * 60 * 24 * 30,
         });
 
-        res.status(200).json({ token });
+        res.status(200).json({ token, user: payload });
     } catch (e) {
         return res.status(400).json({ error: "Hmm, Unable to log in" });
     }

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
+import React, { useState, useContext } from "react";
+import { Context } from "../../store";
 import Link from "next/link";
 import styled, { withTheme } from "styled-components";
 import {
@@ -18,7 +18,7 @@ function LoginComponent() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const router = useRouter();
+    const { state, dispatch } = useContext(Context);
 
     function loginUser(e) {
         e.preventDefault();
@@ -43,8 +43,7 @@ function LoginComponent() {
                         "chefsbookJWTToken",
                         data.token
                     );
-                    // push to landing page
-                    router.push("/");
+                    return dispatch({ type: "setUser", payload: data.user });
                 }
             });
     }

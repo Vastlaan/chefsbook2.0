@@ -34,6 +34,7 @@ const StylesConatiner = createGlobalStyle`
   }
   body{
       overflow-x: hidden;
+      background-color: ${(p) => p.theme.white};
   }
   a{
       text-decoration: none;
