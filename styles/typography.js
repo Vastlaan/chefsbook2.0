@@ -23,3 +23,14 @@ export const Text = styled.p`
     color: ${(p) => (p.color ? p.color : p.theme.grey3)};
     max-width: 45rem;
 `;
+export const Text2 = styled.p`
+    font-size: 1.9rem;
+    color: ${(p) => (p.color ? p.color : p.theme.grey2)};
+    max-width: 45rem;
+`;
+
+export const BigText = styled.p`
+    font-size: 2.2rem;
+    color: ${(p) => (p.color ? p.color : p.theme.primary)};
+    max-width: 45rem;
+`;

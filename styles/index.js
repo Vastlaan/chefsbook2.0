@@ -8,10 +8,10 @@ import {
     PlainButton,
 } from "./buttons";
 import { Line } from "./decorations";
-import { Heading1, Heading3, Text } from "./typography";
+import { Heading1, Heading3, Text, Text2, BigText } from "./typography";
 import { mixins } from "./mixins";
 import {
-    Header,
+    Main,
     ContainerNarrow,
     Grid,
     LoginContainer,
@@ -22,6 +22,7 @@ import {
 export {
     respond,
     fonts,
+    mixins,
     lightTheme,
     darkTheme,
     ButtonPrimary,
@@ -32,8 +33,9 @@ export {
     Heading1,
     Heading3,
     Text,
-    mixins,
-    Header,
+    Text2,
+    BigText,
+    Main,
     ContainerNarrow,
     Grid,
     LoginContainer,

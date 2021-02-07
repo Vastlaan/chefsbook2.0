@@ -2,7 +2,8 @@ import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { fonts } from "../../styles";
-import ThemeControler from "./themeControler";
+import ThemeControler from "./theme_controler";
+import UserControlers from "./user_controlers";
 
 export default function Navigation() {
     return (
@@ -12,6 +13,7 @@ export default function Navigation() {
             </Name>
             <Controlers>
                 <ThemeControler />
+                <UserControlers />
             </Controlers>
         </Container>
     );

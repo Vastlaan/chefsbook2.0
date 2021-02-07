@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled, { withTheme } from "styled-components";
-import { Heading3, Text, LinkButton } from "../../../styles";
+import { Heading3, Text, LinkButton } from "../../styles";
 import { BsArrowRight } from "react-icons/bs";
 import gsap from "gsap";
 

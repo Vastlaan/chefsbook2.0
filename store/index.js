@@ -19,6 +19,7 @@ export const reducer = (state, action) => {
         case "loginUser":
             return { ...state, isLogged: true };
         case "logoutUser":
+            window.localStorage.removeItem("chefsbookJWTToken");
             return { ...state, isLogged: false, user: {} };
         default:
             return { ...state };

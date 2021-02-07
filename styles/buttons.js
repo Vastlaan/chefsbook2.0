@@ -79,5 +79,9 @@ export const PlainButton = styled.button`
     svg {
         font-size: 2.2rem;
         color: ${(p) => p.theme.primary};
+        transition: all 0.3s;
+        &:hover {
+            color: ${(p) => p.theme.primaryDark};
+        }
     }
 `;

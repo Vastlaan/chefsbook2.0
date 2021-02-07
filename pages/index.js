@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import Layout from "../globals/layout";
 import Head from "../globals/head";
 import Loading from "../components/loading";
-import LandingUnverified from "../components/landing/loggedout";
+import LandingUnverified from "../components/landing_unveryfied";
+import Landing from "../components/landing";
 import { Context } from "../store";
 
-function Landing() {
+function Homepage() {
     const [isLogged, setIsLogged] = useState("pending");
 
     const { state, dispatch } = useContext(Context);
@@ -18,6 +19,7 @@ function Landing() {
         if (!token) {
             return setIsLogged(false);
         }
+        console.log(state.user, token);
         fetch("/api/currentUser", {
             method: "GET",
             headers: {
@@ -33,6 +35,7 @@ function Landing() {
                 }
                 // here sign user data to global store and set isLogged to true
                 if (data.user) {
+                    console.log(data.user);
                     return dispatch({
                         type: "setUser",
                         payload: data.user,
@@ -42,24 +45,36 @@ function Landing() {
             });
     }, [state.user]);
 
-    if (isLogged === "pending") {
-        return (
-            <Layout>
-                <Head />
-                <Loading />
-            </Layout>
-        );
+    switch (isLogged) {
+        case "pending":
+            return (
+                <Layout>
+                    <Head />
+                    <Loading />
+                </Layout>
+            );
+        case true:
+            return (
+                <Layout>
+                    <Head />
+                    <Landing />
+                </Layout>
+            );
+        case false:
+            return (
+                <Layout>
+                    <Head />
+                    <LandingUnverified />
+                </Layout>
+            );
+        default:
+            return (
+                <Layout>
+                    <Head />
+                    <LandingUnverified />
+                </Layout>
+            );
     }
-    return (
-        <Layout>
-            <Head />
-            {isLogged ? (
-                <h1>This is core of the application</h1>
-            ) : (
-                <LandingUnverified />
-            )}
-        </Layout>
-    );
 }
 
-export default Landing;
+export default Homepage;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { mixins } from "./mixins";
 import respond from "./respond";
 
-export const Header = styled.header`
+export const Main = styled.main`
     padding-top: ${mixins.padTopNav};
     background-image: ${(p) => `linear-gradient(
             to bottom,

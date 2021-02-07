@@ -27,6 +27,7 @@ export default async function handler(req, res) {
         }
 
         const { id, email, createdAt } = decoded;
+        console.log(id, email.createdAt);
 
         res.status(200).json({
             user: { id, email, createdAt },

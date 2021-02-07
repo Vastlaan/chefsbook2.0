@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { withTheme } from "styled-components";
+import { Context } from "../../store";
 import { validatePassword, validateEmail } from "../../validations";
 
 import {
@@ -19,6 +21,10 @@ function RegisterAccountForm(props) {
     const [password, setPassword] = useState("");
     const [passwordRepeat, setPasswordRepeat] = useState("");
     const [errors, setErrors] = useState([]);
+
+    const { state, dispatch } = useContext(Context);
+
+    const router = useRouter();
 
     function registerNewUser(e) {
         e.preventDefault();
@@ -63,7 +69,13 @@ function RegisterAccountForm(props) {
                     console.log(data.error);
                     return;
                 } else {
-                    console.log(data.user);
+                    window.localStorage.setItem(
+                        "chefsbookJWTToken",
+                        data.token
+                    );
+                    dispatch({ type: "setUser", payload: data.user });
+
+                    return router.push("/");
                 }
             });
     }
@@ -84,7 +96,9 @@ function RegisterAccountForm(props) {
                     />
                     {errors.map((err, i) =>
                         err.field === "email" ? (
-                            <small key={`error-${i}`}>{err.message}</small>
+                            <small key={`register-email${i}`}>
+                                {err.message}
+                            </small>
                         ) : null
                     )}
                 </Field>
@@ -99,9 +113,11 @@ function RegisterAccountForm(props) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    {errors.map((err) =>
+                    {errors.map((err, i) =>
                         err.field === "password" ? (
-                            <small>{err.message}</small>
+                            <small key={`register-password-${i}`}>
+                                {err.message}
+                            </small>
                         ) : null
                     )}
                 </Field>
@@ -115,9 +131,11 @@ function RegisterAccountForm(props) {
                         autoComplete="current-password"
                         onChange={(e) => setPasswordRepeat(e.target.value)}
                     />
-                    {errors.map((err) =>
+                    {errors.map((err, i) =>
                         err.field === "passwordRepeat" ? (
-                            <small>{err.message}</small>
+                            <small key={`register-password-repeat-${i}`}>
+                                {err.message}
+                            </small>
                         ) : null
                     )}
                 </Field>
@@ -135,7 +153,7 @@ function RegisterAccountForm(props) {
                     <p>already have an account?</p>
                 </Field>
                 <Field>
-                    <Link href="/</Link>">
+                    <Link href="/">
                         <ButtonSecondary>Go to login Page</ButtonSecondary>
                     </Link>
                 </Field>

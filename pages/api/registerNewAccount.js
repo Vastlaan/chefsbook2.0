@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import User from "../../models/User";
 import { db } from "../../database";
 import { validateEmail, validatePassword } from "../../validations";
@@ -26,8 +27,17 @@ export default async function handler(req, res) {
                 ...user.getUser(),
             })
             .returning("*");
+        const payload = {
+            id: createdUser.id,
+            email: createdUser.email,
+            createdAt: createdUser.created_at,
+        };
 
-        return res.status(200).json({ user: createdUser });
+        const token = await jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: 60 * 60 * 24 * 30,
+        });
+
+        return res.status(200).json({ user: payload, token });
     } catch (err) {
         console.log(err);
         return res.status(200).json({ error: err });
