@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import { Context } from "../../store";
 import { BigText, Text2, Line } from "../../styles";
@@ -18,10 +19,12 @@ export default function ControlersComponent() {
         <Controlers>
             <BigText>{user.email}</BigText>
             <Line />
-            <Subject>
-                <RiAddLine />
-                <Text2>Add Post</Text2>
-            </Subject>
+            <Link href="/createPost">
+                <Subject>
+                    <RiAddLine />
+                    <Text2>Add Post</Text2>
+                </Subject>
+            </Link>
             <Subject>
                 <RiCalendarEventLine />
                 <Text2>Events</Text2>

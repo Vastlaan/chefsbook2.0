@@ -41,8 +41,8 @@ function Homepage() {
                         payload: data.user,
                     });
                 }
-                return;
-            });
+            })
+            .catch((e) => console.error(e));
     }, [state.user]);
 
     switch (isLogged) {

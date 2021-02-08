@@ -52,6 +52,7 @@ export const Login = styled.form`
     flex-direction: column;
 `;
 export const Field = styled.div`
+    max-width: 45rem;
     display: flex;
     flex-direction: column;
     margin-bottom: 1.9rem;
@@ -62,7 +63,8 @@ export const Field = styled.div`
         font-size: 1.9rem;
         margin-bottom: 0.9rem;
     }
-    input {
+    input,
+    textarea {
         border: none;
         background-color: ${(p) => p.theme.white};
         padding: 0.9rem 1.4rem;

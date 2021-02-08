@@ -18,7 +18,7 @@ export default function UserControlersComponent() {
                     <RiUserSettingsLine />
                 </PlainButton>
             </Link>
-            <PlainButton onClick={() => dispatch({ type: "logoutUser" })}>
+            <PlainButton onClick={() => dispatch({ type: "unsetUser" })}>
                 <RiLogoutBoxRLine />
             </PlainButton>
         </UserControlers>

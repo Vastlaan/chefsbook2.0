@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { Main } from "../../styles";
+import { Main, ContainerNarrow } from "../../styles";
 import Controlers from "../controlers";
 
 export default function MainGridComponent({ children }) {
     return (
         <Main>
-            <MainGrid>
-                <Controlers />
-                {children}
-            </MainGrid>
+            <ContainerNarrow>
+                <MainGrid>
+                    <Controlers />
+                    {children}
+                </MainGrid>
+            </ContainerNarrow>
         </Main>
     );
 }
@@ -17,5 +19,6 @@ export default function MainGridComponent({ children }) {
 const MainGrid = styled.div`
     padding: 2.7rem;
     display: grid;
-    grid-template-columns: minmax(30rem, 40rem) 1fr;
+    grid-template-columns: minmax(25rem, 30rem) 1fr;
+    grid-gap: 2.7rem;
 `;
