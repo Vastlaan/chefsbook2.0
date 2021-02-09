@@ -29,6 +29,24 @@ export default class Connection {
             .then((result) => result)
             .catch((e) => e);
     }
+    createTablePosts() {
+        return this.db.schema
+            .createTable("posts", (table) => {
+                table.increments("id");
+                table
+                    .integer("user_id")
+                    .unsigned()
+                    .references("users.id")
+                    .onDelete("CASCADE");
+                table.string("title");
+                table.string("text");
+                table.string("photo_url");
+                table.integer("likes");
+                table.timestamp("created_at").defaultTo(this.db.fn.now());
+            })
+            .then((result) => result)
+            .catch((e) => e);
+    }
 }
 
 export const db = new Connection().getDatabase();

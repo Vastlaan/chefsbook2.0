@@ -1,6 +1,8 @@
 import multer from "multer";
 import AWS from "aws-sdk";
 import multerS3 from "multer-s3";
+import jwt from "jsonwebtoken";
+import { db } from "../../database";
 
 export const config = {
     api: {
@@ -11,7 +13,6 @@ export const config = {
 function runMiddleware(req, res, fn) {
     return new Promise((resolve, reject) => {
         fn(req, res, (result) => {
-            console.log(result);
             if (result instanceof Error) {
                 return reject(result);
             }
@@ -22,6 +23,20 @@ function runMiddleware(req, res, fn) {
 }
 
 export default async function handler(req, res) {
+    if (!req.headers.authorization) {
+        res.status(403).json({ error: "Not Authorized" });
+    }
+    const token = req.headers.authorization.split(" ")[1];
+
+    if (!token) {
+        res.status(403).json({ error: "Not Authorized" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded.email) {
+        res.status(403).json({ error: "Not Authorized" });
+    }
+
+    let fileName;
     try {
         const spacesEndpoint = new AWS.Endpoint(
             "https://ams3.digitaloceanspaces.com"
@@ -36,19 +51,42 @@ export default async function handler(req, res) {
             storage: multerS3({
                 s3: s3,
                 bucket: "michalantczak",
-                acl: "private",
+                acl: "public-read",
                 key: function (req, file, cb) {
-                    cb(null, Date.now().toString());
+                    fileName = `${decoded.email}/${file.originalname}`;
+                    cb(null, `${decoded.email}/${file.originalname}`);
                 },
             }),
         }).array("file", 1);
 
         await runMiddleware(req, res, upload);
 
-        console.log("here 3: ", req.body, req.files[0].key);
+        console.log("here 3: ", req.body, req.file, fileName);
 
-        res.status(200).json({ data: req.body });
+        const { title, text } = req.body;
+
+        const saveToDatabase = {
+            id: decoded.id,
+            title,
+            text,
+            photourl: fileName || "",
+        };
+
+        console.log("here 4: ", saveToDatabase);
+
+        await db("posts")
+            .insert({
+                user_id: decoded.id,
+                title: saveToDatabase.title,
+                text: saveToDatabase.text,
+                photo_url: saveToDatabase.photourl,
+                likes: 0,
+            })
+            .returning("*");
+
+        res.status(200).json({ ...saveToDatabase });
     } catch (e) {
         console.log(e);
+        res.status(400).json({ error: "Something went wrong" });
     }
 }

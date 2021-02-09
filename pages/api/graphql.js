@@ -2,9 +2,10 @@ import Database from "../../database";
 
 export default async (req, res) => {
     const db = new Database();
-    const resultOfCreatingUsersTable = db.createTableUsers();
+    //const resultOfCreatingUsersTable = db.createTableUsers();
+    const resultOfCreatingPostsTable = db.createTablePosts();
 
     //const users = await db.select("*").from("users");
 
-    res.status(200).json(resultOfCreatingUsersTable);
+    res.status(200).json(resultOfCreatingPostsTable);
 };

@@ -5,6 +5,7 @@ import Loading from "../components/loading";
 import LandingUnverified from "../components/landing_unveryfied";
 import Landing from "../components/landing";
 import { Context } from "../store";
+import checkIfAuthorized from "../utils/checkIfAuthorized";
 
 function Homepage() {
     const [isLogged, setIsLogged] = useState("pending");
@@ -15,34 +16,19 @@ function Homepage() {
         if (state.user.email) {
             return setIsLogged(true);
         }
-        const token = window.localStorage.getItem("chefsbookJWTToken");
-        if (!token) {
-            return setIsLogged(false);
-        }
-        console.log(state.user, token);
-        fetch("/api/currentUser", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then((res) => res.json())
+        checkIfAuthorized()
             .then((data) => {
                 if (data.error) {
-                    setIsLogged(false);
-                    return console.log(data.error);
+                    console.log(data.error);
+                    return setIsLogged(false);
                 }
-                // here sign user data to global store and set isLogged to true
-                if (data.user) {
-                    console.log(data.user);
-                    return dispatch({
-                        type: "setUser",
-                        payload: data.user,
-                    });
+                if (data.type) {
+                    return dispatch(data);
+                } else {
+                    return setIsLogged(false);
                 }
             })
-            .catch((e) => console.error(e));
+            .catch((e) => setIsLogged(false));
     }, [state.user]);
 
     switch (isLogged) {

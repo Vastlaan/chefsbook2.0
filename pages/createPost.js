@@ -1,20 +1,43 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import Layout from "../globals/layout";
 import Head from "../globals/head";
 import Main from "../components/main_grid";
+import { Context } from "../store";
+import checkIfAuthorized from "../utils/checkIfAuthorized";
+import { validateMimeType, validateTitle, validateText } from "../validations";
 import { Heading3, Field, ButtonPrimary } from "../styles";
 import { RiAddCircleLine } from "react-icons/ri";
 
 export default function CreatePostComponent() {
+    const router = useRouter();
+    const { state, dispatch } = useContext(Context);
+
     useEffect(() => {
-        //logic to check if client is logged in
+        if (state.user.email) {
+            return;
+        }
+        checkIfAuthorized()
+            .then((data) => {
+                if (data.error) {
+                    console.log(data.error);
+                    return router.push("/");
+                }
+                if (data.type) {
+                    return dispatch(data);
+                } else {
+                    return router.push("/");
+                }
+            })
+            .catch((e) => router.push("/"));
     }, []);
 
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [file, setFile] = useState(null);
     const [fileImage, setFileImage] = useState(null);
+    const [errors, setErrors] = useState({});
 
     function createPost(e) {
         e.preventDefault();
@@ -23,10 +46,22 @@ export default function CreatePostComponent() {
             return console.log("Unable to send post");
         }
 
+        const isTitleValid = validateTitle(title);
+        if (isTitleValid.type === "error") {
+            return setErrors(isTitleValid);
+        }
+
+        const isTextValid = validateText(text);
+        if (isTextValid.type === "error") {
+            return setErrors(isTextValid);
+        }
+
         const fileToSend = new FormData();
-        fileToSend.append("file", file);
         fileToSend.append("title", title);
         fileToSend.append("text", text);
+        if (file) {
+            fileToSend.append("file", file);
+        }
 
         fetch("/api/createPost", {
             method: "POST",
@@ -55,6 +90,9 @@ export default function CreatePostComponent() {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
+                        {errors.field === "title" ? (
+                            <small>{errors.message}</small>
+                        ) : null}
                     </Field>
                     <Field>
                         <label htmlFor="text">Text</label>
@@ -62,27 +100,15 @@ export default function CreatePostComponent() {
                             name="text"
                             id="text"
                             cols="10"
-                            rows="10"
+                            rows="5"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                         ></textarea>
+                        {errors.field === "text" ? (
+                            <small>{errors.message}</small>
+                        ) : null}
                     </Field>
                     <ImageField>
-                        <label htmlFor="photo">
-                            <RiAddCircleLine />
-                            Add Photo
-                        </label>
-                        <input
-                            type="file"
-                            name="photo"
-                            id="photo"
-                            onChange={(e) => {
-                                setFileImage(
-                                    URL.createObjectURL(e.target.files[0])
-                                );
-                                setFile(e.target.files[0]);
-                            }}
-                        />
                         <ImageBox>
                             {file ? (
                                 <img src={fileImage} alt="image to upload" />
@@ -90,11 +116,36 @@ export default function CreatePostComponent() {
                                 <p>No photo added</p>
                             )}
                         </ImageBox>
-                        {file ? <p>{file.name}</p> : null}
+                        <label htmlFor="photo">
+                            <RiAddCircleLine />
+                            Add Photo
+                        </label>
+
+                        <input
+                            type="file"
+                            name="photo"
+                            id="photo"
+                            onChange={(e) => {
+                                const result = validateMimeType(
+                                    e.target.files[0]
+                                );
+                                if (result.type === "error") {
+                                    return setErrors(result);
+                                }
+                                setFileImage(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                                setFile(e.target.files[0]);
+                            }}
+                        />
                     </ImageField>
-                    <Field>
+                    {file ? <FileName>{file.name}</FileName> : null}
+                    {errors.field === "file" ? (
+                        <small>{errors.message}</small>
+                    ) : null}
+                    <ButtonField>
                         <ButtonPrimary type="submit">Submit</ButtonPrimary>
-                    </Field>
+                    </ButtonField>
                 </CreatePost>
             </Main>
         </Layout>
@@ -107,11 +158,18 @@ const CreatePost = styled.form`
     background-color: ${(p) => p.theme.black};
     border-radius: 5px;
     padding: 2.7rem;
+
+    small {
+        font-size: 1rem;
+        margin: 0.6rem 0;
+        color: orangered;
+    }
 `;
 const ImageField = styled(Field)`
-    // flex-direction: row;
-    // justify-content: flex-start;
-    // align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0;
 
     label {
         max-width: 25rem;
@@ -119,6 +177,7 @@ const ImageField = styled(Field)`
         transition: all 0.3s;
         display: flex;
         align-items: center;
+        margin-left: 1.4rem;
 
         svg {
             margin-right: 1.4rem;
@@ -162,4 +221,11 @@ const ImageBox = styled.div`
         font-size: 1.4rem;
         color: ${(p) => p.theme.grey3};
     }
+`;
+const FileName = styled.p`
+    font-size: 1.4rem;
+    color: ${(p) => p.theme.grey3};
+`;
+const ButtonField = styled(Field)`
+    margin-top: 1.4rem;
 `;

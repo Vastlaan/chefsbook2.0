@@ -36,3 +36,42 @@ export function validatePassword(password, passwordRepeat) {
         };
     }
 }
+
+export function validateMimeType(file) {
+    if (file.type.split("/")[0] !== "image") {
+        return {
+            type: "error",
+            field: "file",
+            message: "File must be an image with extension .jpg .png .jpeg",
+        };
+    }
+    return {
+        type: "valid",
+    };
+}
+
+export function validateText(text) {
+    if (!text) {
+        return {
+            type: "error",
+            field: "text",
+            message: "Text field must be provided",
+        };
+    }
+    return {
+        type: "valid",
+    };
+}
+
+export function validateTitle(title) {
+    if (!title) {
+        return {
+            type: "error",
+            field: "title",
+            message: "Title field must be provided",
+        };
+    }
+    return {
+        type: "valid",
+    };
+}
