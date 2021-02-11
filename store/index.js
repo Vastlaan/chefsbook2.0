@@ -14,6 +14,8 @@ export const reducer = (state, action) => {
             return { ...state, isLogged: action.payload };
         case "logout":
             return { ...state, isLogged: false, user: {} };
+        case "setPosts":
+            return { ...state, user: { ...state.user, posts: action.payload } };
         case "setDarkTheme":
             return { ...state, colorTheme: "dark" };
         case "setLightTheme":

@@ -1,13 +1,29 @@
 import { useContext } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
-import { FlexCol, Heading3, Heading6, Text2, Line } from "../../styles";
+import {
+    FlexCol,
+    Heading3,
+    Heading6,
+    Text2,
+    Line,
+    PlainButton,
+} from "../../styles";
 
 export default function Landing() {
     const {
         state: { user },
+        dispatch,
     } = useContext(Context);
+
+    function deletePost(id) {
+        fetch(`/api/deletePost?id=${id}`)
+            .then((res) => res.json())
+            .then((data) => dispatch({ type: "setPosts", payload: data.posts }))
+            .catch((e) => console.error(e));
+    }
 
     return (
         <MainGridComponent>
@@ -34,14 +50,26 @@ export default function Landing() {
                                         <FlexCol>
                                             <Heading6>{post.title}</Heading6>
                                             <Text2>{post.text}</Text2>
+                                            <Options>
+                                                <PlainButton
+                                                    onClick={() =>
+                                                        deletePost(post.id)
+                                                    }
+                                                >
+                                                    Delete post
+                                                </PlainButton>
+                                                <small>
+                                                    created at:{" "}
+                                                    {
+                                                        post.created_at.split(
+                                                            "T"
+                                                        )[0]
+                                                    }
+                                                </small>
+                                            </Options>
                                         </FlexCol>
                                     </Post>
-                                    <Options>
-                                        <small>
-                                            created at:{" "}
-                                            {post.created_at.split("T")[0]}
-                                        </small>
-                                    </Options>
+
                                     <Line />
                                 </div>
                             );
@@ -92,8 +120,11 @@ const PostImage = styled.div`
     }
 `;
 const Options = styled.div`
+    width: 100%;
+    margin-top: auto;
     display: flex;
     justify-content: flex-end;
+    align-items: flex-end;
 
     small {
         color: ${(p) => p.theme.grey3};

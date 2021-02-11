@@ -61,7 +61,6 @@ function Homepage({ data }) {
 export default Homepage;
 
 export async function getServerSideProps(ctx) {
-    console.log(ctx.req.headers);
     try {
         const data = await checkIfAuthorized(ctx);
         return {

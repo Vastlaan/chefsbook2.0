@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     });
 
     res.setHeader("Set-Cookie", cookie);
-    res.writeHead(302, { Location: "/" });
+    res.writeHead(302, { Location: `${process.env.HOST}` });
     console.log("has been redirected");
-    res.end();
+    res.send();
 }
