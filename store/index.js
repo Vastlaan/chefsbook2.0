@@ -1,7 +1,8 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 
 export const initialState = {
     user: {},
+    isLogged: "pending",
     colorTheme: "light",
 };
 
@@ -9,9 +10,10 @@ export const reducer = (state, action) => {
     switch (action.type) {
         case "setUser":
             return { ...state, user: action.payload };
-        case "unsetUser":
-            window.localStorage.removeItem("chefsbookJWTToken");
-            return { ...state, user: {} };
+        case "isLogged":
+            return { ...state, isLogged: action.payload };
+        case "logout":
+            return { ...state, isLogged: false, user: {} };
         case "setDarkTheme":
             return { ...state, colorTheme: "dark" };
         case "setLightTheme":

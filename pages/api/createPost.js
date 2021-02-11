@@ -3,6 +3,7 @@ import AWS from "aws-sdk";
 import multerS3 from "multer-s3";
 import jwt from "jsonwebtoken";
 import { db } from "../../database";
+import { parse } from "cookie";
 
 export const config = {
     api: {
@@ -23,10 +24,13 @@ function runMiddleware(req, res, fn) {
 }
 
 export default async function handler(req, res) {
-    if (!req.headers.authorization) {
+    const cookie = req.headers.cookie;
+
+    if (!cookie) {
         res.status(403).json({ error: "Not Authorized" });
     }
-    const token = req.headers.authorization.split(" ")[1];
+
+    const token = parse(cookie)[process.env.TOKEN_NAME];
 
     if (!token) {
         res.status(403).json({ error: "Not Authorized" });
@@ -61,8 +65,6 @@ export default async function handler(req, res) {
 
         await runMiddleware(req, res, upload);
 
-        console.log("here 3: ", req.body, req.file, fileName);
-
         const { title, text } = req.body;
 
         const saveToDatabase = {
@@ -71,8 +73,6 @@ export default async function handler(req, res) {
             text,
             photourl: fileName || "",
         };
-
-        console.log("here 4: ", saveToDatabase);
 
         await db("posts")
             .insert({

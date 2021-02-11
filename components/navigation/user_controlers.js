@@ -8,6 +8,9 @@ import { RiLogoutBoxRLine, RiUserSettingsLine } from "react-icons/ri";
 export default function UserControlersComponent() {
     const { state, dispatch } = useContext(Context);
 
+    if (!state.user) {
+        return null;
+    }
     if (!state.user.email) {
         return null;
     }
@@ -18,7 +21,15 @@ export default function UserControlersComponent() {
                     <RiUserSettingsLine />
                 </PlainButton>
             </Link>
-            <PlainButton onClick={() => dispatch({ type: "unsetUser" })}>
+            <PlainButton
+                onClick={() => {
+                    fetch("/api/logout").then((res) => {
+                        dispatch({ type: "logout" });
+                        console.log("logged out has been called");
+                        dispatch({ type: "isLogged", payload: false });
+                    });
+                }}
+            >
                 <RiLogoutBoxRLine />
             </PlainButton>
         </UserControlers>

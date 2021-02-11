@@ -18,6 +18,13 @@ export const Heading3 = styled.h3`
     color: ${(p) => (p.color ? p.color : p.theme.primaryDark)};
     max-width: 55rem;
 `;
+export const Heading6 = styled.h6`
+    font-size: 1.9rem;
+    font-family: ${fonts.heading};
+    font-weight: 800;
+    color: ${(p) => (p.color ? p.color : p.theme.primary)};
+    max-width: 55rem;
+`;
 export const Text = styled.p`
     font-size: 1.9rem;
     color: ${(p) => (p.color ? p.color : p.theme.grey3)};
@@ -33,4 +40,5 @@ export const BigText = styled.p`
     font-size: 2.2rem;
     color: ${(p) => (p.color ? p.color : p.theme.primary)};
     max-width: 45rem;
+    cursor: ${(p) => (p.cursor ? p.cursor : "arrow")};
 `;

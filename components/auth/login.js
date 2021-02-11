@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "../../store";
 import Link from "next/link";
 import styled, { withTheme } from "styled-components";
+import checkIfAuthorized from "../../utils/checkIfAuthorized";
 import {
     ButtonPrimary,
     ButtonSecondary,
@@ -25,7 +26,7 @@ function LoginComponent() {
 
         setError("");
 
-        fetch("/api/login", {
+        fetch(`/api/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -35,15 +36,16 @@ function LoginComponent() {
             .then((res) => res.json())
             .then((data) => {
                 if (data.error) {
-                    console.log(data.error);
                     return setError(data.error);
                 } else {
-                    // save token in localStorage
-                    window.localStorage.setItem(
-                        "chefsbookJWTToken",
-                        data.token
-                    );
-                    return dispatch({ type: "setUser", payload: data.user });
+                    if (data.user) {
+                        console.log(data.user);
+                        // set login status to true
+                        dispatch({ type: "setUser", payload: data.user });
+                        dispatch({ type: "isLogged", payload: true });
+                    } else {
+                        return router.push("/");
+                    }
                 }
             });
     }

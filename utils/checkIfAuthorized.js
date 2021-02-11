@@ -1,15 +1,15 @@
-export default async function checkIfAuthorized() {
-    const token = window.localStorage.getItem("chefsbookJWTToken");
-    if (!token) {
-        return { error: "Not authorized" };
-    }
+export default async function checkIfAuthorized(ctx) {
+    // check if there is cookie
 
+    const { cookie } = ctx.req.headers;
+
+    if (!cookie) {
+        return { error: "Not Authorized" };
+    }
     try {
-        const res = await fetch("/api/currentUser", {
-            method: "GET",
+        const res = await fetch(`${process.env.HOST}/api/currentUser`, {
             headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+                "Set-Cookie": cookie,
             },
         });
 
@@ -18,14 +18,11 @@ export default async function checkIfAuthorized() {
         if (data.error) {
             return { error: "Not Authorized" };
         } else if (data.user) {
-            return {
-                type: "setUser",
-                payload: data.user,
-            };
+            return data.user;
         } else {
             return { error: "Something went wrong" };
         }
     } catch (e) {
-        return { error: e };
+        return { error: e.toString() };
     }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { parse } from "cookie";
 import Layout from "../globals/layout";
 import Head from "../globals/head";
 import Loading from "../components/loading";
@@ -7,29 +8,23 @@ import Landing from "../components/landing";
 import { Context } from "../store";
 import checkIfAuthorized from "../utils/checkIfAuthorized";
 
-function Homepage() {
-    const [isLogged, setIsLogged] = useState("pending");
-
+function Homepage({ data }) {
     const { state, dispatch } = useContext(Context);
 
+    const { isLogged } = state;
+
+    // check only once at page load if there is an auth cookie with token
     useEffect(() => {
-        if (state.user.email) {
-            return setIsLogged(true);
+        if (data.email) {
+            dispatch({ type: "isLogged", payload: true });
+            dispatch({ type: "setUser", payload: data });
+        } else if (data.error && state.isLogged === "pending") {
+            dispatch({ type: "isLogged", payload: false });
         }
-        checkIfAuthorized()
-            .then((data) => {
-                if (data.error) {
-                    console.log(data.error);
-                    return setIsLogged(false);
-                }
-                if (data.type) {
-                    return dispatch(data);
-                } else {
-                    return setIsLogged(false);
-                }
-            })
-            .catch((e) => setIsLogged(false));
-    }, [state.user]);
+    }, []);
+
+    //reload the page if the state has changed
+    useEffect(() => {}, [state]);
 
     switch (isLogged) {
         case "pending":
@@ -64,3 +59,21 @@ function Homepage() {
 }
 
 export default Homepage;
+
+export async function getServerSideProps(ctx) {
+    console.log(ctx.req.headers);
+    try {
+        const data = await checkIfAuthorized(ctx);
+        return {
+            props: {
+                data,
+            },
+        };
+    } catch (e) {
+        return {
+            props: {
+                data: { error: e.toString() },
+            },
+        };
+    }
+}

@@ -17,7 +17,10 @@ export default function ControlersComponent() {
 
     return (
         <Controlers>
-            <BigText>{user.email}</BigText>
+            <Link href="/">
+                <BigText cursor="pointer">{user.email}</BigText>
+            </Link>
+
             <Line />
             <Link href="/createPost">
                 <Subject>
@@ -55,6 +58,7 @@ const Controlers = styled.div`
     flex-direction: column;
     padding: 2.7rem 1.4rem;
     border-radius: 5px;
+    align-self: start;
 `;
 const Subject = styled.div`
     display: flex;

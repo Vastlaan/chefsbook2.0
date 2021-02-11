@@ -8,12 +8,20 @@ import {
     PlainButton,
 } from "./buttons";
 import { Line } from "./decorations";
-import { Heading1, Heading3, Text, Text2, BigText } from "./typography";
+import {
+    Heading1,
+    Heading3,
+    Heading6,
+    Text,
+    Text2,
+    BigText,
+} from "./typography";
 import { mixins } from "./mixins";
 import {
     Main,
     ContainerNarrow,
     Grid,
+    FlexCol,
     LoginContainer,
     Login,
     Field,
@@ -32,12 +40,14 @@ export {
     Line,
     Heading1,
     Heading3,
+    Heading6,
     Text,
     Text2,
     BigText,
     Main,
     ContainerNarrow,
     Grid,
+    FlexCol,
     LoginContainer,
     Login,
     Field,

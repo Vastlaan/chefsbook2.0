@@ -9,11 +9,13 @@ export const Main = styled.main`
             rgba(${p.theme.grey1RGB}, 1),
             rgba(${p.theme.grey1RGB}, 0.7)
         ),
-        url(${p.url})`};
+        url(${p.url || "/img/landing-header-background.jpg"})`};
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center 80%;
-    min-height: 90vh;
+    min-height: calc(100vh - 5rem);
+    max-height: calc(100vh - 5rem);
+    overflow: auto;
 `;
 export const ContainerNarrow = styled.div`
     max-width: 1255px;
@@ -35,6 +37,12 @@ export const Grid = styled.div`
             `
         )}
     ${() => respond("xxl", `padding: 6.7rem 2.7rem;`)}
+`;
+
+export const FlexCol = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 `;
 
 export const LoginContainer = styled.div`

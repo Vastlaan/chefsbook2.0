@@ -14,20 +14,19 @@ const StylesConatiner = createGlobalStyle`
       box-sizing: inherit;
       line-height: inherit;
       scrollbar-width: none;
-      ::-webkit-scrollbar{display: none;}
+      
       font-family: inherit;
+      max-height: inherit;
       
   }
+  ::-webkit-scrollbar{display: none;}
   html{
       font-size: 50%;
       box-sizing: border-box;
       font-family: ${fonts.text};
       ${(props) => respond("xs", `font-size:30%;`)}
-      ${(props) => respond("s", `font-size:50%;`)}
-      ${(props) => respond("m", `font-size:55%;`)}
-      ${(props) => respond("l", `font-size:60%;`)}
-      ${(props) => respond("xl", `font-size:62.5%;`)}
-      ${(props) => respond("xxl", `font-size:65%;`)}
+      ${(props) => respond("l", `font-size:55%;`)}     
+      ${(props) => respond("xxl", `font-size:62.5%;`)}
       ${(props) => respond("tv", `font-size:100%;`)}
       line-height: 1.3;
       ${() => respond("m", "line-height: 1.6;")};

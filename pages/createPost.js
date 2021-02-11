@@ -14,25 +14,6 @@ export default function CreatePostComponent() {
     const router = useRouter();
     const { state, dispatch } = useContext(Context);
 
-    useEffect(() => {
-        if (state.user.email) {
-            return;
-        }
-        checkIfAuthorized()
-            .then((data) => {
-                if (data.error) {
-                    console.log(data.error);
-                    return router.push("/");
-                }
-                if (data.type) {
-                    return dispatch(data);
-                } else {
-                    return router.push("/");
-                }
-            })
-            .catch((e) => router.push("/"));
-    }, []);
-
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [file, setFile] = useState(null);
@@ -41,10 +22,6 @@ export default function CreatePostComponent() {
 
     function createPost(e) {
         e.preventDefault();
-        const token = window.localStorage.getItem("chefsbookJWTToken");
-        if (!token) {
-            return console.log("Unable to send post");
-        }
 
         const isTitleValid = validateTitle(title);
         if (isTitleValid.type === "error") {
@@ -65,13 +42,15 @@ export default function CreatePostComponent() {
 
         fetch("/api/createPost", {
             method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
             body: fileToSend,
         })
             .then((res) => res.json())
-            .then((data) => console.log(data))
+            .then((data) => {
+                if (data.error) {
+                    return console.error(data.error);
+                }
+                // update user and redirect to /
+            })
             .catch((e) => console.log(e));
     }
 

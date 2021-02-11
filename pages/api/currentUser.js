@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import { db } from "../../database";
+import { parse } from "cookie";
 
 function sendError200(res, e) {
     return res.status(200).json({
@@ -7,19 +9,18 @@ function sendError200(res, e) {
 }
 
 export default async function handler(req, res) {
-    // check if there is a token
-    if (!req.headers.authorization) {
-        return sendError200(res);
-    }
-    // grab the token
-    const token = req.headers.authorization.split(" ")[1];
+    // check if there is a token in a cookie
+
+    const parsedCookies = parse(req.headers["set-cookie"][0]);
+
+    const token = parsedCookies[process.env.TOKEN_NAME];
 
     if (!token) {
         return sendError200(res);
     }
 
-    // check if token is valid
     try {
+        // check if token is valid
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if (!decoded) {
@@ -27,9 +28,15 @@ export default async function handler(req, res) {
         }
 
         const { id, email, createdAt } = decoded;
+        // get user posts
+        const posts = await db("posts")
+            .select("*")
+            .where({ user_id: id })
+            .orderBy("created_at", "desc");
 
+        // send all user created data to the frontend
         res.status(200).json({
-            user: { id, email, createdAt },
+            user: { id, email, createdAt, posts },
         });
     } catch (error) {
         return sendError200(res, error);
