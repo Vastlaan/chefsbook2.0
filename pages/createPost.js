@@ -1,11 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Layout from "../globals/layout";
 import Head from "../globals/head";
 import Main from "../components/main_grid";
 import { Context } from "../store";
-import checkIfAuthorized from "../utils/checkIfAuthorized";
 import { validateMimeType, validateTitle, validateText } from "../validations";
 import { Heading3, Field, ButtonPrimary } from "../styles";
 import { RiAddCircleLine } from "react-icons/ri";
@@ -49,7 +48,11 @@ export default function CreatePostComponent() {
                 if (data.error) {
                     return console.error(data.error);
                 }
-                // update user and redirect to /
+                if (data.post) {
+                    console.log(data.post);
+                    dispatch({ type: "updatePosts", payload: data.post });
+                    router.push("/");
+                }
             })
             .catch((e) => console.log(e));
     }

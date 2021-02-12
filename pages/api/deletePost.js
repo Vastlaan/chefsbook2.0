@@ -10,7 +10,8 @@ export default async function handler(req, res) {
     const updatedPosts = await db("posts")
         .select("*")
         .where({ user_id: decoded.id })
-        .returning("*");
+        .returning("*")
+        .orderBy("created_at", "desc");
     // send updated posts
     res.status(200).json({ posts: updatedPosts });
 }

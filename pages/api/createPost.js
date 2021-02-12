@@ -74,7 +74,7 @@ export default async function handler(req, res) {
             photourl: fileName || "",
         };
 
-        await db("posts")
+        const result = await db("posts")
             .insert({
                 user_id: decoded.id,
                 title: saveToDatabase.title,
@@ -84,7 +84,7 @@ export default async function handler(req, res) {
             })
             .returning("*");
 
-        res.status(200).json({ ...saveToDatabase });
+        res.status(200).json({ post: result[0] });
     } catch (e) {
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });
