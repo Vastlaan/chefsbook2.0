@@ -1,3 +1,3 @@
 export const mixins = {
-    padTopNav: "5.3rem",
+    padTopNav: "4.3rem",
 };

@@ -14,9 +14,8 @@ const StylesConatiner = createGlobalStyle`
       box-sizing: inherit;
       line-height: inherit;
       scrollbar-width: none;
-      
       font-family: inherit;
-      max-height: inherit;
+      
       
   }
   ::-webkit-scrollbar{display: none;}

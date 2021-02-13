@@ -21,7 +21,7 @@ export const reducer = (state, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    posts: [...state.user.posts, action.payload],
+                    posts: [action.payload, ...state.user.posts],
                 },
             };
         case "setDarkTheme":

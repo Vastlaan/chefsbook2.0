@@ -15,7 +15,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-    black: "#444",
+    black: "#282D33",
     blackAlways: "#1B1B1E",
     white: "#1B1B1E",
     grey1: "#4F4643",

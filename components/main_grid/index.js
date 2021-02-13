@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Main, ContainerNarrow } from "../../styles";
+import { respond, Main, ContainerNarrow } from "../../styles";
 import Controlers from "../controlers";
 
 export default function MainGridComponent({ children }) {
@@ -18,12 +18,24 @@ export default function MainGridComponent({ children }) {
 
 const Container = styled(ContainerNarrow)`
     overflow: auto;
+    max-height: calc(100vh - 5rem);
 `;
 
 const MainGrid = styled.div`
-    padding: 2.7rem;
-    display: grid;
-    grid-template-columns: minmax(25rem, 30rem) 1fr;
-    grid-gap: 2.7rem;
+    height: inherit;
     overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: calc(100vh - 5rem);
+
+    ${() =>
+        respond(
+            "m",
+            `
+            padding: 2.7rem;
+            display: grid;
+            grid-template-columns: minmax(25rem, 30rem) 1fr;
+            grid-gap: 2.7rem;
+            `
+        )}
 `;

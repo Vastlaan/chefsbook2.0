@@ -15,7 +15,7 @@ export const Main = styled.main`
     background-position: center 80%;
     min-height: calc(100vh - 5rem);
     max-height: calc(100vh - 5rem);
-    overflow: auto;
+    overflow: hidden;
 `;
 export const ContainerNarrow = styled.div`
     max-width: 1255px;
@@ -43,6 +43,20 @@ export const FlexCol = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    & > * {
+        margin: 1.4rem 0;
+    }
+
+    ${() =>
+        respond(
+            "m",
+            `
+        & > * {
+            margin: unset;
+        }
+    `
+        )}
 `;
 
 export const LoginContainer = styled.div`

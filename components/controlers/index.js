@@ -1,31 +1,51 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { Context } from "../../store";
-import { BigText, Text2, Line } from "../../styles";
+import { respond, BigText, Text2, Line } from "../../styles";
 import {
     RiAddLine,
     RiCalendarEventLine,
     RiTeamLine,
     RiSettings5Line,
+    RiMessage2Line,
 } from "react-icons/ri";
 import { FaRegEdit, FaRegListAlt } from "react-icons/fa";
 
 export default function ControlersComponent() {
+    const [isSmall, setIsSmall] = useState(false);
     const { state } = useContext(Context);
     const user = state.user;
 
+    useEffect(() => {
+        function resize() {
+            if (window.innerWidth < 768) {
+                setIsSmall(true);
+            } else {
+                setIsSmall(false);
+            }
+        }
+        window.addEventListener("resize", resize);
+
+        return () => window.removeEventListener("resize", resize);
+    }, []);
+
     return (
         <Controlers>
-            <Link href="/">
-                <BigText cursor="pointer">{user.email}</BigText>
-            </Link>
+            {!isSmall && (
+                <div>
+                    <Link href="/">
+                        <BigText cursor="pointer">{user.email}</BigText>
+                    </Link>
 
-            <Line />
-            <Link href="/createPost">
+                    <Line />
+                </div>
+            )}
+
+            <Link href="/posts">
                 <Subject>
-                    <RiAddLine />
-                    <Text2>Add Post</Text2>
+                    <RiMessage2Line />
+                    <Text2>My Posts</Text2>
                 </Subject>
             </Link>
             <Subject>
@@ -55,10 +75,27 @@ export default function ControlersComponent() {
 const Controlers = styled.div`
     background-color: ${(p) => p.theme.black};
     display: flex;
-    flex-direction: column;
-    padding: 2.7rem 1.4rem;
-    border-radius: 5px;
-    align-self: start;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 1rem;
+
+    ${() =>
+        respond(
+            "m",
+            `
+            padding: 0;
+            position: sticky;
+            top: 0;
+            left: unset;
+            flex-direction: column;
+            padding: 2.7rem 1.4rem;
+            border-radius: 5px;
+            align-self: start;
+        `
+        )}
 `;
 const Subject = styled.div`
     display: flex;
@@ -72,6 +109,10 @@ const Subject = styled.div`
         margin-right: 1.4rem;
         font-size: 2.2rem;
         color: ${(p) => p.theme.grey2};
+    }
+    p {
+        display: none;
+        ${() => respond("m", ` display: inline-block;`)}
     }
 
     &:hover {

@@ -1,13 +1,21 @@
 import styled from "styled-components";
 
 export const ButtonPrimary = styled.button`
-    padding: 0.9rem 1.4rem;
+    padding: 0.9rem 2.2rem;
     background-color: ${(p) => p.theme.primary};
     position: relative;
     z-index: 2;
     font-size: 1.9rem;
     color: ${(p) => p.theme.white};
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        margin-right: 1.4rem;
+        font-size: 2.2rem;
+    }
 
     &::after {
         content: "";

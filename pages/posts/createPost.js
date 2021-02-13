@@ -1,12 +1,16 @@
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Layout from "../globals/layout";
-import Head from "../globals/head";
-import Main from "../components/main_grid";
-import { Context } from "../store";
-import { validateMimeType, validateTitle, validateText } from "../validations";
-import { Heading3, Field, ButtonPrimary } from "../styles";
+import Layout from "../../globals/layout";
+import Head from "../../globals/head";
+import Main from "../../components/main_grid";
+import { Context } from "../../store";
+import {
+    validateMimeType,
+    validateTitle,
+    validateText,
+} from "../../validations";
+import { Heading3, Field, ButtonPrimary } from "../../styles";
 import { RiAddCircleLine } from "react-icons/ri";
 
 export default function CreatePostComponent() {
@@ -50,7 +54,7 @@ export default function CreatePostComponent() {
                 }
                 if (data.post) {
                     dispatch({ type: "updatePosts", payload: data.post });
-                    router.push("/");
+                    router.push("/posts");
                 }
             })
             .catch((e) => console.log(e));

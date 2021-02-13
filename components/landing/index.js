@@ -28,53 +28,7 @@ export default function Landing() {
     return (
         <MainGridComponent>
             <Dashboard>
-                <Heading3>Your Posts:</Heading3>
-                <Posts>
-                    {user.posts &&
-                        user.posts.map((post) => {
-                            return (
-                                <div key={post.id}>
-                                    <Post
-                                        withPhoto={
-                                            post.photo_url ? true : false
-                                        }
-                                    >
-                                        {post.photo_url ? (
-                                            <PostImage>
-                                                <img
-                                                    src={post.photo_url}
-                                                    alt="post main image"
-                                                />
-                                            </PostImage>
-                                        ) : null}
-                                        <FlexCol>
-                                            <Heading6>{post.title}</Heading6>
-                                            <Text2>{post.text}</Text2>
-                                            <Options>
-                                                <PlainButton
-                                                    onClick={() =>
-                                                        deletePost(post.id)
-                                                    }
-                                                >
-                                                    Delete post
-                                                </PlainButton>
-                                                <small>
-                                                    created at:{" "}
-                                                    {
-                                                        post.created_at.split(
-                                                            "T"
-                                                        )[0]
-                                                    }
-                                                </small>
-                                            </Options>
-                                        </FlexCol>
-                                    </Post>
-
-                                    <Line />
-                                </div>
-                            );
-                        })}
-                </Posts>
+                <Heading3>Here goes main content</Heading3>
             </Dashboard>
         </MainGridComponent>
     );
