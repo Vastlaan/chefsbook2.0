@@ -7,7 +7,7 @@ export default class User {
         this.surname = "";
         this.accountPhotoUrl = "";
         this.backgroundPhotoUrl = "";
-        this.createdAt = new Date().toLocaleDateString("en-GB");
+        this.createdAt = "now()";
         this.enabled = true;
         this.recipes = [];
         this.events = [];

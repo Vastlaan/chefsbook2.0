@@ -49,7 +49,6 @@ export default function CreatePostComponent() {
                     return console.error(data.error);
                 }
                 if (data.post) {
-                    console.log(data.post);
                     dispatch({ type: "updatePosts", payload: data.post });
                     router.push("/");
                 }

@@ -42,7 +42,7 @@ export default function Landing() {
                                         {post.photo_url ? (
                                             <PostImage>
                                                 <img
-                                                    src={`https://michalantczak.ams3.digitaloceanspaces.com/${post.photo_url}`}
+                                                    src={post.photo_url}
                                                     alt="post main image"
                                                 />
                                             </PostImage>

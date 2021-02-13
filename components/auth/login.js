@@ -39,7 +39,6 @@ function LoginComponent() {
                     return setError(data.error);
                 } else {
                     if (data.user) {
-                        console.log(data.user);
                         // set login status to true
                         dispatch({ type: "setUser", payload: data.user });
                         dispatch({ type: "isLogged", payload: true });

@@ -64,15 +64,11 @@ function RegisterAccountForm(props) {
                 if (data.error) {
                     setErrors((prevState) => [
                         ...prevState,
-                        { message: data.error },
+                        { message: data.error, field: "general" },
                     ]);
                     console.log(data.error);
                     return;
                 } else {
-                    window.localStorage.setItem(
-                        "chefsbookJWTToken",
-                        data.token
-                    );
                     dispatch({ type: "setUser", payload: data.user });
 
                     return router.push("/");
@@ -146,6 +142,13 @@ function RegisterAccountForm(props) {
                     </Text>
                 </Field>
                 <Field top="2.7rem">
+                    {errors.map((err, i) =>
+                        err.field === "general" ? (
+                            <small key={`register-password-repeat-${i}`}>
+                                {err.message}
+                            </small>
+                        ) : null
+                    )}
                     <ButtonPrimary type="submit">Register</ButtonPrimary>
                 </Field>
 

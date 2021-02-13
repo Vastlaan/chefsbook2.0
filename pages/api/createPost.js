@@ -39,9 +39,10 @@ export default async function handler(req, res) {
     if (!decoded.email) {
         res.status(403).json({ error: "Not Authorized" });
     }
-
+    // set fileName to undefined
     let fileName;
     try {
+        // create new endpoint, it should have format of https://[your_location].digitaloceanspaces.com
         const spacesEndpoint = new AWS.Endpoint(
             "https://ams3.digitaloceanspaces.com"
         );
@@ -50,30 +51,37 @@ export default async function handler(req, res) {
             secretAccessKey: process.env.AWS_SECRET_KEY,
             accessKeyId: process.env.AWS_ACCESS_KEY,
         });
-
+        // middleware function to execute
         const upload = multer({
             storage: multerS3({
                 s3: s3,
                 bucket: "michalantczak",
                 acl: "public-read",
                 key: function (req, file, cb) {
+                    // create a file name, which we later use to append to url and save in database
                     fileName = `${decoded.email}/${file.originalname}`;
                     cb(null, `${decoded.email}/${file.originalname}`);
                 },
             }),
         }).array("file", 1);
 
+        // run middleware
         await runMiddleware(req, res, upload);
 
+        // after request is being processed through middleware it appends the rest of the data, which are not a file, to the req.body
         const { title, text } = req.body;
 
+        // create an object which holds data to store in database
         const saveToDatabase = {
             id: decoded.id,
             title,
             text,
-            photourl: fileName || "",
+            photourl: fileName
+                ? `https://michalantczak.ams3.digitaloceanspaces.com/${fileName}`
+                : "", // if no file just assign empty string
         };
 
+        // I use knex library to save data to postgresql. The knex connection is created in separate file and exported. Here I take advantage of already created knex connection. Your schema is probably different so keep it in mind.
         const result = await db("posts")
             .insert({
                 user_id: decoded.id,
