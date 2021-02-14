@@ -50,6 +50,13 @@ export default function CreatePostComponent({ data }) {
             return setErrors(isTextValid);
         }
 
+        if (file) {
+            const isMimeTypeValid = validateMimeType(file);
+            if (isMimeTypeValid.type === "error") {
+                return setErrors(isMimeTypeValid);
+            }
+        }
+
         const fileToSend = new FormData();
         fileToSend.append("title", title);
         fileToSend.append("text", text);
@@ -64,6 +71,7 @@ export default function CreatePostComponent({ data }) {
             .then((res) => res.json())
             .then((data) => {
                 if (data.error) {
+                    setErrors(data.error);
                     return console.error(data.error);
                 }
                 if (data.post) {

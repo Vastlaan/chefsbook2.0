@@ -37,6 +37,19 @@ export function validatePassword(password, passwordRepeat) {
     }
 }
 
+export function validateMimeTypeMulter(file, cb) {
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype) {
+        return cb(null, true);
+    } else {
+        cb({ error: "You can upload images only!" });
+    }
+}
+
 export function validateMimeType(file) {
     if (file.type.split("/")[0] !== "image") {
         return {
@@ -58,6 +71,13 @@ export function validateText(text) {
             message: "Text field must be provided",
         };
     }
+    if (text.length < 4 || text.length > 2000) {
+        return {
+            type: "error",
+            field: "text",
+            message: " Text filed must be between 3 and 2000 characters",
+        };
+    }
     return {
         type: "valid",
     };
@@ -69,6 +89,13 @@ export function validateTitle(title) {
             type: "error",
             field: "title",
             message: "Title field must be provided",
+        };
+    }
+    if (title.length < 4 || title.length > 500) {
+        return {
+            type: "error",
+            field: "title",
+            message: " Text filed must be between 3 and 500 characters",
         };
     }
     return {

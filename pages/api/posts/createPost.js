@@ -3,6 +3,11 @@ import AWS from "aws-sdk";
 import multerS3 from "multer-s3";
 import jwt from "jsonwebtoken";
 import { db } from "../../../database";
+import {
+    validateText,
+    validateTitle,
+    validateMimeTypeMulter,
+} from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 
 export const config = {
@@ -45,12 +50,15 @@ export default async function handler(req, res) {
                 s3: s3,
                 bucket: "michalantczak",
                 acl: "public-read",
-                key: function (req, file, cb) {
+                key: function (_req, file, cb) {
                     // create a file name, which we later use to append to url and save in database
                     fileName = `${decoded.email}/${file.originalname}`;
                     cb(null, `${decoded.email}/${file.originalname}`);
                 },
             }),
+            fileFilter: function (_req, file, cb) {
+                validateMimeTypeMulter(file, cb);
+            },
         }).array("file", 1);
 
         // run middleware
