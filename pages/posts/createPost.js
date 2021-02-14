@@ -1,10 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
 import Main from "../../components/main_grid";
 import { Context } from "../../store";
+import checkIfAuthorized from "../../utils/checkIfAuthorized";
 import {
     validateMimeType,
     validateTitle,
@@ -13,7 +14,7 @@ import {
 import { Heading3, Field, ButtonPrimary } from "../../styles";
 import { RiAddCircleLine } from "react-icons/ri";
 
-export default function CreatePostComponent() {
+export default function CreatePostComponent({ data }) {
     const router = useRouter();
     const { state, dispatch } = useContext(Context);
 
@@ -22,6 +23,19 @@ export default function CreatePostComponent() {
     const [file, setFile] = useState(null);
     const [fileImage, setFileImage] = useState(null);
     const [errors, setErrors] = useState({});
+
+    // check only once at page load if there is user already logged in and if not if an auth cookie with token exist (data) and load it to the state
+    useEffect(() => {
+        if (state.user.email) {
+            return;
+        }
+        if (data.email) {
+            dispatch({ type: "isLogged", payload: true });
+            dispatch({ type: "setUser", payload: data });
+        } else if (data.error && state.isLogged === "pending") {
+            dispatch({ type: "isLogged", payload: false });
+        }
+    }, []);
 
     function createPost(e) {
         e.preventDefault();
@@ -135,6 +149,23 @@ export default function CreatePostComponent() {
             </Main>
         </Layout>
     );
+}
+
+export async function getServerSideProps(ctx) {
+    try {
+        const data = await checkIfAuthorized(ctx);
+        return {
+            props: {
+                data,
+            },
+        };
+    } catch (e) {
+        return {
+            props: {
+                data: { error: e.toString() },
+            },
+        };
+    }
 }
 
 const CreatePost = styled.form`
