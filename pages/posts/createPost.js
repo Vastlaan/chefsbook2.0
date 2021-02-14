@@ -43,7 +43,7 @@ export default function CreatePostComponent() {
             fileToSend.append("file", file);
         }
 
-        fetch("/api/createPost", {
+        fetch("/api/posts/createPost", {
             method: "POST",
             body: fileToSend,
         })

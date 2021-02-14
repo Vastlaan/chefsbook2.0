@@ -1,29 +1,14 @@
 import { useContext } from "react";
-import Link from "next/link";
 import styled from "styled-components";
 import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
-import {
-    FlexCol,
-    Heading3,
-    Heading6,
-    Text2,
-    Line,
-    PlainButton,
-} from "../../styles";
+import { Heading3 } from "../../styles";
 
 export default function Landing() {
     const {
         state: { user },
         dispatch,
     } = useContext(Context);
-
-    function deletePost(id) {
-        fetch(`/api/deletePost?id=${id}`)
-            .then((res) => res.json())
-            .then((data) => dispatch({ type: "setPosts", payload: data.posts }))
-            .catch((e) => console.error(e));
-    }
 
     return (
         <MainGridComponent>

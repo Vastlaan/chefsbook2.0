@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
-import User from "../../models/User";
-import { db } from "../../database";
-import { validateEmail, validatePassword } from "../../validations";
+import User from "../../../models/User";
+import { db } from "../../../database";
+import { validateEmail, validatePassword } from "../../../validations";
 
 export default async function handler(req, res) {
     const { email, password } = JSON.parse(req.body);

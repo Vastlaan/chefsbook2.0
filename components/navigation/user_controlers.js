@@ -25,7 +25,7 @@ export default function UserControlersComponent() {
             </Link>
             <PlainButton
                 onClick={() => {
-                    fetch("/api/logout").then((res) => {
+                    fetch("/api/auth/logout").then((res) => {
                         dispatch({ type: "logout" });
                         dispatch({ type: "isLogged", payload: false });
                         router.push("/");

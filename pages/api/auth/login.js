@@ -1,4 +1,4 @@
-import { db } from "../../database";
+import { db } from "../../../database";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { serialize, parse } from "cookie";

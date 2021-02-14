@@ -52,7 +52,7 @@ function RegisterAccountForm(props) {
             ]);
         }
 
-        fetch("/api/registerNewAccount", {
+        fetch("/api/auth/registerNewAccount", {
             method: "POST",
             headers: {
                 ContentType: "application/json",

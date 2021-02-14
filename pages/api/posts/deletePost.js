@@ -1,5 +1,5 @@
-import { db } from "../../database";
-import checkCookie from "../../utils/checkCookie";
+import { db } from "../../../database";
+import checkCookie from "../../../utils/checkCookie";
 
 export default async function handler(req, res) {
     // authorize request

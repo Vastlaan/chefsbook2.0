@@ -7,7 +7,7 @@ export default async function checkIfAuthorized(ctx) {
         return { error: "Not Authorized" };
     }
     try {
-        const res = await fetch(`${process.env.HOST}/api/currentUser`, {
+        const res = await fetch(`${process.env.HOST}/api/auth/currentUser`, {
             headers: {
                 "Set-Cookie": cookie,
             },

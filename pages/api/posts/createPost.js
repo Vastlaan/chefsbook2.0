@@ -2,8 +2,8 @@ import multer from "multer";
 import AWS from "aws-sdk";
 import multerS3 from "multer-s3";
 import jwt from "jsonwebtoken";
-import { db } from "../../database";
-import { parse } from "cookie";
+import { db } from "../../../database";
+import checkCookie from "../../../utils/checkCookie";
 
 export const config = {
     api: {
@@ -24,21 +24,9 @@ function runMiddleware(req, res, fn) {
 }
 
 export default async function handler(req, res) {
-    const cookie = req.headers.cookie;
+    // authorize request
+    const decoded = checkCookie(req, res);
 
-    if (!cookie) {
-        res.status(403).json({ error: "Not Authorized" });
-    }
-
-    const token = parse(cookie)[process.env.TOKEN_NAME];
-
-    if (!token) {
-        res.status(403).json({ error: "Not Authorized" });
-    }
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (!decoded.email) {
-        res.status(403).json({ error: "Not Authorized" });
-    }
     // set fileName to undefined
     let fileName;
     try {

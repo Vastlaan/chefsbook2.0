@@ -14,7 +14,7 @@ export default function Landing() {
     } = useContext(Context);
 
     function deletePost(id) {
-        fetch(`/api/deletePost?id=${id}`)
+        fetch(`/api/posts/deletePost?id=${id}`)
             .then((res) => res.json())
             .then((data) => dispatch({ type: "setPosts", payload: data.posts }))
             .catch((e) => console.error(e));
