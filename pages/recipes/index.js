@@ -2,10 +2,10 @@ import { useEffect, useContext } from "react";
 import { Context } from "../../store";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import YourPosts from "../../components/posts/your_posts";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
+import YourRecipes from "../../components/recipes/your_recipes";
 
-export default function OwnerPostsComponent({ data }) {
+export default function RecipesComponent({ data }) {
     const { state, dispatch } = useContext(Context);
     // check only once at page load if there is user already logged in and if not if an auth cookie with token exist (data) and load it to the state
     useEffect(() => {
@@ -22,11 +22,10 @@ export default function OwnerPostsComponent({ data }) {
     return (
         <Layout>
             <Head title="Chefsbook posts" />
-            <YourPosts />
+            <YourRecipes />
         </Layout>
     );
 }
-
 export async function getServerSideProps(ctx) {
     try {
         const data = await checkIfAuthorized(ctx);

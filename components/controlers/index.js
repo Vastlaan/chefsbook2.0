@@ -52,10 +52,12 @@ export default function ControlersComponent() {
                 <RiCalendarEventLine />
                 <Text2>Events</Text2>
             </Subject>
-            <Subject>
-                <FaRegEdit />
-                <Text2>Recipes</Text2>
-            </Subject>
+            <Link href="/recipes">
+                <Subject>
+                    <FaRegEdit />
+                    <Text2>Recipes</Text2>
+                </Subject>
+            </Link>
             <Subject>
                 <RiTeamLine />
                 <Text2>My Team</Text2>

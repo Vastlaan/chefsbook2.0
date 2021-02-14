@@ -4,10 +4,17 @@ import Link from "next/link";
 import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
 import Post from "./post";
-import { respond, BigText, Line, ButtonPrimary, Text2 } from "../../styles";
+import {
+    respond,
+    Dashboard,
+    BigText,
+    Line,
+    ButtonPrimary,
+    Text2,
+} from "../../styles";
 import { RiAddLine } from "react-icons/ri";
 
-export default function Landing() {
+export default function YourPostsComponent() {
     const {
         state: { user },
         dispatch,
@@ -50,20 +57,6 @@ export default function Landing() {
     );
 }
 
-const Dashboard = styled.div`
-    display: flex;
-    flex-direction: column;
-    background-color: ${(p) => p.theme.black};
-    border-radius: 5px;
-    padding: 2.7rem;
-    overflow: auto;
-
-    small {
-        font-size: 1rem;
-        margin: 0.6rem 0;
-        color: orangered;
-    }
-`;
 const Posts = styled.div`
     display: flex;
     flex-direction: column;

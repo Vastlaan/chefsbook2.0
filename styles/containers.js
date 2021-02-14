@@ -103,3 +103,18 @@ export const Field = styled.div`
         color: orangered;
     }
 `;
+
+export const Dashboard = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: ${(p) => p.theme.black};
+    border-radius: 5px;
+    padding: 2.7rem;
+    overflow: auto;
+
+    small {
+        font-size: 1rem;
+        margin: 0.6rem 0;
+        color: orangered;
+    }
+`;

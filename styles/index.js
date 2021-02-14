@@ -25,6 +25,7 @@ import {
     LoginContainer,
     Login,
     Field,
+    Dashboard,
 } from "./containers";
 
 export {
@@ -51,4 +52,5 @@ export {
     LoginContainer,
     Login,
     Field,
+    Dashboard,
 };
