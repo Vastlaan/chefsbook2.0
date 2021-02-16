@@ -79,7 +79,14 @@ export default function CreatePostComponent({ data }) {
                     router.push("/posts");
                 }
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {
+                console.error(e);
+                setErrors({
+                    type: "error",
+                    field: "general",
+                    message: "Something went wrong",
+                });
+            });
     }
 
     return (
@@ -151,6 +158,9 @@ export default function CreatePostComponent({ data }) {
                         <small>{errors.message}</small>
                     ) : null}
                     <ButtonField>
+                        {errors.field === "general" ? (
+                            <small>{errors.message}</small>
+                        ) : null}
                         <ButtonPrimary type="submit">Submit</ButtonPrimary>
                     </ButtonField>
                 </CreatePost>

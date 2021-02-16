@@ -71,7 +71,7 @@ export function validateText(text) {
             message: "Text field must be provided",
         };
     }
-    if (text.length < 4 || text.length > 2000) {
+    if (text.length < 4 || text.length > 3500) {
         return {
             type: "error",
             field: "text",

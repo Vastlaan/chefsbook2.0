@@ -20,8 +20,8 @@ export default function YourPostsComponent() {
         dispatch,
     } = useContext(Context);
 
-    function deletePost(id) {
-        fetch(`/api/posts/deletePost?id=${id}`)
+    function deletePost(id, path) {
+        fetch(`/api/posts/deletePost?id=${id}&path=${path}`)
             .then((res) => res.json())
             .then((data) => dispatch({ type: "setPosts", payload: data.posts }))
             .catch((e) => console.error(e));
@@ -47,7 +47,9 @@ export default function YourPostsComponent() {
                                 <Post
                                     key={post.id}
                                     post={post}
-                                    deletePost={deletePost}
+                                    deletePost={() =>
+                                        deletePost(post.id, post.photo_url)
+                                    }
                                 />
                             );
                         })}

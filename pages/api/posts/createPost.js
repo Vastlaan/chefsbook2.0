@@ -1,5 +1,5 @@
 import multer from "multer";
-import AWS from "aws-sdk";
+import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
 import jwt from "jsonwebtoken";
 import { db } from "../../../database";
@@ -35,20 +35,11 @@ export default async function handler(req, res) {
     // set fileName to undefined
     let fileName;
     try {
-        // create new endpoint, it should have format of https://[your_location].digitaloceanspaces.com
-        const spacesEndpoint = new AWS.Endpoint(
-            "https://ams3.digitaloceanspaces.com"
-        );
-        const s3 = new AWS.S3({
-            endpoint: spacesEndpoint,
-            secretAccessKey: process.env.AWS_SECRET_KEY,
-            accessKeyId: process.env.AWS_ACCESS_KEY,
-        });
         // middleware function to execute
         const upload = multer({
             storage: multerS3({
                 s3: s3,
-                bucket: "michalantczak",
+                bucket: process.env.BUCKET_NAME,
                 acl: "public-read",
                 key: function (_req, file, cb) {
                     // create a file name, which we later use to append to url and save in database
@@ -73,7 +64,7 @@ export default async function handler(req, res) {
             title,
             text,
             photourl: fileName
-                ? `https://michalantczak.ams3.digitaloceanspaces.com/${fileName}`
+                ? `https://${process.env.BUCKET_NAME}.ams3.digitaloceanspaces.com/${fileName}`
                 : "", // if no file just assign empty string
         };
 
