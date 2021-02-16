@@ -2,11 +2,7 @@ import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
 import { db } from "../../../database";
-import {
-    validateText,
-    validateTitle,
-    validateMimeTypeMulter,
-} from "../../../validations";
+import { validateMimeTypeMulter } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 import runMiddleware from "../../../utils/runMiddleware";
 
@@ -44,30 +40,35 @@ export default async function handler(req, res) {
         await runMiddleware(req, res, upload);
 
         // after request is being processed through middleware it appends the rest of the data, which are not a file, to the req.body
-        const { title, text } = req.body;
+        const { name, description, time, ingredients } = req.body;
 
-        // create an object which holds data to store in database
+        console.log(name, description, time, ingredients);
+
         const saveToDatabase = {
-            id: decoded.id,
-            title,
-            text,
-            photourl: fileName
+            user_id: decoded.id,
+            name,
+            description,
+            time,
+            ingredients: JSON.stringify(ingredients),
+            photo_url: fileName
                 ? `https://${process.env.BUCKET_NAME}.ams3.digitaloceanspaces.com/${fileName}`
                 : "", // if no file just assign empty string
+            likes: 0,
         };
 
-        // I use knex library to save data to postgresql. The knex connection is created in separate file and exported. Here I take advantage of already created knex connection. Your schema is probably different so keep it in mind.
-        const result = await db("posts")
+        const result = await db("recipes")
             .insert({
-                user_id: decoded.id,
-                title: saveToDatabase.title,
-                text: saveToDatabase.text,
-                photo_url: saveToDatabase.photourl,
-                likes: 0,
+                user_id: saveToDatabase.user_id,
+                name: saveToDatabase.name,
+                description: saveToDatabase.description,
+                time: saveToDatabase.time,
+                ingredients: saveToDatabase.ingredients,
+                photo_url: saveToDatabase.photo_url,
+                likes: saveToDatabase.likes,
             })
             .returning("*");
 
-        res.status(200).json({ post: result[0] });
+        res.status(200).json({ recipe: result[0] });
     } catch (e) {
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });

@@ -47,6 +47,26 @@ export default class Connection {
             .then((result) => result)
             .catch((e) => e);
     }
+    createTableRecipes() {
+        return this.db.schema
+            .createTable("recipes", (table) => {
+                table.increments("id");
+                table
+                    .integer("user_id")
+                    .unsigned()
+                    .references("users.id")
+                    .onDelete("CASCADE");
+                table.string("name");
+                table.string("description");
+                table.string("photo_url");
+                table.json("ingredients");
+                table.string("time");
+                table.integer("likes");
+                table.timestamp("created_at").defaultTo(this.db.fn.now());
+            })
+            .then((result) => result)
+            .catch((e) => e);
+    }
 }
 
 export const db = new Connection().getDatabase();

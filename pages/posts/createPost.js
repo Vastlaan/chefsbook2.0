@@ -39,6 +39,7 @@ export default function CreatePostComponent({ data }) {
 
     function createPost(e) {
         e.preventDefault();
+        setErrors({});
 
         const isTitleValid = validateTitle(title);
         if (isTitleValid.type === "error") {

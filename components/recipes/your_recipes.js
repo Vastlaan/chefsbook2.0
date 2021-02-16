@@ -19,6 +19,8 @@ export default function YourRecipesComponent() {
         dispatch,
     } = useContext(Context);
 
+    console.log(user);
+
     return (
         <MainGridComponent>
             <Dashboard>
@@ -32,7 +34,18 @@ export default function YourRecipesComponent() {
                         </ButtonPrimary>
                     </Link>
                 </ButtonContainer>
-                <div>here goes my recipes</div>
+                <div>
+                    {user.recipes &&
+                        user.recipes.map((recipe, i) => {
+                            return (
+                                <ul key={`recipe-${i}-${recipe.name}`}>
+                                    <li>{recipe.name}</li>
+                                    <li>{recipe.description}</li>
+                                    <li>{recipe.ingredients}</li>
+                                </ul>
+                            );
+                        })}
+                </div>
             </Dashboard>
         </MainGridComponent>
     );

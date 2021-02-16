@@ -102,3 +102,35 @@ export function validateTitle(title) {
         type: "valid",
     };
 }
+export function validateTime(time) {
+    if (time.length < 4 || time.length > 500) {
+        return {
+            type: "error",
+            field: "time",
+            message: " Text filed must be between 3 and 500 characters",
+        };
+    }
+    return {
+        type: "valid",
+    };
+}
+export function validateIngredients(ingredients) {
+    const isTooLong = ingredients.find((ingr) => ingr.length > 50);
+    if (isTooLong) {
+        return {
+            type: "error",
+            field: "ingredients",
+            message: "Each ingredient must contain no more than 50 characters",
+        };
+    }
+    if (ingredients.length > 80) {
+        return {
+            type: "error",
+            field: "ingredients",
+            message: " Max 80 ingredients",
+        };
+    }
+    return {
+        type: "valid",
+    };
+}

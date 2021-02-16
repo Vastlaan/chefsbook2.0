@@ -33,10 +33,15 @@ export default async function handler(req, res) {
             .select("*")
             .where({ user_id: id })
             .orderBy("created_at", "desc");
+        // get user recipes
+        const recipes = await db("recipes")
+            .select("*")
+            .where({ user_id: id })
+            .orderBy("created_at", "desc");
 
         // send all user created data to the frontend
         res.status(200).json({
-            user: { id, email, createdAt, posts },
+            user: { id, email, createdAt, posts, recipes },
         });
     } catch (error) {
         return sendError200(res, error);
