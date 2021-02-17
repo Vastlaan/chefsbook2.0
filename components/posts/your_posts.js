@@ -40,6 +40,7 @@ export default function YourPostsComponent() {
                         </ButtonPrimary>
                     </Link>
                 </ButtonContainer>
+                <Line />
                 <Posts>
                     {user.posts &&
                         user.posts.map((post) => {

@@ -35,6 +35,7 @@ const MainGrid = styled.div`
             padding: 2.7rem;
             display: grid;
             grid-template-columns: minmax(25rem, 30rem) 1fr;
+            grid-template-rows: 80vh;
             grid-gap: 2.7rem;
             `
         )}

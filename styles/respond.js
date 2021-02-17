@@ -4,7 +4,7 @@ export default function respond(type, content) {
     ${content}
   }`;
     } else if (type === "s") {
-        return `@media only screen and (min-width: 600px){
+        return `@media only screen and (min-width: 539px){
     ${content}
   }`;
     } else if (type === "m") {

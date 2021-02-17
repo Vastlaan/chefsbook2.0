@@ -115,12 +115,12 @@ export function validateTime(time) {
     };
 }
 export function validateIngredients(ingredients) {
-    const isTooLong = ingredients.find((ingr) => ingr.length > 50);
+    const isTooLong = ingredients.find((ingr) => ingr.length > 150);
     if (isTooLong) {
         return {
             type: "error",
             field: "ingredients",
-            message: "Each ingredient must contain no more than 50 characters",
+            message: "Each ingredient must contain no more than 150 characters",
         };
     }
     if (ingredients.length > 80) {

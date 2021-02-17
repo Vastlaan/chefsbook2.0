@@ -3,14 +3,8 @@ import styled from "styled-components";
 import Link from "next/link";
 import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
-import {
-    respond,
-    Dashboard,
-    BigText,
-    Line,
-    ButtonPrimary,
-    Text2,
-} from "../../styles";
+import { respond, Dashboard, BigText, Line, ButtonPrimary } from "../../styles";
+import Recipe from "./recipe";
 import { RiAddLine } from "react-icons/ri";
 
 export default function YourRecipesComponent() {
@@ -34,18 +28,17 @@ export default function YourRecipesComponent() {
                         </ButtonPrimary>
                     </Link>
                 </ButtonContainer>
-                <div>
-                    {user.recipes &&
-                        user.recipes.map((recipe, i) => {
-                            return (
-                                <ul key={`recipe-${i}-${recipe.name}`}>
-                                    <li>{recipe.name}</li>
-                                    <li>{recipe.description}</li>
-                                    <li>{recipe.ingredients}</li>
-                                </ul>
-                            );
-                        })}
-                </div>
+                <Line />
+
+                {user.recipes &&
+                    user.recipes.map((recipe, i) => {
+                        return (
+                            <Recipe
+                                key={`recipe-${i}-${recipe.name}`}
+                                recipe={recipe}
+                            />
+                        );
+                    })}
             </Dashboard>
         </MainGridComponent>
     );

@@ -110,11 +110,67 @@ export const Dashboard = styled.div`
     background-color: ${(p) => p.theme.black};
     border-radius: 5px;
     padding: 2.7rem;
+    padding-bottom: 9rem;
     overflow: auto;
 
+    ${() => respond("m", "padding-bottom: unset;")}
     small {
         font-size: 1rem;
         margin: 0.6rem 0;
         color: orangered;
+    }
+`;
+
+export const ImageContainerSmall = styled.div`
+    overflow: hidden;
+
+    width: 100%;
+
+    img {
+        border-radius: 5px;
+        width: 100%;
+        object-position: center;
+        object-fit: cover;
+    }
+`;
+export const Options = styled.div`
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    small {
+        color: ${(p) => p.theme.grey3} !important;
+    }
+`;
+export const Option = styled.div`
+    margin-right: 1.4rem;
+
+    &:hover {
+        position: relative;
+
+        &::after {
+            content: "delete";
+            padding: 0.2rem 0.4rem;
+            background-color: ${(p) => p.theme.grey1};
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            font-size: 0.9rem;
+            color: ${(p) => p.theme.grey3};
+        }
+    }
+
+    svg {
+        font-size: 1.6rem;
+        transition: all 0.3s;
+    }
+`;
+export const Edit = styled(Option)`
+    &:hover {
+        &::after {
+            content: "edit";
+        }
     }
 `;

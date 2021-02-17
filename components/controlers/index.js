@@ -18,6 +18,11 @@ export default function ControlersComponent() {
     const user = state.user;
 
     useEffect(() => {
+        if (window.innerWidth < 768) {
+            setIsSmall(true);
+        } else {
+            setIsSmall(false);
+        }
         function resize() {
             if (window.innerWidth < 768) {
                 setIsSmall(true);
@@ -109,15 +114,20 @@ const Subject = styled.div`
 
     svg {
         margin-right: 1.4rem;
-        font-size: 2.2rem;
-        color: ${(p) => p.theme.grey2};
+        font-size: 3.3rem;
+        color: ${(p) => p.theme.secondary};
+
+        ${(p) => respond("m", `font-size: 2.2rem; color: ${p.theme.grey2};`)}
     }
     p {
         display: none;
         ${() => respond("m", ` display: inline-block;`)}
     }
-
-    &:hover {
-        border-bottom: 1px solid ${(p) => p.theme.grey2};
-    }
+    ${() =>
+        respond(
+            "m",
+            ` &:hover {
+                border-bottom: 1px solid ${(p) => p.theme.grey2};
+            }`
+        )}
 `;

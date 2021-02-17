@@ -35,7 +35,12 @@ export const Text2 = styled.p`
     color: ${(p) => (p.color ? p.color : p.theme.grey2)};
     max-width: 45rem;
 `;
-
+export const Text3 = styled.p`
+    font-size: 1.9rem;
+    color: ${(p) => (p.color ? p.color : p.theme.grey2)};
+    max-width: 45rem;
+    white-space: break-spaces;
+`;
 export const BigText = styled.p`
     font-size: 2.2rem;
     color: ${(p) => (p.color ? p.color : p.theme.primary)};

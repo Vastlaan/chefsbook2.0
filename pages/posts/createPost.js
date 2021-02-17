@@ -193,6 +193,7 @@ const CreatePost = styled.form`
     background-color: ${(p) => p.theme.black};
     border-radius: 5px;
     padding: 2.7rem;
+    overflow: auto;
 
     small {
         font-size: 1rem;

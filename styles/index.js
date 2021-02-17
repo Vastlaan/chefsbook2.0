@@ -14,6 +14,7 @@ import {
     Heading6,
     Text,
     Text2,
+    Text3,
     BigText,
 } from "./typography";
 import { mixins } from "./mixins";
@@ -26,6 +27,10 @@ import {
     Login,
     Field,
     Dashboard,
+    ImageContainerSmall,
+    Options,
+    Option,
+    Edit,
 } from "./containers";
 
 export {
@@ -44,6 +49,7 @@ export {
     Heading6,
     Text,
     Text2,
+    Text3,
     BigText,
     Main,
     ContainerNarrow,
@@ -53,4 +59,8 @@ export {
     Login,
     Field,
     Dashboard,
+    ImageContainerSmall,
+    Options,
+    Option,
+    Edit,
 };
