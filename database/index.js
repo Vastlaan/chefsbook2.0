@@ -39,7 +39,7 @@ export default class Connection {
                     .references("users.id")
                     .onDelete("CASCADE");
                 table.string("title");
-                table.string("text");
+                table.text("text");
                 table.string("photo_url");
                 table.integer("likes");
                 table.timestamp("created_at").defaultTo(this.db.fn.now());
@@ -57,9 +57,9 @@ export default class Connection {
                     .references("users.id")
                     .onDelete("CASCADE");
                 table.string("name");
-                table.string("description");
+                table.text("description");
                 table.string("photo_url");
-                table.json("ingredients");
+                table.text("ingredients");
                 table.string("time");
                 table.integer("likes");
                 table.timestamp("created_at").defaultTo(this.db.fn.now());
