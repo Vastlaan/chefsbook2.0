@@ -13,8 +13,6 @@ export default function YourRecipesComponent() {
         dispatch,
     } = useContext(Context);
 
-    console.log(user);
-
     return (
         <MainGridComponent>
             <Dashboard>

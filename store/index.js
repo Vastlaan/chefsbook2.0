@@ -24,6 +24,14 @@ export const reducer = (state, action) => {
                     posts: [action.payload, ...state.user.posts],
                 },
             };
+        case "updateRecipe":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    recipes: [action.payload, ...state.user.recipes],
+                },
+            };
         case "setDarkTheme":
             return { ...state, colorTheme: "dark" };
         case "setLightTheme":

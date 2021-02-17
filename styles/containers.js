@@ -123,8 +123,19 @@ export const Dashboard = styled.div`
 
 export const ImageContainerSmall = styled.div`
     overflow: hidden;
-
     width: 100%;
+
+    img {
+        border-radius: 5px;
+        width: 100%;
+        object-position: center;
+        object-fit: cover;
+    }
+`;
+export const ImageContainerLarge = styled.div`
+    overflow: hidden;
+    width: 70%;
+    margin: 0 auto;
 
     img {
         border-radius: 5px;
@@ -172,5 +183,20 @@ export const Edit = styled(Option)`
         &::after {
             content: "edit";
         }
+    }
+`;
+
+export const Form1 = styled.form`
+    display: flex;
+    flex-direction: column;
+    background-color: ${(p) => p.theme.black};
+    border-radius: 5px;
+    padding: 2.7rem;
+    overflow: auto;
+
+    small {
+        font-size: 1rem;
+        margin: 0.6rem 0;
+        color: orangered;
     }
 `;

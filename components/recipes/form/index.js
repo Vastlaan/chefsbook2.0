@@ -16,7 +16,7 @@ import Description from "./fields/description";
 import Time from "./fields/time";
 import Image from "./fields/image";
 
-import { Heading3, Field, ButtonPrimary } from "../../../styles";
+import { Form1, Heading3, Field, ButtonPrimary } from "../../../styles";
 
 export default function CreateRecipeForm() {
     const router = useRouter();
@@ -62,7 +62,7 @@ export default function CreateRecipeForm() {
         const fileToSend = new FormData();
         fileToSend.append("name", title);
         fileToSend.append("description", description);
-        fileToSend.append("ingredients", ingredients);
+        fileToSend.append("ingredients", JSON.stringify(ingredients));
         fileToSend.append("time", time);
         if (file) {
             fileToSend.append("file", file);
@@ -74,15 +74,15 @@ export default function CreateRecipeForm() {
         })
             .then((res) => res.json())
             .then((data) => {
-                // if (data.error) {
-                //     setErrors(data.error);
-                //     return console.error(data.error);
-                // }
+                if (data.error) {
+                    setErrors(data.error);
+                    return console.error(data.error);
+                }
                 console.log(data);
-                // if (data.post) {
-                //     dispatch({ type: "updateRecipes", payload: data.post });
-                //     router.push("/recipes");
-                // }
+                if (data.recipe) {
+                    dispatch({ type: "updateRecipes", payload: data.recipe });
+                    router.push("/recipes");
+                }
             })
             .catch((e) => {
                 console.error(e);
@@ -94,10 +94,7 @@ export default function CreateRecipeForm() {
             });
     }
     return (
-        <CreateRecipe
-            onSubmit={createRecipe}
-            onKeyDown={(e) => e.key != "Enter"}
-        >
+        <Form1 onSubmit={createRecipe} onKeyDown={(e) => e.key != "Enter"}>
             <Heading3>Create New Recipe</Heading3>
 
             <Name title={title} setTitle={setTitle} errors={errors} />
@@ -128,24 +125,9 @@ export default function CreateRecipeForm() {
                 ) : null}
                 <ButtonPrimary type="submit">Create Recipe</ButtonPrimary>
             </ButtonField>
-        </CreateRecipe>
+        </Form1>
     );
 }
-
-const CreateRecipe = styled.form`
-    display: flex;
-    flex-direction: column;
-    background-color: ${(p) => p.theme.black};
-    border-radius: 5px;
-    padding: 2.7rem;
-    overflow: auto;
-
-    small {
-        font-size: 1rem;
-        margin: 0.6rem 0;
-        color: orangered;
-    }
-`;
 
 const ButtonField = styled(Field)`
     margin-top: 1.4rem;

@@ -28,9 +28,11 @@ import {
     Field,
     Dashboard,
     ImageContainerSmall,
+    ImageContainerLarge,
     Options,
     Option,
     Edit,
+    Form1,
 } from "./containers";
 
 export {
@@ -60,7 +62,9 @@ export {
     Field,
     Dashboard,
     ImageContainerSmall,
+    ImageContainerLarge,
     Options,
     Option,
     Edit,
+    Form1,
 };

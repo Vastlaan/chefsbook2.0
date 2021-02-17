@@ -1,9 +1,9 @@
-import React from "react";
+import Link from "next/link";
 import {
     respond,
     Heading6,
     FlexCol,
-    Text2,
+    Text3,
     PlainButton,
     Line,
     Options,
@@ -26,13 +26,15 @@ export default function PostComponent({ post, deletePost }) {
                 <FlexCol>
                     <Heading6>{post.title}</Heading6>
                     <br />
-                    <Text2>{post.text}</Text2>
+                    <Text3>{post.text}</Text3>
                     <Options>
-                        <PlainButton onClick={() => deletePost(post.id)}>
-                            <Edit>
-                                <RiEditLine />
-                            </Edit>
-                        </PlainButton>
+                        <Link href={`/posts/edit/${post.id}`}>
+                            <PlainButton>
+                                <Edit>
+                                    <RiEditLine />
+                                </Edit>
+                            </PlainButton>
+                        </Link>
                         <PlainButton onClick={() => deletePost(post.id)}>
                             <Option>
                                 <RiDeleteBin2Line />

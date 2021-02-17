@@ -14,7 +14,7 @@ import {
 import { Form1, Heading3, Field, ButtonPrimary } from "../../styles";
 import { RiAddCircleLine } from "react-icons/ri";
 
-export default function CreatePostComponent({ data }) {
+export default function CreatePostComponent({ data, id }) {
     const router = useRouter();
     const { state, dispatch } = useContext(Context);
 
@@ -26,6 +26,14 @@ export default function CreatePostComponent({ data }) {
 
     // check only once at page load if there is user already logged in and if not if an auth cookie with token exist (data) and load it to the state
     useEffect(() => {
+        if (id) {
+            const editablePost = data.posts.find(
+                (p) => Number(p.id) === Number(id)
+            );
+            const { title, text } = editablePost;
+            setTitle(title);
+            setText(text);
+        }
         if (state.user.email) {
             return;
         }
@@ -65,7 +73,7 @@ export default function CreatePostComponent({ data }) {
             fileToSend.append("file", file);
         }
 
-        fetch("/api/posts/createPost", {
+        fetch("/api/posts/updatePost", {
             method: "POST",
             body: fileToSend,
         })
@@ -171,11 +179,13 @@ export default function CreatePostComponent({ data }) {
 }
 
 export async function getServerSideProps(ctx) {
+    const { id } = ctx.query;
     try {
         const data = await checkIfAuthorized(ctx);
         return {
             props: {
                 data,
+                id,
             },
         };
     } catch (e) {

@@ -1,18 +1,14 @@
 import styled from "styled-components";
+import Link from "next/link";
 import {
     respond,
     Line,
-    Options,
-    Option,
     ImageContainerSmall,
-    Edit,
     Text3,
     Heading6,
     FlexCol,
-    PlainButton,
     ButtonSecondary,
 } from "../../styles";
-import { RiDeleteBin2Line, RiEditLine } from "react-icons/ri";
 
 export default function RecipeComponent({ recipe }) {
     return (
@@ -31,22 +27,9 @@ export default function RecipeComponent({ recipe }) {
                         100
                     )} . . .`}</Text3>
                     <br />
-                    <ButtonSecondary>View details</ButtonSecondary>
-                    {/* <Options>
-                        <PlainButton onClick={() => editRecipe(recipe.id)}>
-                            <Edit>
-                                <RiEditLine />
-                            </Edit>
-                        </PlainButton>
-                        <PlainButton onClick={() => deleteRecipe(recipe.id)}>
-                            <Option>
-                                <RiDeleteBin2Line />
-                            </Option>
-                        </PlainButton>
-                        <small>
-                            created at: {recipe.created_at.split("T")[0]}
-                        </small>
-                    </Options> */}
+                    <Link href={`/recipes/${recipe.id}`}>
+                        <ButtonSecondary>View details</ButtonSecondary>
+                    </Link>
                 </FlexCol>
             </Recipe>
 

@@ -49,7 +49,7 @@ export default async function handler(req, res) {
             name,
             description,
             time,
-            ingredients: JSON.stringify(ingredients),
+            ingredients: ingredients,
             photo_url: fileName
                 ? `https://${process.env.BUCKET_NAME}.ams3.digitaloceanspaces.com/${fileName}`
                 : "", // if no file just assign empty string

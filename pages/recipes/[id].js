@@ -1,14 +1,16 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Context } from "../../store";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
+import DetailRecipe from "../../components/recipes/detail_recipe";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
-import YourRecipes from "../../components/recipes/your_recipes";
-import Recipes from "../recipes";
 
-export default function Blank({ data, children }) {
+export default function RecipeDetailsComponent({ data, recipe }) {
+    if (data.error) {
+        return <div>Custom Error Component: {recipe.error}</div>;
+    }
+
     const { state, dispatch } = useContext(Context);
-    console.log(data);
 
     useEffect(() => {
         if (state.user.email) {
@@ -21,25 +23,30 @@ export default function Blank({ data, children }) {
             dispatch({ type: "isLogged", payload: false });
         }
     }, []);
+
     return (
         <Layout>
-            <Head title="Chefsbook posts" />
-            <Recipes data={data} />
+            <Head />
+            <DetailRecipe recipe={recipe} />
         </Layout>
     );
 }
+
 export async function getServerSideProps(ctx) {
+    const { id } = ctx.params;
     try {
         const data = await checkIfAuthorized(ctx);
+
         return {
             props: {
                 data,
+                recipe: data.recipes.find((r) => Number(r.id) == Number(id)),
             },
         };
     } catch (e) {
         return {
             props: {
-                data: { error: e.toString() },
+                data: { error: "Ups, something went wrong" },
             },
         };
     }
