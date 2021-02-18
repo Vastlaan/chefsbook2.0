@@ -123,11 +123,7 @@ const Subject = styled.div`
         display: none;
         ${() => respond("m", ` display: inline-block;`)}
     }
-    ${() =>
-        respond(
-            "m",
-            ` &:hover {
-                border-bottom: 1px solid ${(p) => p.theme.grey2};
-            }`
-        )}
+    &:hover {
+        ${(p) => respond("m", ` border-bottom: 1px solid ${p.theme.grey2}; `)}
+    }
 `;

@@ -16,6 +16,11 @@ export const reducer = (state, action) => {
             return { ...state, isLogged: false, user: {} };
         case "setPosts":
             return { ...state, user: { ...state.user, posts: action.payload } };
+        case "setRecipes":
+            return {
+                ...state,
+                user: { ...state.user, recipes: action.payload },
+            };
         case "updatePosts":
             return {
                 ...state,
@@ -36,7 +41,7 @@ export const reducer = (state, action) => {
                     posts: [action.payload, ...filteredPosts],
                 },
             };
-        case "updateRecipe":
+        case "updateRecipes":
             return {
                 ...state,
                 user: {

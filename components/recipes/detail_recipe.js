@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
 import styled from "styled-components";
 import {
@@ -25,6 +28,19 @@ import {
 } from "react-icons/ri";
 
 export default function DetailRecipeComponent({ recipe }) {
+    const { state, dispatch } = useContext(Context);
+    const router = useRouter();
+
+    function deleteRecipe(id, path) {
+        fetch(`/api/recipes/deleteRecipe?id=${id}&path=${path}`)
+            .then((res) => res.json())
+            .then((data) => {
+                dispatch({ type: "setRecipes", payload: data.recipes });
+                return router.push("/recipes");
+            })
+            .catch((e) => console.error(e));
+    }
+
     return (
         <MainGridComponent>
             <Dashboard>
@@ -35,10 +51,12 @@ export default function DetailRecipeComponent({ recipe }) {
                         </Link>
                     </GoBack>
 
-                    <PlainButton onClick={() => editRecipe(recipe.id)}>
-                        <Edit>
-                            <RiEditLine />
-                        </Edit>
+                    <PlainButton>
+                        <Link href={`/recipes/edit/${recipe.id}`}>
+                            <Edit>
+                                <RiEditLine />
+                            </Edit>
+                        </Link>
                     </PlainButton>
                     <PlainButton onClick={() => deleteRecipe(recipe.id)}>
                         <Option>

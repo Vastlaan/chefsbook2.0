@@ -31,8 +31,13 @@ export default async function handler(req, res) {
                 acl: "public-read",
                 key: function (_req, file, cb) {
                     // create a file name, which we later use to append to url and save in database
-                    fileName = `${decoded.email}/${file.originalname}`;
-                    cb(null, `${decoded.email}/${file.originalname}`);
+                    fileName = `${decoded.email}/${Date.now()}-${
+                        file.originalname
+                    }`;
+                    cb(
+                        null,
+                        `${decoded.email}/${Date.now()}-${file.originalname}`
+                    );
                 },
             }),
             fileFilter: function (_req, file, cb) {
