@@ -146,7 +146,7 @@ export const ImageContainerLarge = styled.div`
 `;
 export const Options = styled.div`
     width: 100%;
-    margin-top: auto;
+    margin-top: ${(p) => (p.marginTop ? p.marginTop : "auto")};
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;

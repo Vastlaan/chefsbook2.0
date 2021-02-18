@@ -9,6 +9,7 @@ export default function ImageComponent({
     file,
     setFile,
     errors,
+    photo_url,
 }) {
     return (
         <>
@@ -16,6 +17,8 @@ export default function ImageComponent({
                 <ImageBox>
                     {file ? (
                         <img src={fileImage} alt="image to upload" />
+                    ) : photo_url ? (
+                        <img src={photo_url} alt="image of dish" />
                     ) : (
                         <p>No photo added</p>
                     )}

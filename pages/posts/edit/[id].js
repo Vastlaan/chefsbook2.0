@@ -27,6 +27,7 @@ export default function CreatePostComponent({ data, id }) {
     const [text, setText] = useState("");
     const [file, setFile] = useState(null);
     const [fileImage, setFileImage] = useState(null);
+    const [photoUrl, setPhotoUrl] = useState("");
     const [errors, setErrors] = useState({});
 
     const editablePost = data.posts.find((p) => Number(p.id) === Number(id));
@@ -36,6 +37,7 @@ export default function CreatePostComponent({ data, id }) {
         setTitle(editablePost.title);
         setText(editablePost.text);
         setPostId(editablePost.id);
+        setPhotoUrl(editablePost.photo_url);
 
         if (state.user.email) {
             return;
@@ -74,6 +76,7 @@ export default function CreatePostComponent({ data, id }) {
         fileToSend.append("postId", postId);
         fileToSend.append("title", title);
         fileToSend.append("text", text);
+        fileToSend.append("photo_url", photoUrl);
 
         fetch("/api/posts/updatePost", {
             method: "POST",

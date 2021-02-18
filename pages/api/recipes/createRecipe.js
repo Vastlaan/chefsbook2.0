@@ -56,7 +56,7 @@ export default async function handler(req, res) {
             time,
             ingredients: ingredients,
             photo_url: fileName
-                ? `https://${process.env.BUCKET_NAME}.ams3.digitaloceanspaces.com/${fileName}`
+                ? `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.BUCKET_NAME}/${fileName}`
                 : "", // if no file just assign empty string
             likes: 0,
         };

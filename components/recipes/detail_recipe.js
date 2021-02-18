@@ -44,7 +44,7 @@ export default function DetailRecipeComponent({ recipe }) {
     return (
         <MainGridComponent>
             <Dashboard>
-                <Options>
+                <Options marginTop="unset">
                     <GoBack>
                         <Link href="/recipes">
                             <RiArrowGoBackLine />

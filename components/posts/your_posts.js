@@ -23,7 +23,12 @@ export default function YourPostsComponent() {
     function deletePost(id, path) {
         fetch(`/api/posts/deletePost?id=${id}&path=${path}`)
             .then((res) => res.json())
-            .then((data) => dispatch({ type: "setPosts", payload: data.posts }))
+            .then((data) => {
+                if (data.error) {
+                    return console.log(data.error);
+                }
+                dispatch({ type: "setPosts", payload: data.posts });
+            })
             .catch((e) => console.error(e));
     }
 

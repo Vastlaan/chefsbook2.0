@@ -2,11 +2,7 @@ import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
 import { db } from "../../../database";
-import {
-    validateText,
-    validateTitle,
-    validateMimeTypeMulter,
-} from "../../../validations";
+import { validateMimeTypeMulter } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 import runMiddleware from "../../../utils/runMiddleware";
 
@@ -49,30 +45,38 @@ export default async function handler(req, res) {
         await runMiddleware(req, res, upload);
 
         // after request is being processed through middleware it appends the rest of the data, which are not a file, to the req.body
-        const { title, text } = req.body;
+        const {
+            name,
+            description,
+            time,
+            ingredients,
+            photo_url,
+            recipeId,
+        } = req.body;
 
-        // create an object which holds data to store in database
         const saveToDatabase = {
-            id: decoded.id,
-            title,
-            text,
-            photourl: fileName
+            id: recipeId,
+            name,
+            description,
+            time,
+            ingredients: ingredients,
+            photo_url: fileName
                 ? `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.BUCKET_NAME}/${fileName}`
-                : "", // if no file just assign empty string
+                : photo_url, // if no file just assign empty string
         };
 
-        // I use knex library to save data to postgresql. The knex connection is created in separate file and exported. Here I take advantage of already created knex connection. Your schema is probably different so keep it in mind.
-        const result = await db("posts")
-            .insert({
-                user_id: decoded.id,
-                title: saveToDatabase.title,
-                text: saveToDatabase.text,
-                photo_url: saveToDatabase.photourl,
-                likes: 0,
+        const result = await db("recipes")
+            .where({ id: saveToDatabase.id })
+            .update({
+                name: saveToDatabase.name,
+                description: saveToDatabase.description,
+                time: saveToDatabase.time,
+                ingredients: saveToDatabase.ingredients,
+                photo_url: saveToDatabase.photo_url,
             })
             .returning("*");
 
-        res.status(200).json({ post: result[0] });
+        res.status(200).json({ recipe: result[0] });
     } catch (e) {
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });

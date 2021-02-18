@@ -10,8 +10,9 @@ export default async function handler(req, res) {
 
     // delete photo if exists
     if (req.query.path) {
-        const array = req.query.path.split(".com/");
-        const key = `${array[1]}/${array[2]}`;
+        const array = req.query.path.split(`${process.env.BUCKET_NAME}/`);
+
+        const key = array[1];
         const params = {
             Bucket: process.env.BUCKET_NAME,
             Key: key,

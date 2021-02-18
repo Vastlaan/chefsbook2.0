@@ -44,7 +44,7 @@ export default async function handler(req, res) {
         await runMiddleware(req, res, upload);
 
         // after request is being processed through middleware it appends the rest of the data, which are not a file, to the req.body
-        const { title, text, postId } = req.body;
+        const { title, text, postId, photo_url } = req.body;
 
         // create an object which holds data to store in database
         const saveToDatabase = {
@@ -52,8 +52,8 @@ export default async function handler(req, res) {
             title,
             text,
             photo_url: fileName
-                ? `https://${process.env.BUCKET_NAME}.ams3.digitaloceanspaces.com/${fileName}`
-                : "", // if no file just assign empty string
+                ? `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.BUCKET_NAME}/${fileName}`
+                : photo_url, // if no file just assign empty string
         };
         console.log(saveToDatabase);
         // I use knex library to save data to postgresql. The knex connection is created in separate file and exported. Here I take advantage of already created knex connection. Your schema is probably different so keep it in mind.
