@@ -1,39 +1,42 @@
 import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Layout from "../../globals/layout";
-import Head from "../../globals/head";
-import Main from "../../components/main_grid";
-import { Context } from "../../store";
-import checkIfAuthorized from "../../utils/checkIfAuthorized";
+import Layout from "../../../globals/layout";
+import Head from "../../../globals/head";
+import Main from "../../../components/main_grid";
+import { Context } from "../../../store";
+import checkIfAuthorized from "../../../utils/checkIfAuthorized";
 import {
     validateMimeType,
     validateTitle,
     validateText,
-} from "../../validations";
-import { Form1, Heading3, Field, ButtonPrimary } from "../../styles";
+} from "../../../validations";
+import { Form1, Heading3, Field, ButtonPrimary } from "../../../styles";
 import { RiAddCircleLine } from "react-icons/ri";
 
 export default function CreatePostComponent({ data, id }) {
     const router = useRouter();
+
+    if (!id) {
+        return router.push("/posts");
+    }
     const { state, dispatch } = useContext(Context);
 
+    const [postId, setPostId] = useState("");
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [file, setFile] = useState(null);
     const [fileImage, setFileImage] = useState(null);
     const [errors, setErrors] = useState({});
 
+    const editablePost = data.posts.find((p) => Number(p.id) === Number(id));
+
     // check only once at page load if there is user already logged in and if not if an auth cookie with token exist (data) and load it to the state
     useEffect(() => {
-        if (id) {
-            const editablePost = data.posts.find(
-                (p) => Number(p.id) === Number(id)
-            );
-            const { title, text } = editablePost;
-            setTitle(title);
-            setText(text);
-        }
+        setTitle(editablePost.title);
+        setText(editablePost.text);
+        setPostId(editablePost.id);
+
         if (state.user.email) {
             return;
         }
@@ -45,7 +48,7 @@ export default function CreatePostComponent({ data, id }) {
         }
     }, []);
 
-    function createPost(e) {
+    function editPost(e) {
         e.preventDefault();
         setErrors({});
 
@@ -59,19 +62,18 @@ export default function CreatePostComponent({ data, id }) {
             return setErrors(isTextValid);
         }
 
+        const fileToSend = new FormData();
+
         if (file) {
             const isMimeTypeValid = validateMimeType(file);
             if (isMimeTypeValid.type === "error") {
                 return setErrors(isMimeTypeValid);
             }
-        }
-
-        const fileToSend = new FormData();
-        fileToSend.append("title", title);
-        fileToSend.append("text", text);
-        if (file) {
             fileToSend.append("file", file);
         }
+        fileToSend.append("postId", postId);
+        fileToSend.append("title", title);
+        fileToSend.append("text", text);
 
         fetch("/api/posts/updatePost", {
             method: "POST",
@@ -84,7 +86,7 @@ export default function CreatePostComponent({ data, id }) {
                     return console.error(data.error);
                 }
                 if (data.post) {
-                    dispatch({ type: "updatePosts", payload: data.post });
+                    dispatch({ type: "updateSinglePost", payload: data.post });
                     router.push("/posts");
                 }
             })
@@ -102,8 +104,8 @@ export default function CreatePostComponent({ data, id }) {
         <Layout>
             <Head />
             <Main>
-                <Form1 onSubmit={createPost}>
-                    <Heading3>Create New Post</Heading3>
+                <Form1 onSubmit={editPost}>
+                    <Heading3>Edit Post</Heading3>
                     <Field>
                         <label htmlFor="title">Title</label>
                         <input
@@ -135,6 +137,11 @@ export default function CreatePostComponent({ data, id }) {
                         <ImageBox>
                             {file ? (
                                 <img src={fileImage} alt="image to upload" />
+                            ) : editablePost.photo_url !== "" ? (
+                                <img
+                                    src={editablePost.photo_url}
+                                    alt="image to upload"
+                                />
                             ) : (
                                 <p>No photo added</p>
                             )}

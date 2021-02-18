@@ -24,6 +24,18 @@ export const reducer = (state, action) => {
                     posts: [action.payload, ...state.user.posts],
                 },
             };
+        case "updateSinglePost":
+            const filteredPosts = state.user.posts.filter(
+                (p) => p.id !== action.payload.id
+            );
+
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    posts: [action.payload, ...filteredPosts],
+                },
+            };
         case "updateRecipe":
             return {
                 ...state,
