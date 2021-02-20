@@ -132,6 +132,7 @@ export default function EditRecipeForm({ id }) {
                 fileImage={fileImage}
                 setFileImage={setFileImage}
                 errors={errors}
+                setErrors={setErrors}
                 photo_url={photoUrl}
             />
 

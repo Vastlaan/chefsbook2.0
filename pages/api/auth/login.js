@@ -27,7 +27,9 @@ export default async function handler(req, res) {
         const payload = {
             id: user.id,
             email: user.email,
-            createdAt: user.created_at,
+            created_at: user.created_at.toString().split(" 00")[0],
+            account_photo_url: user.account_photo_url,
+            background_photo_url: user.background_photo_url,
         };
         // create JWT token
         const token = await jwt.sign(payload, process.env.JWT_SECRET, {
@@ -53,8 +55,17 @@ export default async function handler(req, res) {
             .where({ user_id: user.id })
             .orderBy("created_at", "desc");
 
-        res.status(200).json({ user: { ...payload, ...{ posts: posts } } });
+        // get user recipes
+        const recipes = await db("recipes")
+            .select("*")
+            .where({ user_id: user.id })
+            .orderBy("created_at", "desc");
+
+        res.status(201).json({
+            user: { ...payload, ...{ posts: posts }, ...{ recipes: recipes } },
+        });
     } catch (e) {
+        console.error(e);
         return res.status(400).json({ error: "Hmm, Unable to log in" });
     }
 }

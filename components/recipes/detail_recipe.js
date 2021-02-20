@@ -45,11 +45,11 @@ export default function DetailRecipeComponent({ recipe }) {
         <MainGridComponent>
             <Dashboard>
                 <Options marginTop="unset">
-                    <GoBack>
-                        <Link href="/recipes">
+                    <Link href="/recipes">
+                        <GoBack>
                             <RiArrowGoBackLine />
-                        </Link>
-                    </GoBack>
+                        </GoBack>
+                    </Link>
 
                     <PlainButton>
                         <Link href={`/recipes/edit/${recipe.id}`}>

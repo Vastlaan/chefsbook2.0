@@ -9,6 +9,7 @@ export default function ImageComponent({
     file,
     setFile,
     errors,
+    setErrors,
     photo_url,
 }) {
     return (

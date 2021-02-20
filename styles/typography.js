@@ -34,6 +34,10 @@ export const Text2 = styled.p`
     font-size: 1.9rem;
     color: ${(p) => (p.color ? p.color : p.theme.grey2)};
     max-width: 45rem;
+
+    span {
+        color: ${(p) => p.theme.secondary};
+    }
 `;
 export const Text3 = styled.p`
     font-size: 1.9rem;
@@ -46,4 +50,9 @@ export const BigText = styled.p`
     color: ${(p) => (p.color ? p.color : p.theme.primary)};
     max-width: 45rem;
     cursor: ${(p) => (p.cursor ? p.cursor : "arrow")};
+`;
+export const SmallText = styled.p`
+    font-size: 1.4rem;
+    color: ${(p) => (p.color ? p.color : p.theme.grey3)};
+    max-width: 45rem;
 `;

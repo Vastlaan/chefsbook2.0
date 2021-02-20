@@ -58,6 +58,15 @@ export const FlexCol = styled.div`
     `
         )}
 `;
+export const FlexRow = styled.div`
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    & > * {
+        margin: 1.4rem 0;
+    }
+`;
 
 export const LoginContainer = styled.div`
     display: flex;
@@ -76,7 +85,7 @@ export const Login = styled.form`
 export const Field = styled.div`
     max-width: 45rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: ${(p) => (p.direction ? p.direction : "column")};
     margin-bottom: 1.9rem;
     margin-top: ${(p) => (p.top ? p.top : "0")};
 
@@ -101,6 +110,9 @@ export const Field = styled.div`
         font-size: 1rem;
         margin: 0.6rem 0;
         color: orangered;
+    }
+    span {
+        color: ${(p) => p.theme.secondary};
     }
 `;
 
@@ -144,6 +156,23 @@ export const ImageContainerLarge = styled.div`
         object-fit: cover;
     }
 `;
+export const ImageContainerRound = styled.div`
+    overflow: hidden;
+    width: ${(p) => (p.dimension ? p.dimension : "15rem")};
+    height: ${(p) => (p.dimension ? p.dimension : "15rem")};
+    border-radius: 50%;
+    border: 1px solid ${(p) => p.theme.grey3};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.4rem 0;
+
+    img {
+        width: 100%;
+        object-position: center;
+        object-fit: cover;
+    }
+`;
 export const Options = styled.div`
     width: 100%;
     margin-top: ${(p) => (p.marginTop ? p.marginTop : "auto")};
@@ -156,7 +185,7 @@ export const Options = styled.div`
     }
 `;
 export const Option = styled.div`
-    margin-right: 1.4rem;
+    margin: 0 1.4rem;
 
     &:hover {
         position: relative;
@@ -176,6 +205,7 @@ export const Option = styled.div`
     svg {
         font-size: 1.6rem;
         transition: all 0.3s;
+        color: ;
     }
 `;
 export const Edit = styled(Option)`

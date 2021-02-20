@@ -71,10 +71,12 @@ export default function ControlersComponent() {
                 <FaRegListAlt />
                 <Text2>Preparation List</Text2>
             </Subject>
-            <Subject>
-                <RiSettings5Line />
-                <Text2>Settings</Text2>
-            </Subject>
+            <Link href="/user/settings">
+                <Subject>
+                    <RiSettings5Line />
+                    <Text2>Settings</Text2>
+                </Subject>
+            </Link>
         </Controlers>
     );
 }

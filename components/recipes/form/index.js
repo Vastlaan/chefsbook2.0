@@ -117,6 +117,7 @@ export default function CreateRecipeForm() {
                 fileImage={fileImage}
                 setFileImage={setFileImage}
                 errors={errors}
+                setErrors={setErrors}
             />
 
             <ButtonField>
