@@ -37,6 +37,11 @@ export default async function handler(req, res) {
             account_photo_url,
             background_photo_url,
         } = decoded;
+        // get other user data
+        const otherUserData = await db("users")
+            .select("name", "surname")
+            .where({ id: id });
+        const { name, surname } = otherUserData[0];
         // get user posts
         const posts = await db("posts")
             .select("*")
@@ -52,6 +57,8 @@ export default async function handler(req, res) {
         res.status(200).json({
             user: {
                 id,
+                name,
+                surname,
                 email,
                 created_at,
                 account_photo_url,

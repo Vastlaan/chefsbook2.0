@@ -6,6 +6,7 @@ import {
     ButtonSecondary,
     LinkButton,
     PlainButton,
+    InputFlexible,
 } from "./buttons";
 import { Line } from "./decorations";
 import {
@@ -48,6 +49,7 @@ export {
     ButtonSecondary,
     LinkButton,
     PlainButton,
+    InputFlexible,
     Line,
     Heading1,
     Heading3,

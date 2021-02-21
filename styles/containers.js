@@ -66,6 +66,9 @@ export const FlexRow = styled.div`
     & > * {
         margin: 1.4rem 0;
     }
+    svg {
+        margin-right: 1.4rem;
+    }
 `;
 
 export const LoginContainer = styled.div`
@@ -172,6 +175,10 @@ export const ImageContainerRound = styled.div`
         object-position: center;
         object-fit: cover;
     }
+    label {
+        margin: 0;
+        color: ${(p) => p.theme.grey3};
+    }
 `;
 export const Options = styled.div`
     width: 100%;
@@ -226,6 +233,7 @@ export const Form1 = styled.form`
 
     small {
         font-size: 1rem;
+        letter-spacing: 0.15rem;
         margin: 0.6rem 0;
         color: orangered;
     }

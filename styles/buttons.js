@@ -93,3 +93,14 @@ export const PlainButton = styled.button`
         }
     }
 `;
+export const InputFlexible = styled.input`
+    margin: 0 !important;
+    border: none;
+    background-color: transparent !important;
+    color: ${(p) => p.theme.secondary} !important;
+
+    &:focus,
+    :active {
+        box-shadow: none;
+    }
+`;

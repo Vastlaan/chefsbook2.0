@@ -1,109 +1,143 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
-import Link from "next/link";
 import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
+import Email from "./fields/email";
+import Name from "./fields/name";
+import Surname from "./fields/surname";
+import AccountPhotoComponent from "./fields/account_photo";
+import { validateEmail, validateMimeType } from "../../validations";
 import {
     respond,
-    Dashboard,
     BigText,
     Line,
-    Field,
-    FlexCol,
     FlexRow,
-    ImageContainerRound,
     ButtonSecondary,
-    PlainButton,
-    Text,
-    Text2,
     SmallText,
-    Options,
-    Edit,
+    Form1,
 } from "../../styles";
-import { RiAddLine, RiEditLine } from "react-icons/ri";
 
 export default function UserSettingsComponent({ user }) {
+    const { state, dispatch } = useContext(Context);
+
+    console.log("Prime", user);
+
+    const [currentlyEdited, setCurrentlyEdited] = useState("");
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [accountPhoto, setAccountPhoto] = useState(null);
+    const [accountPhotoBlob, setAccountPhotoBlog] = useState(null);
+    const [errors, setErrors] = useState([]);
+
+    function updateUserProfile(e) {
+        e.preventDefault();
+        console.log(email, name, surname, accountPhoto);
+
+        let dataToSend = new FormData();
+        if (email) {
+            const isEmailValid = validateEmail(email);
+            if (isEmailValid.type === "error") {
+                return setErrors(isEmailValid);
+            }
+            dataToSend.append("email", email);
+        }
+        if (name) {
+            dataToSend.append("name", name);
+        }
+        if (surname) {
+            dataToSend.append("surname", surname);
+        }
+        if (accountPhoto) {
+            const isPhotoValid = validateMimeType(accountPhoto);
+            if (isPhotoValid.type === "error") {
+                return setErrors(isPhotoValid);
+            }
+            dataToSend.append("file", accountPhoto);
+        }
+
+        fetch("/api/user/updateUser", {
+            method: "POST",
+            body: dataToSend,
+        })
+            .then((res) => res.json())
+            .then((user) => {
+                if (user.error) {
+                    setErrors({
+                        type: "error",
+                        field: "general",
+                        message: user.error,
+                    });
+                }
+                console.log(user);
+                // dispatch({ type: "updateUser", payload: user });
+            })
+            .catch((e) => {
+                console.error(e);
+                setErrors({
+                    type: "error",
+                    field: "general",
+                    message: "Ups, something went wrong",
+                });
+            });
+    }
+
     return (
         <MainGridComponent>
-            <Dashboard>
+            <Form1 onSubmit={updateUserProfile}>
                 <BigText>Your Profile:</BigText>
                 <Line />
 
-                <FlexRow>
-                    <Text2>
-                        E-mail: <span>{user.email}</span>
-                    </Text2>
-
-                    <Edit>
-                        <PlainButton>
-                            <RiEditLine />
-                        </PlainButton>
-                    </Edit>
-                </FlexRow>
+                <Email
+                    email={email}
+                    setEmail={setEmail}
+                    currentlyEdited={currentlyEdited}
+                    setCurrentlyEdited={setCurrentlyEdited}
+                    userEmail={user.email}
+                />
 
                 <Line />
-                <FlexRow>
-                    <Text2>
-                        First Name: <span>{user.name}</span>
-                    </Text2>
 
-                    <Edit>
-                        <PlainButton>
-                            <RiEditLine />
-                        </PlainButton>
-                    </Edit>
-                </FlexRow>
+                <Name
+                    name={name}
+                    setName={setName}
+                    currentlyEdited={currentlyEdited}
+                    setCurrentlyEdited={setCurrentlyEdited}
+                    userName={user.name}
+                />
                 <Line />
 
-                <FlexRow>
-                    <Text2>
-                        Last Name: <span>{user.surname}</span>
-                    </Text2>
-
-                    <Edit>
-                        <PlainButton>
-                            <RiEditLine />
-                        </PlainButton>
-                    </Edit>
-                </FlexRow>
+                <Surname
+                    surname={surname}
+                    setSurname={setSurname}
+                    currentlyEdited={currentlyEdited}
+                    setCurrentlyEdited={setCurrentlyEdited}
+                    userSurname={user.surname}
+                />
 
                 <Line />
-                <FlexCol>
-                    <Text2 htmlFor="photo">Profile Picture:</Text2>
-                    <ImageContainerRound>
-                        {user.account_photo_url ? (
-                            <img
-                                src={user.account_photo_url}
-                                alt="user photo"
-                            />
-                        ) : (
-                            <Text>No Photo Yet</Text>
-                        )}
-                    </ImageContainerRound>
-                    <Line />
-                </FlexCol>
+
+                <AccountPhotoComponent
+                    userAccountPhoto={user.account_photo_url}
+                    setAccountPhoto={setAccountPhoto}
+                    accountPhotoBlob={accountPhotoBlob}
+                    setAccountPhotoBlog={setAccountPhotoBlog}
+                    errors={errors}
+                    setErrors={setErrors}
+                />
+
                 <FlexRow>
                     <SmallText>
                         Account created at: <span>{user.created_at}</span>
                     </SmallText>
                 </FlexRow>
-
+                {errors.field === "general" && <small>{errors.message}</small>}
                 <FlexRow>
-                    <ButtonSecondary>Save changes</ButtonSecondary>
+                    <ButtonSecondary type="submit">
+                        Save changes
+                    </ButtonSecondary>
                 </FlexRow>
-            </Dashboard>
+            </Form1>
         </MainGridComponent>
     );
 }
-
-const Posts = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-const ButtonContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-    ${() => respond("m", "align-items: flex-start;")}
-`;
