@@ -90,16 +90,19 @@ export default function DetailRecipeComponent({ recipe }) {
 }
 const Duo = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-gap: 2.7rem;
+
+    ${() => respond("m", "grid-template-columns: 1fr 1fr;")}
 `;
 const Ingredients = styled.ul`
     list-style: none;
     display: flex;
     flex-direction: column;
-    padding: 1.4rem;
+    padding: 0;
 
     li {
+        margin: 0.7rem 0;
         font-size: 1.9rem;
         font-style: italic;
         font-weight: 300;
