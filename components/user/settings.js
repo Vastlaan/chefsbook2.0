@@ -16,9 +16,12 @@ import {
     SmallText,
     Form1,
 } from "../../styles";
+import { DateTime } from "luxon";
 
 export default function UserSettingsComponent({ user }) {
     const { state, dispatch } = useContext(Context);
+
+    const created = DateTime.fromISO(user.created_at).toLocaleString();
 
     const [currentlyEdited, setCurrentlyEdited] = useState("");
     const [email, setEmail] = useState("");
@@ -127,7 +130,7 @@ export default function UserSettingsComponent({ user }) {
 
                 <FlexRow>
                     <SmallText>
-                        Account created at: <span>{user.created_at}</span>
+                        Account created at: <span>{created}</span>
                     </SmallText>
                 </FlexRow>
                 {errors.field === "general" && <small>{errors.message}</small>}

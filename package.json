@@ -20,6 +20,7 @@
     "gsap": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.17",
+    "luxon": "^1.26.0",
     "micro-cors": "^0.1.1",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",

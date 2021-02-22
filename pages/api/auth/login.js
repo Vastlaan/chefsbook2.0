@@ -2,6 +2,7 @@ import { db } from "../../../database";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { serialize, parse } from "cookie";
+import { DateTime } from "luxon";
 
 export default async function handler(req, res) {
     const { email, password } = req.body;
@@ -27,7 +28,7 @@ export default async function handler(req, res) {
         const payload = {
             id: user.id,
             email: user.email,
-            created_at: user.created_at.toString().split(" 00")[0],
+            created_at: user.created_at,
         };
         // create JWT token
         const token = await jwt.sign(payload, process.env.JWT_SECRET, {

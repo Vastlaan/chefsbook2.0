@@ -34,6 +34,7 @@ export const Text2 = styled.p`
     font-size: 1.9rem;
     color: ${(p) => (p.color ? p.color : p.theme.grey2)};
     max-width: 45rem;
+    text-align: ${(p) => (p.align ? p.align : "left")};
 
     span {
         color: ${(p) => p.theme.secondary};

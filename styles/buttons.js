@@ -84,13 +84,16 @@ export const PlainButton = styled.button`
     align-items: center;
     justify-content: center;
 
+    &:hover {
+        svg {
+            color: ${(p) => p.theme.primaryDark};
+        }
+    }
+
     svg {
         font-size: 2.2rem;
         color: ${(p) => p.theme.primary};
         transition: all 0.3s;
-        &:hover {
-            color: ${(p) => p.theme.primaryDark};
-        }
     }
 `;
 export const InputFlexible = styled.input`

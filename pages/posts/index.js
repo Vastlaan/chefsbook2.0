@@ -5,7 +5,7 @@ import Head from "../../globals/head";
 import YourPosts from "../../components/posts/your_posts";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
-export default function OwnerPostsComponent({ data }) {
+export default function PostsPage({ data }) {
     const { state, dispatch } = useContext(Context);
     // check only once at page load if there is user already logged in and if not if an auth cookie with token exist (data) and load it to the state
     useEffect(() => {
