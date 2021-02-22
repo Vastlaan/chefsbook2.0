@@ -30,18 +30,22 @@ export default async function handler(req, res) {
             return sendError(res);
         }
 
-        const {
-            id,
-            email,
-            created_at,
-            account_photo_url,
-            background_photo_url,
-        } = decoded;
+        const { id, email, created_at } = decoded;
         // get other user data
         const otherUserData = await db("users")
-            .select("name", "surname")
+            .select(
+                "name",
+                "surname",
+                "account_photo_url",
+                "background_photo_url"
+            )
             .where({ id: id });
-        const { name, surname } = otherUserData[0];
+        const {
+            name,
+            surname,
+            account_photo_url,
+            background_photo_url,
+        } = otherUserData[0];
         // get user posts
         const posts = await db("posts")
             .select("*")

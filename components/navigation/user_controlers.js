@@ -3,24 +3,31 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import styled from "styled-components";
 import { Context } from "../../store";
-import { PlainButton } from "../../styles";
+import { PlainButton, ImageContainerRound } from "../../styles";
 import { RiLogoutBoxRLine, RiUserSettingsLine } from "react-icons/ri";
 
 export default function UserControlersComponent() {
     const { state, dispatch } = useContext(Context);
     const router = useRouter();
 
-    if (!state.user) {
+    if (!state.user || !state.user.email) {
         return null;
     }
-    if (!state.user.email) {
-        return null;
-    }
+
     return (
         <UserControlers>
-            <Link href="/">
+            <Link href="/user/settings">
                 <PlainButton>
-                    <RiUserSettingsLine />
+                    {state.user.account_photo_url ? (
+                        <ImageContainerRound dimension="2.7rem" margin="0">
+                            <img
+                                src={state.user.account_photo_url}
+                                alt="user photo"
+                            />
+                        </ImageContainerRound>
+                    ) : (
+                        <RiUserSettingsLine />
+                    )}
                 </PlainButton>
             </Link>
             <PlainButton

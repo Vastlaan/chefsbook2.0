@@ -168,7 +168,7 @@ export const ImageContainerRound = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1.4rem 0;
+    margin: ${(p) => (p.margin ? p.marign : "1.4rem 0")};
 
     img {
         width: 100%;
@@ -230,6 +230,9 @@ export const Form1 = styled.form`
     border-radius: 5px;
     padding: 2.7rem;
     overflow: auto;
+    padding-bottom: 9rem;
+
+    ${() => respond("m", "padding-bottom: unset;")}
 
     small {
         font-size: 1rem;

@@ -28,8 +28,6 @@ export default async function handler(req, res) {
             id: user.id,
             email: user.email,
             created_at: user.created_at.toString().split(" 00")[0],
-            account_photo_url: user.account_photo_url,
-            background_photo_url: user.background_photo_url,
         };
         // create JWT token
         const token = await jwt.sign(payload, process.env.JWT_SECRET, {
@@ -48,6 +46,15 @@ export default async function handler(req, res) {
         });
         // setup cookie in response header
         res.setHeader("Set-Cookie", cookie);
+        // get other user data
+        const otherUserData = await db("users")
+            .select(
+                "name",
+                "surname",
+                "account_photo_url",
+                "background_photo_url"
+            )
+            .where({ id: user.id });
 
         // get posts
         const posts = await db("posts")
@@ -62,7 +69,12 @@ export default async function handler(req, res) {
             .orderBy("created_at", "desc");
 
         res.status(201).json({
-            user: { ...payload, ...{ posts: posts }, ...{ recipes: recipes } },
+            user: {
+                ...payload,
+                ...otherUserData[0],
+                ...{ posts: posts },
+                ...{ recipes: recipes },
+            },
         });
     } catch (e) {
         console.error(e);

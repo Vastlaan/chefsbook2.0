@@ -26,10 +26,10 @@ export default function ImageComponent({
         <ImageField>
             <label>Profile Picture:</label>
             <ImageContainerRound>
-                {userAccountPhoto ? (
-                    <img src={userAccountPhoto} alt="user's photo" />
-                ) : accountPhotoBlob ? (
+                {accountPhotoBlob ? (
                     <img src={accountPhotoBlob} alt="user's photo" />
+                ) : userAccountPhoto ? (
+                    <img src={userAccountPhoto} alt="user's photo" />
                 ) : (
                     <label htmlFor="photo">No Photo Yet</label>
                 )}

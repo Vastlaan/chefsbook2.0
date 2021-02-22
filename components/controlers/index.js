@@ -53,10 +53,12 @@ export default function ControlersComponent() {
                     <Text2>My Posts</Text2>
                 </Subject>
             </Link>
-            <Subject>
-                <RiCalendarEventLine />
-                <Text2>Events</Text2>
-            </Subject>
+            <Link href="/events">
+                <Subject>
+                    <RiCalendarEventLine />
+                    <Text2>Events</Text2>
+                </Subject>
+            </Link>
             <Link href="/recipes">
                 <Subject>
                     <FaRegEdit />

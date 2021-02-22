@@ -20,8 +20,6 @@ import {
 export default function UserSettingsComponent({ user }) {
     const { state, dispatch } = useContext(Context);
 
-    console.log("Prime", user);
-
     const [currentlyEdited, setCurrentlyEdited] = useState("");
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
@@ -69,8 +67,9 @@ export default function UserSettingsComponent({ user }) {
                         message: user.error,
                     });
                 }
-                console.log(user);
-                // dispatch({ type: "updateUser", payload: user });
+
+                dispatch({ type: "updateUser", payload: user });
+                return (window.location.href = "/");
             })
             .catch((e) => {
                 console.error(e);
