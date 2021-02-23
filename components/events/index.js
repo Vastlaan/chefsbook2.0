@@ -3,8 +3,16 @@ import styled from "styled-components";
 import Link from "next/link";
 import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
+import Time from "./time";
 import Calendar from "./calendar";
-import { respond, Dashboard, BigText, Line, ButtonPrimary } from "../../styles";
+import {
+    respond,
+    Dashboard,
+    BigText,
+    Line,
+    ButtonPrimary,
+    FlexRow,
+} from "../../styles";
 import { RiAddLine } from "react-icons/ri";
 
 export default function EventsComponent() {
@@ -16,18 +24,15 @@ export default function EventsComponent() {
     return (
         <MainGridComponent>
             <Dashboard>
-                <BigText>Calendar:</BigText>
-                <Line />
-                <ButtonContainer>
-                    <Link href="/posts/createPost">
-                        <ButtonPrimary>
-                            <RiAddLine />
-                            Create New Event
-                        </ButtonPrimary>
-                    </Link>
-                </ButtonContainer>
+                <TopRow>
+                    <BigText>Calendar:</BigText>
+                    <Time />
+                </TopRow>
                 <Line />
                 <Calendar />
+                <Line />
+                <BigText>Comming events:</BigText>
+                <Line />
             </Dashboard>
         </MainGridComponent>
     );
@@ -39,4 +44,10 @@ const ButtonContainer = styled.div`
     flex-direction: column;
 
     ${() => respond("m", "align-items: flex-start;")}
+`;
+const TopRow = styled(FlexRow)`
+    align-items: center;
+    & > * {
+        margin: 0;
+    }
 `;
