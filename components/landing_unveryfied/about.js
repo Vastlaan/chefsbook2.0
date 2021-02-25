@@ -105,6 +105,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     min-height: 40vh;
+    overflow: auto;
 `;
 const Headline = styled.div`
     margin-bottom: 2.7rem;

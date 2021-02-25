@@ -14,8 +14,8 @@ export const Main = styled.main`
     background-size: cover;
     background-position: center 80%;
     min-height: calc(100vh - 5rem);
-    max-height: calc(100vh - 5rem);
-    overflow: hidden;
+    max-height: 100vh;
+    overflow: auto;
 `;
 export const ContainerNarrow = styled.div`
     max-width: 1255px;
@@ -61,6 +61,7 @@ export const FlexCol = styled.div`
 export const FlexRow = styled.div`
     display: flex;
     align-items: center;
+    justify-content: ${(p) => (p.justify ? p.justify : "flex-start")};
     flex-wrap: wrap;
 
     & > * {

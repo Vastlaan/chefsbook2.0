@@ -92,6 +92,7 @@ const Controlers = styled.div`
     left: 0;
     width: 100%;
     padding: 0 1rem;
+    z-index: 98;
 
     ${() =>
         respond(

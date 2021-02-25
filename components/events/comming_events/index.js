@@ -11,7 +11,6 @@ export default function ComingEventsComponent() {
     const [commingWeekEvents, setCommingWeekEvents] = useState([]);
 
     useEffect(() => {
-        console.log(state.user.events);
         if (state.user.events) {
             const selectedAndSorted = state.user.events
                 .filter(
@@ -41,7 +40,6 @@ export default function ComingEventsComponent() {
 
             {commingWeekEvents.length > 0
                 ? commingWeekEvents.map((currentEvent, i) => {
-                      console.log(currentEvent);
                       const {
                           day,
                           month,

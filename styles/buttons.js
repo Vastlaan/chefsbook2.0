@@ -36,7 +36,7 @@ export const ButtonPrimary = styled.button`
     }
 `;
 export const ButtonSecondary = styled.button`
-    padding: 0.9rem 1.4rem;
+    padding: 0.9rem 2.2rem;
     background-color: ${(p) => p.theme.secondary};
     position: relative;
     z-index: 2;

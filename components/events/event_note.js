@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { Context } from "../../store";
+import ModalBeforeDelete from "../modals/modal_before_delete";
 import { PlainButton } from "../../styles";
-import { RiTimeLine, RiCloseFill } from "react-icons/ri";
+import { RiTimeLine, RiCloseFill, RiCalendarEventLine } from "react-icons/ri";
 
 export default function EventNoteComponent({
     date,
@@ -21,27 +22,32 @@ export default function EventNoteComponent({
         const res = await fetch(`/api/events/deleteEvent?id=${id}`);
         const data = await res.json();
         dispatch({ type: "updateEvents", payload: data.events });
-        // return router.reload();
     }
 
     return (
         <EventNote key={hour + minute}>
             {date && (
-                <Date>
-                    Date:{" "}
-                    {` ${date.day.length === 1 ? `0${date.day}` : date.day}-${
-                        date.month.length === 1 ? `0${date.month}` : date.month
-                    }-${date.year}`}
-                </Date>
+                <Row>
+                    <RiCalendarEventLine />{" "}
+                    <p>
+                        {` ${
+                            date.day.length === 1 ? `0${date.day}` : date.day
+                        }-${
+                            date.month.length === 1
+                                ? `0${date.month}`
+                                : date.month
+                        }-${date.year}`}
+                    </p>
+                </Row>
             )}
-            <Time>
+            <Row>
                 <RiTimeLine />
                 <p>
                     {`${hour.length === 1 ? `0${hour}` : hour}:${
                         minute.length === 1 ? `0${minute}` : minute
                     }`}
                 </p>
-            </Time>
+            </Row>
             <Description>
                 <p>{description}</p>
             </Description>
@@ -49,23 +55,11 @@ export default function EventNoteComponent({
                 <RiCloseFill />
             </DeleteEvent>
             {displayQuestion && (
-                <CustomDeleteComponent>
-                    <button
-                        onClick={() => {
-                            setDisplayQuestion(false);
-                            deleteEvent();
-                        }}
-                    >
-                        yes
-                    </button>
-                    <button
-                        onClick={() => {
-                            setDisplayQuestion(false);
-                        }}
-                    >
-                        no
-                    </button>
-                </CustomDeleteComponent>
+                <ModalBeforeDelete
+                    setModal={setDisplayQuestion}
+                    deleteItem={deleteEvent}
+                    message="Are you sure you want to delete this event?"
+                />
             )}
         </EventNote>
     );
@@ -81,12 +75,7 @@ const EventNote = styled.div`
     transition: all 0.3s;
     position: relative;
 `;
-const Date = styled.div`
-    display: flex;
-    color: ${(p) => p.theme.white};
-    font-size: 1.9rem;
-`;
-const Time = styled.div`
+const Row = styled.div`
     display: flex;
     align-items: center;
 
@@ -117,15 +106,4 @@ const DeleteEvent = styled(PlainButton)`
     svg {
         color: ${(p) => p.theme.white};
     }
-`;
-const CustomDeleteComponent = styled.div`
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    backgound-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `;

@@ -1,10 +1,27 @@
+import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { Context } from "../../../store";
 import { WEEK_DAYS } from "../../../utils/weekDays";
 import { respond } from "../../../styles";
 
 export default function MonthDaysComponent({ startDate }) {
     const currentDay = startDate.day;
+
+    const { state } = useContext(Context);
+
+    const [currentMonthEvents, setCurrentMonthEvents] = useState([]);
+
+    useEffect(() => {
+        state.user.events &&
+            setCurrentMonthEvents(
+                state.user.events.filter(
+                    (currentEvent) =>
+                        currentEvent.month === startDate.month.toString() &&
+                        currentEvent.year === startDate.year.toString()
+                )
+            );
+    }, [startDate, state]);
 
     function generateMonthDaysArray(dt) {
         let arrayOfDaysInMonth = [];
@@ -29,17 +46,33 @@ export default function MonthDaysComponent({ startDate }) {
     return (
         <MonthDays>
             {monthDaysToRender.map((day, i) => {
+                const arrayOfDaysWhenEvent = [];
+                currentMonthEvents.forEach((eve) =>
+                    arrayOfDaysWhenEvent.push(eve.day)
+                );
+
                 if (!day) {
                     return <EmptyDay key={`day-${i}-${day}`}></EmptyDay>;
-                } else {
-                    return day === currentDay ? (
+                } else if (arrayOfDaysWhenEvent.includes(day.toString())) {
+                    return (
+                        <Link
+                            key={`day-${i}-${day}`}
+                            href={`/events/details?day=${day}&month=${month}&year=${year}`}
+                        >
+                            <Day color="#6DAA6C">{day}</Day>
+                        </Link>
+                    );
+                } else if (day === currentDay) {
+                    return (
                         <Link
                             key={`day-${i}-${day}`}
                             href={`/events/details?day=${day}&month=${month}&year=${year}`}
                         >
                             <Day color="skyblue">{day}</Day>
                         </Link>
-                    ) : (
+                    );
+                } else {
+                    return (
                         <Link
                             key={`day-${i}-${day}`}
                             href={`/events/details?day=${day}&month=${month}&year=${year}`}

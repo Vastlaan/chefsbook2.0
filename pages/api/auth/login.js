@@ -68,6 +68,13 @@ export default async function handler(req, res) {
             .select("*")
             .where({ user_id: user.id })
             .orderBy("created_at", "desc");
+        // get user events
+        const events = await db("events")
+            .select("*")
+            .where({ user_id: user.id })
+            .orderBy("year", "asc")
+            .orderBy("month", "asc")
+            .orderBy("day", "asc");
 
         res.status(201).json({
             user: {
@@ -75,6 +82,7 @@ export default async function handler(req, res) {
                 ...otherUserData[0],
                 ...{ posts: posts },
                 ...{ recipes: recipes },
+                ...{ events: events },
             },
         });
     } catch (e) {

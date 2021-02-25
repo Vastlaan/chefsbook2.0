@@ -1,7 +1,12 @@
 import { createContext } from "react";
 
 export const initialState = {
-    user: {},
+    user: {
+        recipes: [],
+        events: [],
+        posts: [],
+        preparations: [],
+    },
     isLogged: "pending",
     colorTheme: "light",
 };

@@ -27,7 +27,7 @@ const MainGrid = styled.div`
     display: flex;
     flex-direction: column-reverse;
     min-height: calc(100vh - 5rem);
-    max-height: calc(100vh - 5rem);
+    max-height: 100vh;
 
     ${() =>
         respond(
