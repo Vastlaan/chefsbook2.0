@@ -7,19 +7,15 @@ import styled from "styled-components";
 import {
     respond,
     Dashboard,
-    BigText,
-    ButtonPrimary,
-    Line,
     Options,
     Option,
     ImageContainerSmall,
     Edit,
+    GoBack,
     Text3,
     Heading1,
     Heading3,
-    FlexCol,
     PlainButton,
-    ButtonSecondary,
 } from "../../styles";
 import {
     RiDeleteBin2Line,
@@ -116,17 +112,4 @@ const PrepTime = styled.li`
 const WideText = styled(Text3)`
     max-width: 100%;
     margin-bottom: 2.7rem;
-`;
-const GoBack = styled(Option)`
-    margin-right: auto;
-    color: ${(p) => p.theme.primary};
-    transition: all 0.3s;
-
-    &:hover {
-        cursor: pointer;
-        color: ${(p) => p.theme.primaryDark};
-        &::after {
-            content: "back";
-        }
-    }
 `;

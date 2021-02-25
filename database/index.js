@@ -67,6 +67,27 @@ export default class Connection {
             .then((result) => result)
             .catch((e) => e);
     }
+
+    createTableEvents() {
+        return this.db.schema
+            .createTable("events", (table) => {
+                table.increments("id");
+                table
+                    .integer("user_id")
+                    .unsigned()
+                    .references("users.id")
+                    .onDelete("CASCADE");
+                table.text("description");
+                table.string("minute");
+                table.string("hour");
+                table.string("day");
+                table.string("month");
+                table.string("year");
+                table.timestamp("created_at").defaultTo(this.db.fn.now());
+            })
+            .then((data) => data)
+            .catch((e) => console.log(e));
+    }
 }
 
 export const db = new Connection().getDatabase();

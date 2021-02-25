@@ -42,7 +42,7 @@ export const Grid = styled.div`
 export const FlexCol = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: ${(p) => (p.alignItems ? p.alignItems : "flex-start")};
 
     & > * {
         margin: 1.4rem 0;
@@ -69,6 +69,10 @@ export const FlexRow = styled.div`
     svg {
         margin-right: 1.4rem;
     }
+`;
+export const TopRow = styled.div`
+    display: flex;
+    align-items: center;
 `;
 
 export const LoginContainer = styled.div`
@@ -121,6 +125,7 @@ export const Field = styled.div`
 
 export const Dashboard = styled.div`
     display: flex;
+    flex: 1;
     flex-direction: column;
     background-color: ${(p) => p.theme.black};
     border-radius: 5px;
@@ -128,7 +133,7 @@ export const Dashboard = styled.div`
     padding-bottom: 9rem;
     overflow: auto;
 
-    ${() => respond("m", "padding-bottom: unset;")}
+    ${() => respond("m", "padding-bottom: 4.7rem;")}
     small {
         font-size: 1rem;
         margin: 0.6rem 0;
@@ -184,8 +189,9 @@ export const Options = styled.div`
     width: 100%;
     margin-top: ${(p) => (p.marginTop ? p.marginTop : "auto")};
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: ${(p) =>
+        p.justifyContent ? p.justifyContent : "flex-end"};
+    align-items: ${(p) => (p.alignItems ? p.alignItems : "center")};
 
     small {
         color: ${(p) => p.theme.grey3} !important;
@@ -210,7 +216,7 @@ export const Option = styled.div`
     }
 
     svg {
-        font-size: 1.6rem;
+        font-size: 1.9rem;
         transition: all 0.3s;
         color: ;
     }
@@ -222,9 +228,24 @@ export const Edit = styled(Option)`
         }
     }
 `;
+export const GoBack = styled(Option)`
+    margin: 0;
+    margin-right: auto;
+    color: ${(p) => p.theme.primary};
+    transition: all 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        color: ${(p) => p.theme.primaryDark};
+        &::after {
+            content: "back";
+        }
+    }
+`;
 
 export const Form1 = styled.form`
     display: flex;
+    flex: 1;
     flex-direction: column;
     background-color: ${(p) => p.theme.black};
     border-radius: 5px;
@@ -240,4 +261,12 @@ export const Form1 = styled.form`
         margin: 0.6rem 0;
         color: orangered;
     }
+`;
+
+export const ButtonContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    ${() => respond("m", "align-items: flex-start;")}
 `;

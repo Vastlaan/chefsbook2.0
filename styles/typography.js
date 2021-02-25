@@ -51,6 +51,9 @@ export const BigText = styled.p`
     color: ${(p) => (p.color ? p.color : p.theme.primary)};
     max-width: 45rem;
     cursor: ${(p) => (p.cursor ? p.cursor : "arrow")};
+    span {
+        color: ${(p) => p.theme.secondary};
+    }
 `;
 export const SmallText = styled.p`
     font-size: 1.4rem;

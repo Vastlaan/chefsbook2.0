@@ -9,10 +9,6 @@ export default class User {
         this.backgroundPhotoUrl = "";
         this.createdAt = "now()";
         this.enabled = true;
-        this.recipes = [];
-        this.events = [];
-        this.preparations = [];
-        this.schedules = [];
     }
 
     getUser() {
@@ -26,10 +22,6 @@ export default class User {
             background_photo_url: this.backgroundPhotoUrl,
             created_at: this.createdAt,
             enabled: this.enabled,
-            // recipes: this.recipes,
-            // events: this.events,
-            // preparations: this.preparations,
-            // schedules: this.schedules,
         };
     }
 }

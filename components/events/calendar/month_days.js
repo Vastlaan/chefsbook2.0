@@ -1,11 +1,10 @@
 import styled from "styled-components";
+import Link from "next/link";
 import { WEEK_DAYS } from "../../../utils/weekDays";
 import { respond } from "../../../styles";
 
 export default function MonthDaysComponent({ startDate }) {
     const currentDay = startDate.day;
-
-    console.log("current day:", currentDay);
 
     function generateMonthDaysArray(dt) {
         let arrayOfDaysInMonth = [];
@@ -25,6 +24,8 @@ export default function MonthDaysComponent({ startDate }) {
 
     const monthDaysToRender = generateMonthDaysArray(startDate);
 
+    const { month, year } = startDate;
+
     return (
         <MonthDays>
             {monthDaysToRender.map((day, i) => {
@@ -32,11 +33,19 @@ export default function MonthDaysComponent({ startDate }) {
                     return <EmptyDay key={`day-${i}-${day}`}></EmptyDay>;
                 } else {
                     return day === currentDay ? (
-                        <Day key={`day-${i}-${day}`} color="skyblue">
-                            {day}
-                        </Day>
+                        <Link
+                            key={`day-${i}-${day}`}
+                            href={`/events/details?day=${day}&month=${month}&year=${year}`}
+                        >
+                            <Day color="skyblue">{day}</Day>
+                        </Link>
                     ) : (
-                        <Day key={`day-${i}-${day}`}>{day}</Day>
+                        <Link
+                            key={`day-${i}-${day}`}
+                            href={`/events/details?day=${day}&month=${month}&year=${year}`}
+                        >
+                            <Day>{day}</Day>
+                        </Link>
                     );
                 }
             })}

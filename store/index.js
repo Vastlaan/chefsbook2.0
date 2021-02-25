@@ -57,6 +57,22 @@ export const reducer = (state, action) => {
                     ...action.payload,
                 },
             };
+        case "updateEvents":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    events: action.payload,
+                },
+            };
+        case "updateCreatedEvent":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    events: [action.payload, ...state.user.events],
+                },
+            };
         case "setDarkTheme":
             return { ...state, colorTheme: "dark" };
         case "setLightTheme":

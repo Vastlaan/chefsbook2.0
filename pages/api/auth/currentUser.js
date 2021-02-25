@@ -56,6 +56,13 @@ export default async function handler(req, res) {
             .select("*")
             .where({ user_id: id })
             .orderBy("created_at", "desc");
+        // get user events
+        const events = await db("events")
+            .select("*")
+            .where({ user_id: id })
+            .orderBy("year", "asc")
+            .orderBy("month", "asc")
+            .orderBy("day", "asc");
 
         // send all user created data to the frontend
         res.status(200).json({
@@ -69,6 +76,7 @@ export default async function handler(req, res) {
                 background_photo_url,
                 posts,
                 recipes,
+                events,
             },
         });
     } catch (error) {

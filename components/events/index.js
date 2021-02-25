@@ -1,26 +1,10 @@
-import { useContext } from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
 import Time from "./time";
 import Calendar from "./calendar";
-import {
-    respond,
-    Dashboard,
-    BigText,
-    Line,
-    ButtonPrimary,
-    FlexRow,
-} from "../../styles";
-import { RiAddLine } from "react-icons/ri";
+import CommingEvents from "./comming_events";
+import { Dashboard, BigText, Line, TopRow } from "../../styles";
 
 export default function EventsComponent() {
-    const {
-        state: { user },
-        dispatch,
-    } = useContext(Context);
-
     return (
         <MainGridComponent>
             <Dashboard>
@@ -31,23 +15,9 @@ export default function EventsComponent() {
                 <Line />
                 <Calendar />
                 <Line />
-                <BigText>Comming events:</BigText>
+                <CommingEvents />
                 <Line />
             </Dashboard>
         </MainGridComponent>
     );
 }
-
-const ButtonContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-    ${() => respond("m", "align-items: flex-start;")}
-`;
-const TopRow = styled(FlexRow)`
-    align-items: center;
-    & > * {
-        margin: 0;
-    }
-`;

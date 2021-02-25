@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { DateTime } from "luxon";
 import styled from "styled-components";
+
 import MonthPanel from "./month_panel";
 import WeekDays from "./week_days";
 import MonthDays from "./month_days";
 
 export default function CalendarComponent(props) {
     const [startDate, setStartDate] = useState(DateTime.now());
-
-    console.log(startDate);
 
     return (
         <Calendar>

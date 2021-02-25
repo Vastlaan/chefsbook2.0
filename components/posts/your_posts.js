@@ -5,12 +5,12 @@ import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
 import Post from "./post";
 import {
-    respond,
     Dashboard,
     BigText,
     Line,
     ButtonPrimary,
-    Text2,
+    ButtonContainer,
+    FlexCol,
 } from "../../styles";
 import { RiAddLine } from "react-icons/ri";
 
@@ -46,7 +46,7 @@ export default function YourPostsComponent() {
                     </Link>
                 </ButtonContainer>
                 <Line />
-                <Posts>
+                <FlexCol alignItems="stretch">
                     {user.posts &&
                         user.posts.map((post) => {
                             return (
@@ -59,20 +59,8 @@ export default function YourPostsComponent() {
                                 />
                             );
                         })}
-                </Posts>
+                </FlexCol>
             </Dashboard>
         </MainGridComponent>
     );
 }
-
-const Posts = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-const ButtonContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-    ${() => respond("m", "align-items: flex-start;")}
-`;

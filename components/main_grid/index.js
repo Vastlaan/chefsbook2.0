@@ -26,6 +26,7 @@ const MainGrid = styled.div`
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
+    min-height: calc(100vh - 5rem);
     max-height: calc(100vh - 5rem);
 
     ${() =>

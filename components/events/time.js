@@ -48,6 +48,7 @@ const TimeString = styled.div`
     svg {
         font-size: 1.9rem;
         color: ${(p) => p.theme.secondary};
+        margin-right: 1.4rem;
     }
     p {
         font-size: 1.9rem;

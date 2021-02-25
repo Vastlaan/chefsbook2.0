@@ -2,13 +2,15 @@ import { useEffect, useContext, useState } from "react";
 import { Context } from "../../store";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import DetailRecipe from "../../components/recipes/detail_recipe";
+import EventDetails from "../../components/events/event_details";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
-export default function RecipeDetailsComponent({ data, recipe }) {
+export default function EventDetailsComponent({ data, currentDay }) {
     if (data.error) {
         return <div>Custom Error Component: {data.error}</div>;
     }
+
+    const { day, month, year } = currentDay;
 
     const { state, dispatch } = useContext(Context);
 
@@ -27,26 +29,31 @@ export default function RecipeDetailsComponent({ data, recipe }) {
     return (
         <Layout>
             <Head />
-            <DetailRecipe recipe={recipe} />
+            <EventDetails
+                day={day}
+                month={month}
+                year={year}
+                events={data.events}
+            />
         </Layout>
     );
 }
 
 export async function getServerSideProps(ctx) {
-    const { id } = ctx.params;
     try {
         const data = await checkIfAuthorized(ctx);
 
         return {
             props: {
                 data,
-                recipe: data.recipes.find((r) => Number(r.id) == Number(id)),
+                currentDay: ctx.query,
             },
         };
     } catch (e) {
         return {
             props: {
                 data: { error: "Ups, something went wrong" },
+                currentDay: null,
             },
         };
     }
