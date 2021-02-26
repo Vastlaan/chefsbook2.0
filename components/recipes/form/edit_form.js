@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import styled from "styled-components";
 import { Context } from "../../../store";
 import {
@@ -15,8 +16,15 @@ import Ingredients from "./fields/ingredients";
 import Description from "./fields/description";
 import Time from "./fields/time";
 import Image from "./fields/image";
-
-import { Form1, Heading3, Field, ButtonPrimary } from "../../../styles";
+import { RiArrowGoBackLine } from "react-icons/ri";
+import {
+    Form1,
+    Heading3,
+    Field,
+    ButtonPrimary,
+    Options,
+    GoBack,
+} from "../../../styles";
 
 export default function EditRecipeForm({ id }) {
     const router = useRouter();
@@ -33,6 +41,9 @@ export default function EditRecipeForm({ id }) {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
+        if (state.user.recipes.length === 0 || !state.user.recipes) {
+            return router.push("/recipes");
+        }
         const editableRecipe = state.user.recipes.find(
             (r) => Number(r.id) === Number(id)
         );
@@ -111,7 +122,13 @@ export default function EditRecipeForm({ id }) {
     return (
         <Form1 onSubmit={updateRecipe} onKeyDown={(e) => e.key != "Enter"}>
             <Heading3>Edit Recipe</Heading3>
-
+            <Options>
+                <Link href={`/recipes/${id}`}>
+                    <GoBack>
+                        <RiArrowGoBackLine />
+                    </GoBack>
+                </Link>
+            </Options>
             <Name title={title} setTitle={setTitle} errors={errors} />
             <Ingredients
                 ingredients={ingredients}

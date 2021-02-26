@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Context } from "../../../store";
@@ -15,8 +16,15 @@ import Ingredients from "./fields/ingredients";
 import Description from "./fields/description";
 import Time from "./fields/time";
 import Image from "./fields/image";
-
-import { Form1, Heading3, Field, ButtonPrimary } from "../../../styles";
+import { RiArrowGoBackLine } from "react-icons/ri";
+import {
+    Form1,
+    Heading3,
+    Field,
+    ButtonPrimary,
+    Options,
+    GoBack,
+} from "../../../styles";
 
 export default function CreateRecipeForm() {
     const router = useRouter();
@@ -96,7 +104,13 @@ export default function CreateRecipeForm() {
     return (
         <Form1 onSubmit={createRecipe} onKeyDown={(e) => e.key != "Enter"}>
             <Heading3>Create New Recipe</Heading3>
-
+            <Options>
+                <Link href={`/recipes`}>
+                    <GoBack>
+                        <RiArrowGoBackLine />
+                    </GoBack>
+                </Link>
+            </Options>
             <Name title={title} setTitle={setTitle} errors={errors} />
             <Ingredients
                 ingredients={ingredients}
