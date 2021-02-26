@@ -54,6 +54,7 @@ export default function CreateRecipeComponent({ day, month, year }) {
             minute,
             description,
         };
+        console.log(dataToSend);
 
         fetch("/api/events/createEvent", {
             method: "POST",

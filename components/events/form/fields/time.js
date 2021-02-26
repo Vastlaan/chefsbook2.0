@@ -4,6 +4,12 @@ import { MINUTES } from "../../../../utils/minutes";
 import { Field, FlexRow } from "../../../../styles";
 
 export default function TimeComponent({ setHour, setMinute, errors }) {
+    function filterFirstZero(string) {
+        if (string.charAt(0) === "0") {
+            return string.charAt(1);
+        }
+        return string;
+    }
     return (
         <Field>
             <label>Pick up the time:</label>
@@ -13,7 +19,9 @@ export default function TimeComponent({ setHour, setMinute, errors }) {
                     <select
                         name="hour"
                         id="hour"
-                        onChange={(e) => setHour(e.target.value)}
+                        onChange={(e) => {
+                            setHour(filterFirstZero(e.target.value));
+                        }}
                     >
                         {HOURS.map((h) => (
                             <option key={h}>{h}</option>
@@ -26,7 +34,9 @@ export default function TimeComponent({ setHour, setMinute, errors }) {
                     <select
                         name="minute"
                         id="minute"
-                        onChange={(e) => setMinute(e.target.value)}
+                        onChange={(e) =>
+                            setMinute(filterFirstZero(e.target.value))
+                        }
                     >
                         {MINUTES.map((h) => (
                             <option key={h}>{h}</option>
@@ -56,6 +66,11 @@ const CustomSelect = styled.div`
         padding: 0.7rem 1.4rem;
         color: ${(p) => p.theme.secondary};
         font-size: 1.6rem;
+
+        &:active,
+        :focus {
+            outline: none;
+        }
 
         option {
             font-size: 1.6rem;
