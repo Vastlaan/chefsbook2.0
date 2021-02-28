@@ -6,6 +6,7 @@ export const initialState = {
         events: [],
         posts: [],
         preparations: [],
+        members: [],
     },
     isLogged: "pending",
     colorTheme: "light",

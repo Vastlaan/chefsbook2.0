@@ -88,6 +88,34 @@ export default class Connection {
             .then((data) => data)
             .catch((e) => console.log(e));
     }
+
+    createTableMembers() {
+        return this.db.schema.createTable("members", (table) => {
+            table.increments("id");
+            table
+                .integer("user_id")
+                .unsigned()
+                .references("users.id")
+                .onDelete("CASCADE");
+            table.string("full_name");
+            table.string("email");
+            table.timestamp("created_at").defaultTo(this.db.fn.now());
+        });
+    }
+
+    createTableSchedules() {
+        return this.db.schema.createTable("schedules", (table) => {
+            table.increments("id");
+            table
+                .integer("member_id")
+                .unsigned()
+                .references("members.id")
+                .onDelete("CASCADE");
+            table.string("week_number").defaultTo("0");
+            table.text("schedule");
+            table.timestamp("created_at");
+        });
+    }
 }
 
 export const db = new Connection().getDatabase();

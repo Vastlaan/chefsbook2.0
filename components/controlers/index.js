@@ -65,14 +65,18 @@ export default function ControlersComponent() {
                     <Text2>Recipes</Text2>
                 </Subject>
             </Link>
-            <Subject>
-                <RiTeamLine />
-                <Text2>My Team</Text2>
-            </Subject>
-            <Subject>
-                <FaRegListAlt />
-                <Text2>Preparation List</Text2>
-            </Subject>
+            <Link href="/team">
+                <Subject>
+                    <RiTeamLine />
+                    <Text2>My Team</Text2>
+                </Subject>
+            </Link>
+            <Link href="/preparations">
+                <Subject>
+                    <FaRegListAlt />
+                    <Text2>Preparation List</Text2>
+                </Subject>
+            </Link>
             <Link href="/user/settings">
                 <Subject>
                     <RiSettings5Line />

@@ -271,3 +271,56 @@ export const ButtonContainer = styled.div`
 
     ${() => respond("m", "align-items: flex-start;")}
 `;
+export const TableRow = styled.div`
+    padding: 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid ${(p) => (p.color ? p.color : p.theme.primary)};
+    background-color: ${(p) => (p.fill ? p.color : "transparent")};
+
+    ${() => respond("l", "padding: 0.7rem")}
+
+    p {
+        flex: 1;
+        color: ${(p) =>
+            p.colorFont ? p.colorFont : p.color ? p.color : p.theme.primary};
+        font-size: 1.6rem;
+        text-align: center;
+        letter-spacing: 0.15rem;
+
+        ${() => respond("s", "font-size: 1.6rem")}
+    }
+
+    svg {
+        margin: 0 0.7rem;
+        font-size: 2.7rem;
+
+        &:hover {
+            fill: ${(p) => p.theme.grey2};
+        }
+    }
+`;
+
+export const WeekdaysPanel = styled.div`
+    display: flex;
+    width: 100%;
+`;
+export const WeekdayPanelRow = styled(TableRow)`
+    flex: 1;
+    diplay: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.7rem 0;
+    min-width: 5rem;
+
+    ${() => respond("l", "padding: 0.7rem")}
+    p {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.4rem;
+    }
+    sup {
+        color: ${(p) => p.theme.primaryDark};
+    }
+`;

@@ -63,6 +63,23 @@ export default async function handler(req, res) {
             .orderBy("year", "asc")
             .orderBy("month", "asc")
             .orderBy("day", "asc");
+        // get members created by user
+        let members = await db("members").select("*").where({ user_id: id });
+
+        // create helper function to append schedules to members - later move to utils
+        async function appendSchedules(members) {
+            return Promise.all(
+                members.map(async (member) => {
+                    const schedules = await db("schedules")
+                        .select("*")
+                        .where({ member_id: member.id });
+                    member.schedules = schedules;
+                    return member;
+                })
+            );
+        }
+        // append schedules to members
+        members = await appendSchedules(members);
 
         // send all user created data to the frontend
         res.status(200).json({
@@ -77,6 +94,7 @@ export default async function handler(req, res) {
                 posts,
                 recipes,
                 events,
+                members,
             },
         });
     } catch (error) {
