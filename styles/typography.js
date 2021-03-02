@@ -51,6 +51,7 @@ export const BigText = styled.p`
     color: ${(p) => (p.color ? p.color : p.theme.primary)};
     max-width: 45rem;
     cursor: ${(p) => (p.cursor ? p.cursor : "arrow")};
+    text-align: ${(p) => (p.align ? p.align : "left")};
     span {
         color: ${(p) => p.theme.secondary};
     }

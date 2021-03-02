@@ -1,35 +1,17 @@
 import { db } from "../../../database";
-import { validateText } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 
 export default async function handler(req, res) {
     // authorize request
     const decoded = checkCookie(req, res);
 
-    const { fullName, email, schedule } = req.body;
-    if (!fullName || !schedule) {
-        return res.status({
-            error:
-                "Missing fields. Please check the schedule and name and try again.",
-        });
-    }
-
     try {
-        const newMember = await db("members")
-            .insert({
-                user_id: decoded.id,
-                full_name: fullName,
-                email: email,
-            })
-            .returning("*");
-        const newSchedule = await db("schedules")
-            .insert({
-                member_id: newMember[0].id,
-                week_number: schedule.week_number,
-                schedule: schedule.schedule,
-            })
-            .returning("*");
-        //grab again updated members
+        // delete post
+        await db("members")
+            .where({ id: req.query.id, user_id: decoded.id })
+            .del();
+
+        // grab updated posts
         let members = await db("members")
             .select("*")
             .where({ user_id: decoded.id });
@@ -48,12 +30,10 @@ export default async function handler(req, res) {
         }
         // append schedules to members
         members = await appendSchedules(members);
-
-        res.status(200).json({
-            members: members,
-        });
+        // send updated members
+        res.status(200).json({ members: members });
     } catch (e) {
         console.error(e);
-        return res.status({ error: "Something went wrong" });
+        res.status(400).json({ error: "Something went wrong" });
     }
 }

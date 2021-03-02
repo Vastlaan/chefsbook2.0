@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
+import { Context } from "../../../store";
 import MainGridComponent from "../../main_grid";
 import Options from "./options";
 import Name from "./name";
@@ -8,6 +10,9 @@ import Schedule from "./schedule";
 import { Form1, Field, Heading3, Line, ButtonPrimary } from "../../../styles";
 
 export default function TeamComponent() {
+    const { state, dispatch } = useContext(Context);
+    const router = useRouter();
+
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [forWeek, setForWeek] = useState("0");
@@ -45,7 +50,6 @@ export default function TeamComponent() {
                 Sunday: sunday,
             }),
         };
-        console.log(fullName, email, schedule);
 
         const dataToSend = {
             fullName,
@@ -64,7 +68,16 @@ export default function TeamComponent() {
             });
             const data = await res.json();
 
-            console.log(data);
+            if (data.error) {
+                return console.error(data.error);
+            }
+            if (data.members) {
+                dispatch({
+                    type: "updateMembers",
+                    payload: data.members,
+                });
+                router.push("/team");
+            }
         } catch (e) {
             console.error(e);
             setErrors({
