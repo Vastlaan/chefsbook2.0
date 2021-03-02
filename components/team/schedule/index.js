@@ -1,14 +1,15 @@
 import { useState, useContext } from "react";
-import styled, { withTheme } from "styled-components";
+import { withTheme } from "styled-components";
 import { DateTime } from "luxon";
 import { Context } from "../../../store";
+import { SCHEDULE_UNDEFINED } from "../../../utils/scheduleUndefined";
 import Date from "./date";
 import Week from "./week";
 import Weekdays from "./weekdays";
 import Plan from "./plan";
 import {
-    respond,
     FlexCol,
+    TableGrid,
     TableRow,
     TopRow,
     BigText,
@@ -28,6 +29,23 @@ function ScheduleComponent(props) {
         } else {
             setDt((prevState) => prevState.plus({ week: 1 }));
         }
+    }
+
+    function generateScheduleToRender(member) {
+        let scheduleForCurrentWeek = member.schedules.find(
+            (sch) => sch.week_number === weekNumber.toString()
+        );
+        if (!scheduleForCurrentWeek) {
+            scheduleForCurrentWeek = member.schedules.find(
+                (sch) => sch.week_number === "0"
+            );
+
+            if (!scheduleForCurrentWeek) {
+                scheduleForCurrentWeek = SCHEDULE_UNDEFINED;
+            }
+        }
+        const scheduleToRender = JSON.parse(scheduleForCurrentWeek.schedule);
+        return scheduleToRender;
     }
 
     const weekStartingDay = {
@@ -66,17 +84,7 @@ function ScheduleComponent(props) {
                 <Weekdays dt={dt} />
 
                 {state.user.members.map((member, i) => {
-                    let scheduleForCurrentWeek = member.schedules.find(
-                        (sch) => sch.week_number === weekNumber.toString()
-                    );
-                    if (!scheduleForCurrentWeek) {
-                        scheduleForCurrentWeek = member.schedules.find(
-                            (sch) => sch.week_number === "0"
-                        );
-                    }
-                    const scheduleToRender = JSON.parse(
-                        scheduleForCurrentWeek.schedule
-                    );
+                    const scheduleToRender = generateScheduleToRender(member);
 
                     return (
                         <Plan
@@ -93,30 +101,3 @@ function ScheduleComponent(props) {
     );
 }
 export default withTheme(ScheduleComponent);
-
-const TableGrid = styled.div`
-    margin: 2.7rem 0rem;
-    display: grid;
-    grid-template-columns: minmax(15rem, 18rem) minmax(19rem, 1fr);
-    overflow: auto;
-
-    ${() =>
-        respond(
-            "s",
-            `
-            width: 100%;
-            width: -moz-available;
-            width: -webkit-fill-available;
-            width: fill-available;
-            `
-        )}
-
-    ${() =>
-        respond(
-            "l",
-            `
-              grid-template-columns: minmax(15rem, 25rem) minmax(25rem, 1fr);
-              margin: 2.7rem 1.4rem;
-            `
-        )}
-`;

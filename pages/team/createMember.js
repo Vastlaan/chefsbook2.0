@@ -2,13 +2,10 @@ import { useEffect, useContext } from "react";
 import { Context } from "../../store";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import EventsComponent from "../../components/events";
+import CreateMemberComponent from "../../components/team/member/create_member";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
-export default function Events({ data }) {
-    if (data.error) {
-        return <div>Custom Error Component: {data.error}</div>;
-    }
+export default function CreateMemberPage({ data }) {
     const { state, dispatch } = useContext(Context);
     // check only once at page load if there is user already logged in and if not if an auth cookie with token exist (data) and load it to the state
     useEffect(() => {
@@ -24,8 +21,8 @@ export default function Events({ data }) {
     }, []);
     return (
         <Layout>
-            <Head title="Events and Calendar" />
-            <EventsComponent />
+            <Head title="Create Member" />
+            <CreateMemberComponent />
         </Layout>
     );
 }

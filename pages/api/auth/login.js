@@ -75,6 +75,25 @@ export default async function handler(req, res) {
             .orderBy("year", "asc")
             .orderBy("month", "asc")
             .orderBy("day", "asc");
+        // get members created by user
+        let members = await db("members")
+            .select("*")
+            .where({ user_id: user.id });
+
+        // create helper function to append schedules to members - later move to utils
+        async function appendSchedules(members) {
+            return Promise.all(
+                members.map(async (member) => {
+                    const schedules = await db("schedules")
+                        .select("*")
+                        .where({ member_id: member.id });
+                    member.schedules = schedules;
+                    return member;
+                })
+            );
+        }
+        // append schedules to members
+        members = await appendSchedules(members);
 
         res.status(201).json({
             user: {
@@ -83,6 +102,7 @@ export default async function handler(req, res) {
                 ...{ posts: posts },
                 ...{ recipes: recipes },
                 ...{ events: events },
+                ...{ members: members },
             },
         });
     } catch (e) {

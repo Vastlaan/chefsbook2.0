@@ -21,7 +21,7 @@ export default function TeamPage({ data }) {
     }, []);
     return (
         <Layout>
-            <Head title="Preparation Lists" />
+            <Head title="Team Planning" />
             <TeamComponent />
         </Layout>
     );

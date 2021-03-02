@@ -22,6 +22,7 @@ export default function EventNoteComponent({
         const res = await fetch(`/api/events/deleteEvent?id=${id}`);
         const data = await res.json();
         dispatch({ type: "updateEvents", payload: data.events });
+        router.push(`/events`);
     }
 
     return (

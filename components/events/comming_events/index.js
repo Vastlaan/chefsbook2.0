@@ -19,7 +19,12 @@ export default function ComingEventsComponent() {
                             year: ev.year,
                             month: ev.month,
                             day: ev.day,
-                        }).startOf("day") <= datePlusOneWeek.startOf("day")
+                        }).startOf("day") <= datePlusOneWeek.startOf("day") &&
+                        DateTime.fromObject({
+                            year: ev.year,
+                            month: ev.month,
+                            day: ev.day,
+                        }).startOf("day") >= DateTime.now().startOf("day")
                 )
                 .sort(sortByDayAndMonth);
             setCommingWeekEvents(selectedAndSorted);

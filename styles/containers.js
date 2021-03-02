@@ -108,7 +108,7 @@ export const Field = styled.div`
         background-color: ${(p) => p.theme.white};
         padding: 0.9rem 1.4rem;
         font-size: 1.6rem;
-        color: ${(p) => p.theme.black};
+        color: ${(p) => p.theme.grey3};
     }
     p {
         font-size: 1.4rem;
@@ -130,10 +130,10 @@ export const Dashboard = styled.div`
     flex-direction: column;
     background-color: ${(p) => p.theme.black};
     border-radius: 5px;
-    padding: 2.7rem;
+    padding: 2.7rem 1.4rem;
     padding-bottom: 9rem;
     overflow: auto;
-
+    ${() => respond("s", "padding: 2.7rem;")}
     ${() => respond("m", "padding-bottom: 4.7rem;")}
     small {
         font-size: 1rem;
@@ -250,10 +250,11 @@ export const Form1 = styled.form`
     flex-direction: column;
     background-color: ${(p) => p.theme.black};
     border-radius: 5px;
-    padding: 2.7rem;
+    padding: 2.7rem 1.4rem;
     overflow: auto;
     padding-bottom: 9rem;
 
+    ${() => respond("s", "padding: 2.7rem;")}
     ${() => respond("m", "padding-bottom: unset;")}
 
     small {
@@ -277,7 +278,9 @@ export const TableRow = styled.div`
     justify-content: center;
     align-items: center;
     border: 1px solid ${(p) => (p.color ? p.color : p.theme.primary)};
-    background-color: ${(p) => (p.fill ? p.color : "transparent")};
+    background-color: ${(p) =>
+        p.disabled ? p.theme.grey3 : p.fill ? p.color : "transparent"};
+    pointer-events: ${(p) => (p.disabled ? "none" : "auto")};
 
     ${() => respond("l", "padding: 0.7rem")}
 
@@ -323,4 +326,31 @@ export const WeekdayPanelRow = styled(TableRow)`
     sup {
         color: ${(p) => p.theme.primaryDark};
     }
+`;
+export const TableGrid = styled.div`
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+    margin: 2.7rem 0rem;
+    display: grid;
+    grid-template-columns: minmax(15rem, 15rem) minmax(19rem, 1fr);
+    overflow: auto;
+
+    ${() =>
+        respond(
+            "s",
+            `
+            grid-template-columns: minmax(15rem, 18rem) minmax(19rem, 1fr);
+            `
+        )}
+
+    ${() =>
+        respond(
+            "l",
+            `
+              grid-template-columns: minmax(15rem, 25rem) minmax(25rem, 1fr);
+              margin: 2.7rem 1.4rem;
+            `
+        )}
 `;

@@ -43,6 +43,7 @@ import {
     TableRow,
     WeekdaysPanel,
     WeekdayPanelRow,
+    TableGrid,
 } from "./containers";
 
 export {
@@ -87,4 +88,5 @@ export {
     TableRow,
     WeekdaysPanel,
     WeekdayPanelRow,
+    TableGrid,
 };

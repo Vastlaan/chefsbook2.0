@@ -5,6 +5,9 @@ import checkCookie from "../../../utils/checkCookie";
 export default async function handler(req, res) {
     // authorize request
     const decoded = checkCookie(req, res);
+    if (!decoded.id) {
+        return res.status({ error: "Not authorized" });
+    }
 
     try {
         const { year, month, day, hour, minute, description } = req.body;
