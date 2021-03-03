@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Context } from "../../../store";
-import Modal from "../../modals/modal_before_delete";
-import { Options, Option, Edit, GoBack, PlainButton } from "../../../styles";
+import { Context } from "../../../../store";
+import Modal from "../../../modals/modal_before_delete";
+import { Options, Option, Edit, GoBack, PlainButton } from "../../../../styles";
 import {
     RiDeleteBin2Line,
     RiEditLine,

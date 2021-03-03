@@ -8,7 +8,7 @@ import {
     Heading6,
     FlexCol,
     ButtonSecondary,
-} from "../../styles";
+} from "../../../styles";
 
 export default function RecipeComponent({ recipe }) {
     return (

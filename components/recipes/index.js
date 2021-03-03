@@ -9,7 +9,7 @@ import {
     ButtonPrimary,
     ButtonContainer,
 } from "../../styles";
-import Recipe from "./recipe";
+import Recipe from "./recipe/overview_recipe";
 import { RiAddLine } from "react-icons/ri";
 
 export default function YourRecipesComponent() {

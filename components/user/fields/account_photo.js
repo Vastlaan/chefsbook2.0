@@ -36,7 +36,9 @@ export default function ImageComponent({
             </ImageContainerRound>
             <label htmlFor="photo">
                 <RiAddCircleLine />
-                Add Photo
+                {userAccountPhoto || userPhotoBlob
+                    ? "Change Photo"
+                    : "Add Photo"}
             </label>
 
             <input

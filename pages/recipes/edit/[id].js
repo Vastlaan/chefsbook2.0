@@ -5,7 +5,7 @@ import Head from "../../../globals/head";
 import Main from "../../../components/main_grid";
 import { Context } from "../../../store";
 import checkIfAuthorized from "../../../utils/checkIfAuthorized";
-import EditRecipeForm from "../../../components/recipes/form/edit_form";
+import EditRecipeForm from "../../../components/recipes/recipe/edit_recipe";
 
 export default function CreateRecipeComponent({ data, id }) {
     const router = useRouter();

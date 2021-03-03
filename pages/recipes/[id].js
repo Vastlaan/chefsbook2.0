@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { Context } from "../../store";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import DetailRecipe from "../../components/recipes/detail_recipe";
+import DetailRecipe from "../../components/recipes/recipe/detail_recipe";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
 export default function RecipeDetailsComponent({ data, recipe }) {

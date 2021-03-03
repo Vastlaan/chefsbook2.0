@@ -22,51 +22,13 @@ export default function EmailField({
     return (
         <FieldRow>
             <label htmlFor="email">E-mail:</label>
-            {currentlyEdited !== "email" ? (
-                <InputFlexible
-                    type="text"
-                    name="email"
-                    value={email ? email : userEmail}
-                    disabled
-                />
-            ) : (
-                <input
-                    type="text"
-                    name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            )}
 
-            {currentlyEdited === "email" ? (
-                <FlexRow>
-                    <PlainButton
-                        onClick={() => {
-                            setCurrentlyEdited("");
-                        }}
-                    >
-                        <RiCheckboxCircleLine color="#6DAA6C" />
-                    </PlainButton>
-                    <PlainButton
-                        onClick={() => {
-                            setEmail("");
-                            setCurrentlyEdited("");
-                        }}
-                    >
-                        <RiIndeterminateCircleLine color="orangered" />
-                    </PlainButton>
-                </FlexRow>
-            ) : (
-                <Edit>
-                    <PlainButton
-                        onClick={() => {
-                            setCurrentlyEdited("email");
-                        }}
-                    >
-                        <RiEditLine />
-                    </PlainButton>
-                </Edit>
-            )}
+            <InputFlexible
+                type="text"
+                name="email"
+                value={email ? email : userEmail}
+                disabled
+            />
         </FieldRow>
     );
 }

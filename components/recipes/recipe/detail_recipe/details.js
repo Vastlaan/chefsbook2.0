@@ -6,16 +6,18 @@ import {
     Heading1,
     Heading3,
     Text3,
-} from "../../../styles";
+} from "../../../../styles";
 
 export default function DetailsComponent({ recipe }) {
     return (
         <FlexCol>
-            <Heading1>{recipe.name}</Heading1>
             <Duo>
-                <ImageContainerSmall>
-                    <img src={recipe.photo_url} alt={recipe.name} />
-                </ImageContainerSmall>
+                {recipe.photo_url && (
+                    <ImageContainerSmall>
+                        <img src={recipe.photo_url} alt={recipe.name} />
+                    </ImageContainerSmall>
+                )}
+
                 <Ingredients>
                     <Heading3>Ingredients:</Heading3>
                     {JSON.parse(recipe.ingredients).map((ingredient, i) => (
