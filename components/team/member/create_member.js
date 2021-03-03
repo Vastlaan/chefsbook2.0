@@ -16,11 +16,11 @@ export default function TeamComponent() {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [forWeek, setForWeek] = useState("0");
-    const [monday, setMonday] = useState("free");
-    const [tuesday, setTuesday] = useState("free");
-    const [wednesday, setWednesday] = useState("free");
-    const [thursday, setThursday] = useState("free");
-    const [friday, setFriday] = useState("free");
+    const [monday, setMonday] = useState("10:00 - 18:00");
+    const [tuesday, setTuesday] = useState("10:00 - 18:00");
+    const [wednesday, setWednesday] = useState("10:00 - 18:00");
+    const [thursday, setThursday] = useState("10:00 - 18:00");
+    const [friday, setFriday] = useState("10:00 - 18:00");
     const [saturday, setSaturday] = useState("free");
     const [sunday, setSunday] = useState("free");
     const [errors, setErrors] = useState({});
@@ -56,6 +56,7 @@ export default function TeamComponent() {
             email,
             schedule,
         };
+        console.log(dataToSend);
 
         // send to database
         try {

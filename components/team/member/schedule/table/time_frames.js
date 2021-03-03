@@ -10,8 +10,22 @@ export default function TimeFramesComponent({ day, setDay }) {
     const [minuteEnd, setMinuteEnd] = useState(MINUTES[0]);
 
     useEffect(() => {
-        setDay(`${hourStart}:${minuteStart} - ${hourEnd}:${minuteEnd}`);
-    }, [hourStart, minuteStart, hourEnd, minuteEnd]);
+        if (day !== "free") {
+            setDay(`${hourStart}:${minuteStart} - ${hourEnd}:${minuteEnd}`);
+        }
+    }, [hourStart, hourEnd, minuteEnd, minuteStart]);
+
+    useEffect(() => {
+        if (day !== "free") {
+            const startHours = day.split(" - ")[0];
+            const stopHours = day.split(" - ")[1];
+
+            setHourStart(startHours.split(":")[0]);
+            setMinuteStart(startHours.split(":")[1]);
+            setHourEnd(stopHours.split(":")[0]);
+            setMinuteEnd(stopHours.split(":")[1]);
+        }
+    }, [day]);
 
     return (
         <TimeContainer>
@@ -21,17 +35,13 @@ export default function TimeFramesComponent({ day, setDay }) {
                     <select
                         name="hour"
                         id="hour"
+                        value={hourStart}
                         onChange={(e) => {
                             setHourStart(e.target.value);
                         }}
                     >
                         {HOURS.map((h) => (
-                            <option
-                                key={h}
-                                selected={h === hourStart ? "selected" : null}
-                            >
-                                {h}
-                            </option>
+                            <option key={h}>{h}</option>
                         ))}
                     </select>
                 </CustomSelect>
@@ -41,7 +51,9 @@ export default function TimeFramesComponent({ day, setDay }) {
                     <select
                         name="minute"
                         id="minute"
-                        onChange={(e) => setMinuteStart(e.target.value)}
+                        onChange={(e) => {
+                            setMinuteStart(e.target.value);
+                        }}
                     >
                         {MINUTES.map((h) => (
                             <option key={h}>{h}</option>
@@ -62,12 +74,7 @@ export default function TimeFramesComponent({ day, setDay }) {
                         }}
                     >
                         {HOURS.map((h) => (
-                            <option
-                                key={h}
-                                selected={h === hourEnd ? "selected" : null}
-                            >
-                                {h}
-                            </option>
+                            <option key={h}>{h}</option>
                         ))}
                     </select>
                 </CustomSelect>
@@ -77,7 +84,9 @@ export default function TimeFramesComponent({ day, setDay }) {
                     <select
                         name="minute"
                         id="minute"
-                        onChange={(e) => setMinuteEnd(e.target.value)}
+                        onChange={(e) => {
+                            setMinuteEnd(e.target.value);
+                        }}
                     >
                         {MINUTES.map((h) => (
                             <option key={h}>{h}</option>

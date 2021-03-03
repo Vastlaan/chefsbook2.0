@@ -6,7 +6,7 @@ import { Context } from "../../../store";
 import checkIfAuthorized from "../../../utils/checkIfAuthorized";
 import EditMember from "../../../components/team/member/edit_member";
 
-export default function CreateRecipeComponent({ data, id }) {
+export default function CreateRecipeComponent({ data, id, week }) {
     if (data.error) {
         return <div>The following error occured: {data.error}</div>;
     }
@@ -31,13 +31,13 @@ export default function CreateRecipeComponent({ data, id }) {
         <Layout>
             <Head title="Edit Member" />
 
-            <EditMember id={id} />
+            <EditMember id={id} week={week} />
         </Layout>
     );
 }
 
 export async function getServerSideProps(ctx) {
-    const { id } = ctx.query;
+    const { id, week } = ctx.query;
 
     try {
         const data = await checkIfAuthorized(ctx);
@@ -45,6 +45,7 @@ export async function getServerSideProps(ctx) {
             props: {
                 data,
                 id,
+                week: week ? week : "0",
             },
         };
     } catch (e) {

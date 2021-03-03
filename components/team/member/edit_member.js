@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Context } from "../../../store";
@@ -9,7 +9,7 @@ import Email from "./email";
 import Schedule from "./schedule";
 import { Form1, Field, Heading3, Line, ButtonPrimary } from "../../../styles";
 
-export default function TeamComponent() {
+export default function EditMemberComponent({ id, week }) {
     const { state, dispatch } = useContext(Context);
     const router = useRouter();
 
@@ -24,6 +24,35 @@ export default function TeamComponent() {
     const [saturday, setSaturday] = useState("free");
     const [sunday, setSunday] = useState("free");
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        const editMember = state.user.members.find(
+            (m) => m.id.toString() === id.toString()
+        );
+        if (!editMember) {
+            return router.push("/team");
+        }
+        if (editMember) {
+            let schedule = editMember.schedules.find(
+                (sch) => sch.week_number === week.toString()
+            );
+            if (!schedule) {
+                schedule = editMember.schedules[0];
+            }
+            const scheduleObject = JSON.parse(schedule.schedule);
+
+            setFullName(editMember.full_name);
+            setEmail(editMember.email);
+            setForWeek(schedule.week_number);
+            setMonday(scheduleObject.Monday);
+            setTuesday(scheduleObject.Tuesday);
+            setWednesday(scheduleObject.Wednesday);
+            setThursday(scheduleObject.Thursday);
+            setFriday(scheduleObject.Friday);
+            setSaturday(scheduleObject.Saturday);
+            setSunday(scheduleObject.Sunday);
+        }
+    }, []);
 
     async function updateMember(e) {
         e.preventDefault();
@@ -54,12 +83,14 @@ export default function TeamComponent() {
         const dataToSend = {
             fullName,
             email,
-            schedule,
+            schedule: schedule.schedule,
+            id,
+            week: forWeek,
         };
 
         // send to database
         try {
-            const res = await fetch("/api/team/registerMember", {
+            const res = await fetch("/api/team/updateMember", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -9,7 +9,6 @@ function ScheduleComponent(props) {
     const [dt, setDt] = useState(DateTime.now());
     const { forWeek, setForWeek } = props;
     const weekNumber = dt.weekNumber;
-
     return (
         <FlexCol>
             <TopRow>
