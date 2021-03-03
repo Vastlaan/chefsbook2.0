@@ -52,7 +52,7 @@ export const reducer = (state, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    recipes: [action.payload, ...state.user.recipes],
+                    recipes: action.payload,
                 },
             };
         case "updateUser":

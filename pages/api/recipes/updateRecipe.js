@@ -65,18 +65,19 @@ export default async function handler(req, res) {
                 : photo_url, // if no file just assign empty string
         };
 
-        const result = await db("recipes")
-            .where({ id: saveToDatabase.id })
-            .update({
-                name: saveToDatabase.name,
-                description: saveToDatabase.description,
-                time: saveToDatabase.time,
-                ingredients: saveToDatabase.ingredients,
-                photo_url: saveToDatabase.photo_url,
-            })
-            .returning("*");
+        await db("recipes").where({ id: saveToDatabase.id }).update({
+            name: saveToDatabase.name,
+            description: saveToDatabase.description,
+            time: saveToDatabase.time,
+            ingredients: saveToDatabase.ingredients,
+            photo_url: saveToDatabase.photo_url,
+        });
+        const updatedRecipes = await db("recipes")
+            .select("*")
+            .where({ user_id: decoded.id })
+            .orderBy("created_at", "desc");
 
-        res.status(200).json({ recipe: result[0] });
+        res.status(200).json({ recipes: updatedRecipes });
     } catch (e) {
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });

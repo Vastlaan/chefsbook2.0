@@ -2,12 +2,14 @@ import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../../globals/layout";
 import Head from "../../../globals/head";
-import Main from "../../../components/main_grid";
 import { Context } from "../../../store";
 import checkIfAuthorized from "../../../utils/checkIfAuthorized";
 import EditRecipeForm from "../../../components/recipes/recipe/edit_recipe";
 
 export default function CreateRecipeComponent({ data, id }) {
+    if (data.error) {
+        return <div>The following error occured: {data.error}</div>;
+    }
     const router = useRouter();
     const { state, dispatch } = useContext(Context);
 
@@ -27,9 +29,8 @@ export default function CreateRecipeComponent({ data, id }) {
     return (
         <Layout>
             <Head />
-            <Main>
-                <EditRecipeForm id={id} />
-            </Main>
+
+            <EditRecipeForm id={id} />
         </Layout>
     );
 }

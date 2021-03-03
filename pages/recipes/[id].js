@@ -7,7 +7,7 @@ import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
 export default function RecipeDetailsComponent({ data, recipe }) {
     if (data.error) {
-        return <div>Custom Error Component: {data.error}</div>;
+        return <div>The following error occured: {data.error}</div>;
     }
 
     const { state, dispatch } = useContext(Context);

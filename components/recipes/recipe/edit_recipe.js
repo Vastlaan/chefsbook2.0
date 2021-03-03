@@ -10,6 +10,7 @@ import {
     validateTime,
     validateIngredients,
 } from "../../../validations";
+import MainGridComponent from "../../main_grid";
 //fields
 import Name from "./fields/name";
 import Ingredients from "./fields/ingredients";
@@ -105,8 +106,8 @@ export default function EditRecipeForm({ id }) {
                     return console.error(data.error);
                 }
                 console.log(data);
-                if (data.recipe) {
-                    dispatch({ type: "updateRecipes", payload: data.recipe });
+                if (data.recipes) {
+                    dispatch({ type: "updateRecipes", payload: data.recipes });
                     router.push("/recipes");
                 }
             })
@@ -120,46 +121,48 @@ export default function EditRecipeForm({ id }) {
             });
     }
     return (
-        <Form1 onSubmit={updateRecipe} onKeyDown={(e) => e.key != "Enter"}>
-            <Heading3>Edit Recipe</Heading3>
-            <Options>
-                <Link href={`/recipes/${id}`}>
-                    <GoBack>
-                        <RiArrowGoBackLine />
-                    </GoBack>
-                </Link>
-            </Options>
-            <Name title={title} setTitle={setTitle} errors={errors} />
-            <Ingredients
-                ingredients={ingredients}
-                setIngredients={setIngredients}
-                currentIngredient={currentIngredient}
-                setCurrentIngredient={setCurrentIngredient}
-                errors={errors}
-            />
-            <Description
-                description={description}
-                setDescription={setDescription}
-                errors={errors}
-            />
-            <Time time={time} setTime={setTime} errors={errors} />
-            <Image
-                file={file}
-                setFile={setFile}
-                fileImage={fileImage}
-                setFileImage={setFileImage}
-                errors={errors}
-                setErrors={setErrors}
-                photo_url={photoUrl}
-            />
+        <MainGridComponent>
+            <Form1 onSubmit={updateRecipe} onKeyDown={(e) => e.key != "Enter"}>
+                <Heading3>Edit Recipe</Heading3>
+                <Options>
+                    <Link href={`/recipes/${id}`}>
+                        <GoBack>
+                            <RiArrowGoBackLine />
+                        </GoBack>
+                    </Link>
+                </Options>
+                <Name title={title} setTitle={setTitle} errors={errors} />
+                <Ingredients
+                    ingredients={ingredients}
+                    setIngredients={setIngredients}
+                    currentIngredient={currentIngredient}
+                    setCurrentIngredient={setCurrentIngredient}
+                    errors={errors}
+                />
+                <Description
+                    description={description}
+                    setDescription={setDescription}
+                    errors={errors}
+                />
+                <Time time={time} setTime={setTime} errors={errors} />
+                <Image
+                    file={file}
+                    setFile={setFile}
+                    fileImage={fileImage}
+                    setFileImage={setFileImage}
+                    errors={errors}
+                    setErrors={setErrors}
+                    photo_url={photoUrl}
+                />
 
-            <ButtonField>
-                {errors.field === "general" ? (
-                    <small>{errors.message}</small>
-                ) : null}
-                <ButtonPrimary type="submit">Edit Recipe</ButtonPrimary>
-            </ButtonField>
-        </Form1>
+                <ButtonField>
+                    {errors.field === "general" ? (
+                        <small>{errors.message}</small>
+                    ) : null}
+                    <ButtonPrimary type="submit">Edit Recipe</ButtonPrimary>
+                </ButtonField>
+            </Form1>
+        </MainGridComponent>
     );
 }
 

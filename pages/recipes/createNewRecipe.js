@@ -2,12 +2,15 @@ import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import Main from "../../components/main_grid";
+
 import { Context } from "../../store";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 import CreateRecipeForm from "../../components/recipes/recipe/create_recipe";
 
 export default function CreateRecipeComponent({ data }) {
+    if (data.error) {
+        return <div>The following error occured: {data.error}</div>;
+    }
     const router = useRouter();
     const { state, dispatch } = useContext(Context);
 
@@ -27,9 +30,8 @@ export default function CreateRecipeComponent({ data }) {
     return (
         <Layout>
             <Head />
-            <Main>
-                <CreateRecipeForm />
-            </Main>
+
+            <CreateRecipeForm />
         </Layout>
     );
 }

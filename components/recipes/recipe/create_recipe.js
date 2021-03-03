@@ -10,6 +10,7 @@ import {
     validateTime,
     validateIngredients,
 } from "../../../validations";
+import MainGridComponent from "../../main_grid";
 //fields
 import Name from "./fields/name";
 import Ingredients from "./fields/ingredients";
@@ -102,45 +103,47 @@ export default function CreateRecipeForm() {
             });
     }
     return (
-        <Form1 onSubmit={createRecipe} onKeyDown={(e) => e.key != "Enter"}>
-            <Heading3>Create New Recipe</Heading3>
-            <Options>
-                <Link href={`/recipes`}>
-                    <GoBack>
-                        <RiArrowGoBackLine />
-                    </GoBack>
-                </Link>
-            </Options>
-            <Name title={title} setTitle={setTitle} errors={errors} />
-            <Ingredients
-                ingredients={ingredients}
-                setIngredients={setIngredients}
-                currentIngredient={currentIngredient}
-                setCurrentIngredient={setCurrentIngredient}
-                errors={errors}
-            />
-            <Description
-                description={description}
-                setDescription={setDescription}
-                errors={errors}
-            />
-            <Time time={time} setTime={setTime} errors={errors} />
-            <Image
-                file={file}
-                setFile={setFile}
-                fileImage={fileImage}
-                setFileImage={setFileImage}
-                errors={errors}
-                setErrors={setErrors}
-            />
+        <MainGridComponent>
+            <Form1 onSubmit={createRecipe} onKeyDown={(e) => e.key != "Enter"}>
+                <Heading3>Create New Recipe</Heading3>
+                <Options>
+                    <Link href={`/recipes`}>
+                        <GoBack>
+                            <RiArrowGoBackLine />
+                        </GoBack>
+                    </Link>
+                </Options>
+                <Name title={title} setTitle={setTitle} errors={errors} />
+                <Ingredients
+                    ingredients={ingredients}
+                    setIngredients={setIngredients}
+                    currentIngredient={currentIngredient}
+                    setCurrentIngredient={setCurrentIngredient}
+                    errors={errors}
+                />
+                <Description
+                    description={description}
+                    setDescription={setDescription}
+                    errors={errors}
+                />
+                <Time time={time} setTime={setTime} errors={errors} />
+                <Image
+                    file={file}
+                    setFile={setFile}
+                    fileImage={fileImage}
+                    setFileImage={setFileImage}
+                    errors={errors}
+                    setErrors={setErrors}
+                />
 
-            <ButtonField>
-                {errors.field === "general" ? (
-                    <small>{errors.message}</small>
-                ) : null}
-                <ButtonPrimary type="submit">Create Recipe</ButtonPrimary>
-            </ButtonField>
-        </Form1>
+                <ButtonField>
+                    {errors.field === "general" ? (
+                        <small>{errors.message}</small>
+                    ) : null}
+                    <ButtonPrimary type="submit">Create Recipe</ButtonPrimary>
+                </ButtonField>
+            </Form1>
+        </MainGridComponent>
     );
 }
 
