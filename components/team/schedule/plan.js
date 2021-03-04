@@ -1,12 +1,15 @@
+import Link from "next/link";
 import { TableRow, WeekdaysPanel, WeekdayPanelRow } from "../../../styles";
 import { WEEK_DAYS } from "../../../utils/weekDays";
 
-export default function Plan({ member, theme, scheduleToRender }) {
+export default function Plan({ member, theme, scheduleToRender, weekNumber }) {
     return (
         <>
-            <TableRow color={theme.secondary}>
-                <p>{member.full_name}</p>
-            </TableRow>
+            <Link href={`/team/edit/${member.id}?week=${weekNumber}`}>
+                <TableRow color={theme.secondary} hovered={true}>
+                    <p>{member.full_name}</p>
+                </TableRow>
+            </Link>
             <WeekdaysPanel>
                 {WEEK_DAYS.map((currentDay) => {
                     const workingHoursSplitted = scheduleToRender[

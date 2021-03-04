@@ -28,6 +28,7 @@ export default async function handler(req, res) {
         const weekExists = await db("schedules")
             .select("week_number")
             .where({ week_number: week, member_id: id });
+
         console.log(weekExists);
         if (weekExists.length > 0) {
             await db("schedules")
@@ -49,7 +50,8 @@ export default async function handler(req, res) {
         //grab again updated members
         let members = await db("members")
             .select("*")
-            .where({ user_id: decoded.id });
+            .where({ user_id: decoded.id })
+            .orderBy("created_at", "asc");
 
         // create helper function to append schedules to members
         async function appendSchedules(members) {

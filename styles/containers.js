@@ -281,8 +281,17 @@ export const TableRow = styled.div`
     background-color: ${(p) =>
         p.disabled ? p.theme.grey3 : p.fill ? p.color : "transparent"};
     pointer-events: ${(p) => (p.disabled ? "none" : "auto")};
+    transition: all 0.3s;
 
     ${() => respond("l", "padding: 0.7rem")}
+
+    &:hover {
+        cursor: ${(p) => (p.hovered ? "pointer" : "arrow")};
+        background-color: ${(p) => p.hovered && p.color};
+        p {
+            color: ${(p) => p.hovered && p.theme.white};
+        }
+    }
 
     p {
         flex: 1;

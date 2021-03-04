@@ -64,7 +64,10 @@ export default async function handler(req, res) {
             .orderBy("month", "asc")
             .orderBy("day", "asc");
         // get members created by user
-        let members = await db("members").select("*").where({ user_id: id });
+        let members = await db("members")
+            .select("*")
+            .where({ user_id: id })
+            .orderBy("created_at", "asc");
 
         // create helper function to append schedules to members - later move to utils
         async function appendSchedules(members) {

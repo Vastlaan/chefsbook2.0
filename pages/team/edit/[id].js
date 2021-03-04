@@ -38,6 +38,7 @@ export default function CreateRecipeComponent({ data, id, week }) {
 
 export async function getServerSideProps(ctx) {
     const { id, week } = ctx.query;
+    console.log(id, week);
 
     try {
         const data = await checkIfAuthorized(ctx);

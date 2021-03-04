@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DateTime } from "luxon";
 import { withTheme } from "styled-components";
 import TypeSchedule from "./type_schedule";
@@ -6,9 +6,18 @@ import Table from "./table";
 import { FlexCol, TopRow, BigText } from "../../../../styles";
 
 function ScheduleComponent(props) {
-    const [dt, setDt] = useState(DateTime.now());
     const { forWeek, setForWeek } = props;
+    const [dt, setDt] = useState(DateTime.fromObject({ weekNumber: forWeek }));
     const weekNumber = dt.weekNumber;
+
+    // useEffect(() => {
+    //     if (forWeek !== "0") {
+    //         setDt(DateTime.fromObject({ weekNumber: parseInt(forWeek) }));
+    //     }
+    // }, []);
+
+    console.log("schedule forWeek: ", forWeek);
+
     return (
         <FlexCol>
             <TopRow>

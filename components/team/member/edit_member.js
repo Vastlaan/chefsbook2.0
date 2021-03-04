@@ -15,7 +15,7 @@ export default function EditMemberComponent({ id, week }) {
 
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
-    const [forWeek, setForWeek] = useState("0");
+    const [forWeek, setForWeek] = useState(week.toString());
     const [monday, setMonday] = useState("free");
     const [tuesday, setTuesday] = useState("free");
     const [wednesday, setWednesday] = useState("free");
@@ -32,10 +32,14 @@ export default function EditMemberComponent({ id, week }) {
         if (!editMember) {
             return router.push("/team");
         }
+
+        console.log("edit_member line 36: ", week, forWeek);
+
         if (editMember) {
             let schedule = editMember.schedules.find(
-                (sch) => sch.week_number === week.toString()
+                (sch) => sch.week_number === forWeek
             );
+
             if (!schedule) {
                 schedule = editMember.schedules[0];
             }
@@ -43,7 +47,7 @@ export default function EditMemberComponent({ id, week }) {
 
             setFullName(editMember.full_name);
             setEmail(editMember.email);
-            setForWeek(schedule.week_number);
+            // setForWeek(schedule.week_number);
             setMonday(scheduleObject.Monday);
             setTuesday(scheduleObject.Tuesday);
             setWednesday(scheduleObject.Wednesday);
@@ -52,7 +56,7 @@ export default function EditMemberComponent({ id, week }) {
             setSaturday(scheduleObject.Saturday);
             setSunday(scheduleObject.Sunday);
         }
-    }, []);
+    }, [forWeek]);
 
     async function updateMember(e) {
         e.preventDefault();

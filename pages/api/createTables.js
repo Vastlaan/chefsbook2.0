@@ -7,7 +7,7 @@ export default async (req, res) => {
     // const resultOfCreatingRecipesTable = await  db.createTableRecipes();
     // const resultOfCreatingEventsTable = await db.createTableEvents();
     // const resultOfCreatingMembersTable = await db.createTableMembers();
-    const resultOfCreatingSchedulesTable = await db.createTableSchedules();
+    // const resultOfCreatingSchedulesTable = await db.createTableSchedules();
 
     //const users = await db.select("*").from("users");
 

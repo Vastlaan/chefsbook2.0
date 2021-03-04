@@ -89,6 +89,7 @@ function ScheduleComponent(props) {
                     return (
                         <Plan
                             key={`user-${i}-${member.full_name}`}
+                            weekNumber={weekNumber}
                             member={member}
                             theme={props.theme}
                             scheduleToRender={scheduleToRender}

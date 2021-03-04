@@ -22,10 +22,12 @@ export default function TypeScheduleComponent({
                     type="radio"
                     name="type"
                     id="currentWeek"
-                    checked={forWeek === weekNumber.toString()}
+                    checked={forWeek !== "0"}
                     onChange={() => setForWeek(weekNumber.toString())}
                 />
-                <label htmlFor="currentWeek">Week: {weekNumber}</label>
+                <label htmlFor="currentWeek">
+                    Week: {forWeek === "0" ? "Default" : forWeek}
+                </label>
             </RadioButtons>
         </Field>
     );
