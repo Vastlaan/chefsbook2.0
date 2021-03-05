@@ -19,7 +19,7 @@ export const reducer = (state, action) => {
         case "isLogged":
             return { ...state, isLogged: action.payload };
         case "logout":
-            return { ...state, isLogged: false, user: {} };
+            return { ...state, isLogged: false, user: initialState.user };
         case "setPosts":
             return { ...state, user: { ...state.user, posts: action.payload } };
         case "setRecipes":

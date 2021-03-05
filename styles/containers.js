@@ -60,7 +60,7 @@ export const FlexCol = styled.div`
 `;
 export const FlexRow = styled.div`
     display: flex;
-    align-items: center;
+    align-items: ${(p) => (p.align ? p.align : "center")};
     justify-content: ${(p) => (p.justify ? p.justify : "flex-start")};
     flex-wrap: wrap;
 
@@ -243,6 +243,18 @@ export const GoBack = styled(Option)`
         }
     }
 `;
+export const SendEmail = styled(Option)`
+    svg {
+        color: ${(p) => p.theme.white};
+    }
+    &:hover {
+        cursor: pointer;
+        color: ${(p) => p.theme.primaryDark};
+        &::after {
+            content: "send as email";
+        }
+    }
+`;
 
 export const Form1 = styled.form`
     display: flex;
@@ -362,4 +374,64 @@ export const TableGrid = styled.div`
               margin: 2.7rem 1.4rem;
             `
         )}
+`;
+
+export const Note = styled.div`
+    min-width: 35rem;
+    padding: 1.4rem;
+    margin: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    background-color: ${(p) => p.theme.secondary};
+    border-radius: 5px;
+    transition: all 0.3s;
+    position: relative;
+`;
+export const RowNote = styled.div`
+    display: flex;
+    align-items: center;
+
+    p {
+        color: ${(p) => p.theme.white};
+        font-size: 1.9rem;
+    }
+    svg {
+        color: ${(p) => p.theme.white};
+        font-size: 1.9rem;
+        margin-right: 1.4rem;
+    }
+`;
+export const List = styled.ul`
+    border-top: ${(p) => (p.border ? `1px solid ${p.theme.white}` : "none")};
+    padding: 1.4rem 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    li {
+        font-size: 1.9rem;
+        color: ${(p) => p.theme.white};
+    }
+`;
+
+export const ListSmall = styled(List)`
+    border: 1px solid ${(p) => p.theme.white};
+    padding: 0.7rem;
+    transition: all 0.3s;
+
+    p {
+        color: ${(p) => p.theme.white};
+    }
+
+    li {
+        font-size: 1.4rem;
+        color: ${(p) => p.theme.white};
+        transition: all 0.3s;
+
+        &:hover {
+            cursor: pointer;
+            color: ${(p) => p.theme.grey2};
+        }
+    }
 `;

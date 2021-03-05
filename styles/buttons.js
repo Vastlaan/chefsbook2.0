@@ -107,3 +107,13 @@ export const InputFlexible = styled.input`
         box-shadow: none;
     }
 `;
+export const DeleteNote = styled(PlainButton)`
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.7rem;
+
+    svg {
+        color: ${(p) => p.theme.white};
+    }
+`;

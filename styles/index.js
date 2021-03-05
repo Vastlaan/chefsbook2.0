@@ -7,6 +7,7 @@ import {
     LinkButton,
     PlainButton,
     InputFlexible,
+    DeleteNote,
 } from "./buttons";
 import { Line } from "./decorations";
 import {
@@ -38,12 +39,17 @@ import {
     Option,
     Edit,
     GoBack,
+    SendEmail,
     Form1,
     ButtonContainer,
     TableRow,
     WeekdaysPanel,
     WeekdayPanelRow,
     TableGrid,
+    Note,
+    RowNote,
+    List,
+    ListSmall,
 } from "./containers";
 
 export {
@@ -83,10 +89,16 @@ export {
     Option,
     Edit,
     GoBack,
+    SendEmail,
     Form1,
     ButtonContainer,
     TableRow,
     WeekdaysPanel,
     WeekdayPanelRow,
     TableGrid,
+    Note,
+    RowNote,
+    List,
+    ListSmall,
+    DeleteNote,
 };
