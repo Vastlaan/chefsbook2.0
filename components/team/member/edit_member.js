@@ -33,8 +33,6 @@ export default function EditMemberComponent({ id, week }) {
             return router.push("/team");
         }
 
-        console.log("edit_member line 36: ", week, forWeek);
-
         if (editMember) {
             let schedule = editMember.schedules.find(
                 (sch) => sch.week_number === forWeek

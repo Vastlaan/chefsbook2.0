@@ -84,6 +84,14 @@ export default async function handler(req, res) {
         // append schedules to members
         members = await appendSchedules(members);
 
+        // get preparations list
+        const preparations = await db("preparations")
+            .select("*")
+            .where({ user_id: id })
+            .orderBy("year", "asc")
+            .orderBy("month", "asc")
+            .orderBy("day", "asc");
+
         // send all user created data to the frontend
         res.status(200).json({
             user: {
@@ -98,6 +106,7 @@ export default async function handler(req, res) {
                 recipes,
                 events,
                 members,
+                preparations,
             },
         });
     } catch (error) {

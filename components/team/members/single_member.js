@@ -13,7 +13,7 @@ export default function SingleMemberComponent({ member, iteration }) {
         try {
             const res = await fetch(`/api/team/deleteMember?id=${member.id}`);
             const data = await res.json();
-            console.log(data);
+
             if (data.error) {
                 return console.error(data.error);
             }

@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 import { Context } from "../../store";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import YourPosts from "../../components/posts/your_posts";
+import YourPosts from "../../components/posts";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
 export default function PostsPage({ data }) {

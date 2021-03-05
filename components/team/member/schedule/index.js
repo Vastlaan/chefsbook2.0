@@ -10,14 +10,6 @@ function ScheduleComponent(props) {
     const [dt, setDt] = useState(DateTime.fromObject({ weekNumber: forWeek }));
     const weekNumber = dt.weekNumber;
 
-    // useEffect(() => {
-    //     if (forWeek !== "0") {
-    //         setDt(DateTime.fromObject({ weekNumber: parseInt(forWeek) }));
-    //     }
-    // }, []);
-
-    console.log("schedule forWeek: ", forWeek);
-
     return (
         <FlexCol>
             <TopRow>

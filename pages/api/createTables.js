@@ -8,8 +8,9 @@ export default async (req, res) => {
     // const resultOfCreatingEventsTable = await db.createTableEvents();
     // const resultOfCreatingMembersTable = await db.createTableMembers();
     // const resultOfCreatingSchedulesTable = await db.createTableSchedules();
+    const resultOfCreatingPreparationsTable = await db.createTablePreparations();
 
     //const users = await db.select("*").from("users");
 
-    res.status(200).json({ resultOfCreatingSchedulesTable });
+    res.status(200).json({ resultOfCreatingPreparationsTable });
 };

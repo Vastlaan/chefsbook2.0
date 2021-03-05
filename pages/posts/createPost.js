@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import Main from "../../components/main_grid";
-import CreateRecipeComponent from "../../components/posts/form";
+
+import CreateRecipeComponent from "../../components/posts/create_post";
 import { Context } from "../../store";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
@@ -24,9 +24,8 @@ export default function CreatePostComponent({ data }) {
     return (
         <Layout>
             <Head />
-            <Main>
-                <CreateRecipeComponent />
-            </Main>
+
+            <CreateRecipeComponent />
         </Layout>
     );
 }

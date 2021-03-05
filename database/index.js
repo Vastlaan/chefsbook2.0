@@ -113,7 +113,23 @@ export default class Connection {
                 .onDelete("CASCADE");
             table.string("week_number").defaultTo("0");
             table.text("schedule");
-            table.timestamp("created_at");
+            table.timestamp("created_at").defaultTo(this.db.fn.now());
+        });
+    }
+
+    createTablePreparations() {
+        return this.db.schema.createTable("preparations", (table) => {
+            table.increments("id");
+            table
+                .integer("user_id")
+                .unsigned()
+                .references("users.id")
+                .onDelete("CASCADE");
+            table.text("list");
+            table.string("day");
+            table.string("month");
+            table.string("year");
+            table.timestamp("created_at").defaultTo(this.db.fn.now());
         });
     }
 }

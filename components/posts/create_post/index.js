@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Context } from "../../../store";
+import MainGridComponent from "../../main_grid";
 import Title from "./fields/title";
 import Text from "./fields/text";
 import Image from "./fields/image";
@@ -76,29 +77,31 @@ export default function CreateRecipeComponent() {
     }
 
     return (
-        <Form1 onSubmit={createPost}>
-            <Heading3>Create New Post</Heading3>
+        <MainGridComponent>
+            <Form1 onSubmit={createPost}>
+                <Heading3>Create New Post</Heading3>
 
-            <Title title={title} setTitle={setTitle} errors={errors} />
+                <Title title={title} setTitle={setTitle} errors={errors} />
 
-            <Text title={title} setText={setText} errors={errors} />
+                <Text title={title} setText={setText} errors={errors} />
 
-            <Image
-                file={file}
-                setFile={setFile}
-                fileImage={fileImage}
-                setFileImage={setFileImage}
-                errors={errors}
-                setErrors={setErrors}
-            />
+                <Image
+                    file={file}
+                    setFile={setFile}
+                    fileImage={fileImage}
+                    setFileImage={setFileImage}
+                    errors={errors}
+                    setErrors={setErrors}
+                />
 
-            <ButtonField>
-                {errors.field === "general" ? (
-                    <small>{errors.message}</small>
-                ) : null}
-                <ButtonPrimary type="submit">Submit</ButtonPrimary>
-            </ButtonField>
-        </Form1>
+                <ButtonField>
+                    {errors.field === "general" ? (
+                        <small>{errors.message}</small>
+                    ) : null}
+                    <ButtonPrimary type="submit">Submit</ButtonPrimary>
+                </ButtonField>
+            </Form1>
+        </MainGridComponent>
     );
 }
 
