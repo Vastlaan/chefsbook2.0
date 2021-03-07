@@ -1,7 +1,7 @@
 import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
-import { db } from "../../../database";
+import Connection from "../../../database";
 import {
     validateText,
     validateTitle,
@@ -61,6 +61,9 @@ export default async function handler(req, res) {
                 : "", // if no file just assign empty string
         };
 
+        // create connection with database
+        const db = new Connection().getDatabase();
+
         // I use knex library to save data to postgresql. The knex connection is created in separate file and exported. Here I take advantage of already created knex connection. Your schema is probably different so keep it in mind.
         const result = await db("posts")
             .insert({
@@ -73,7 +76,9 @@ export default async function handler(req, res) {
             .returning("*");
 
         res.status(200).json({ post: result[0] });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });
     }

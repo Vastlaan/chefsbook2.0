@@ -6,6 +6,7 @@ export default async function checkIfAuthorized(ctx) {
     if (!cookie) {
         return { error: "Not Authorized" };
     }
+
     try {
         const res = await fetch(`${process.env.HOST}/api/auth/currentUser`, {
             headers: {
@@ -23,6 +24,7 @@ export default async function checkIfAuthorized(ctx) {
             return { error: "Something went wrong" };
         }
     } catch (e) {
+        console.error(e);
         return { error: e.toString() };
     }
 }

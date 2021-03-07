@@ -2,10 +2,10 @@ import { useEffect, useContext } from "react";
 import { Context } from "../../store";
 import Layout from "../../globals/layout";
 import Head from "../../globals/head";
-import PreparationsComponent from "../../components/preparations";
+import CreateNewListComponent from "../../components/preparations/preparation/create_new_list";
 import checkIfAuthorized from "../../utils/checkIfAuthorized";
 
-export default function PreparationsPage({ data }) {
+export default function CreateNewListPage({ data }) {
     if (data.error) {
         return <div>Error: {data.error}</div>;
     }
@@ -24,8 +24,8 @@ export default function PreparationsPage({ data }) {
     }, []);
     return (
         <Layout>
-            <Head title="Preparation Lists" />
-            <PreparationsComponent />
+            <Head title="Create New Preparation Lists" />
+            <CreateNewListComponent />
         </Layout>
     );
 }

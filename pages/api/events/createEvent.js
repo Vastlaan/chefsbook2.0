@@ -1,4 +1,4 @@
-import { db } from "../../../database";
+import Connection from "../../../database";
 import { validateText } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 
@@ -6,6 +6,8 @@ export default async function handler(req, res) {
     // authorize request
     const decoded = checkCookie(req, res);
 
+    // create connection with database
+    const db = new Connection().getDatabase();
     try {
         const { year, month, day, hour, minute, description } = req.body;
 
@@ -22,7 +24,9 @@ export default async function handler(req, res) {
             .returning("*");
 
         res.status(200).json({ event: result[0] });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });
     }

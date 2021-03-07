@@ -87,9 +87,9 @@ export default function CreateRecipeForm() {
                     setErrors(data.error);
                     return console.error(data.error);
                 }
-                console.log(data);
-                if (data.recipe) {
-                    dispatch({ type: "updateRecipes", payload: data.recipe });
+
+                if (data.recipes) {
+                    dispatch({ type: "updateRecipes", payload: data.recipes });
                     router.push("/recipes");
                 }
             })

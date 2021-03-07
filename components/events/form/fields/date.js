@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { Field } from "../../../../styles";
 
 export default function DateComponent({ day, month, year }) {
@@ -6,9 +7,11 @@ export default function DateComponent({ day, month, year }) {
             <label>
                 Date:{" "}
                 <span>
-                    {` ${day.length === 1 ? `0${day}` : day}-${
-                        month.length === 1 ? `0${month}` : month
-                    }-${year}`}
+                    {DateTime.fromObject({
+                        day,
+                        month,
+                        year,
+                    }).toLocaleString(DateTime.DATE_FULL)}
                 </span>
             </label>
         </Field>

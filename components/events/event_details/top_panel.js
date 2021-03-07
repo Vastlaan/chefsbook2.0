@@ -1,17 +1,18 @@
+import { DateTime } from "luxon";
 import Time from "../time";
-import { BigText, TopRow } from "../../../styles";
+import { Heading6, TopRow } from "../../../styles";
 
 export default function TopPanel({ day, month, year }) {
     return (
         <TopRow>
-            <BigText>
-                Events for
+            <Heading6 color="#6DAA6C">
+                Events for:{" "}
                 <span>
-                    {` ${day.length === 1 ? `0${day}` : day}-${
-                        month.length === 1 ? `0${month}` : month
-                    }-${year}`}
+                    {DateTime.fromObject({ day, month, year }).toLocaleString(
+                        DateTime.DATE_FULL
+                    )}
                 </span>
-            </BigText>
+            </Heading6>
             <Time />
         </TopRow>
     );

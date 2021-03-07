@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { db } from "../../../database";
+import Connection from "../../../database";
 import { parse } from "cookie";
 
 function sendError(res, e) {
@@ -9,6 +9,8 @@ function sendError(res, e) {
 }
 
 export default async function handler(req, res) {
+    const db = new Connection().getDatabase();
+
     if (!req.headers["set-cookie"]) {
         return sendError(res);
     }
@@ -92,7 +94,8 @@ export default async function handler(req, res) {
             .orderBy("month", "asc")
             .orderBy("day", "asc");
 
-        // send all user created data to the frontend
+        // close db connection
+        await // send all user created data to the frontend
         res.status(200).json({
             user: {
                 id,
@@ -109,7 +112,10 @@ export default async function handler(req, res) {
                 preparations,
             },
         });
+        db.destroy();
     } catch (error) {
+        db && db.destroy();
+        console.error(error);
         return sendError(res, error);
     }
 }

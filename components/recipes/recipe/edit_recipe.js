@@ -105,7 +105,7 @@ export default function EditRecipeForm({ id }) {
                     setErrors(data.error);
                     return console.error(data.error);
                 }
-                console.log(data);
+
                 if (data.recipes) {
                     dispatch({ type: "updateRecipes", payload: data.recipes });
                     router.push("/recipes");

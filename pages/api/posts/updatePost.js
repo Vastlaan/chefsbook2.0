@@ -1,7 +1,7 @@
 import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
-import { db } from "../../../database";
+import Connection, { db } from "../../../database";
 import {
     validateText,
     validateTitle,
@@ -55,8 +55,10 @@ export default async function handler(req, res) {
                 ? `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.BUCKET_NAME}/${fileName}`
                 : photo_url, // if no file just assign empty string
         };
-        console.log(saveToDatabase);
-        // I use knex library to save data to postgresql. The knex connection is created in separate file and exported. Here I take advantage of already created knex connection. Your schema is probably different so keep it in mind.
+
+        // create connection with database
+        const db = new Connection().getDatabase();
+
         const result = await db("posts")
             .where({
                 id: saveToDatabase.id,
@@ -69,7 +71,9 @@ export default async function handler(req, res) {
             .returning("*");
 
         res.status(200).json({ post: result[0] });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });
     }

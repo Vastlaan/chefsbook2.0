@@ -1,7 +1,7 @@
 import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
-import { db } from "../../../database";
+import Connection from "../../../database";
 import { validateMimeTypeMulter } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 import runMiddleware from "../../../utils/runMiddleware";
@@ -47,8 +47,6 @@ export default async function handler(req, res) {
         // after request is being processed through middleware it appends the rest of the data, which are not a file, to the req.body
         const { name, description, time, ingredients } = req.body;
 
-        console.log(name, description, time, ingredients);
-
         const saveToDatabase = {
             user_id: decoded.id,
             name,
@@ -61,7 +59,10 @@ export default async function handler(req, res) {
             likes: 0,
         };
 
-        const result = await db("recipes")
+        // create connection with database
+        const db = new Connection().getDatabase();
+
+        await db("recipes")
             .insert({
                 user_id: saveToDatabase.user_id,
                 name: saveToDatabase.name,
@@ -72,9 +73,16 @@ export default async function handler(req, res) {
                 likes: saveToDatabase.likes,
             })
             .returning("*");
+        const updatedRecipes = await db("recipes")
+            .select("*")
+            .where({ user_id: decoded.id })
+            .returning("*")
+            .orderBy("created_at", "desc");
 
-        res.status(200).json({ recipe: result[0] });
+        res.status(200).json({ recipes: updatedRecipes });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });
     }

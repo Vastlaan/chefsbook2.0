@@ -17,6 +17,8 @@ export default function YourRecipesComponent() {
         state: { user },
     } = useContext(Context);
 
+    console.log(user);
+
     return (
         <MainGridComponent>
             <Dashboard>

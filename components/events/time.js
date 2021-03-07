@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import styled from "styled-components";
-import { FlexRow } from "../../styles";
 import { RiTimeLine } from "react-icons/ri";
 
 export default function Time() {

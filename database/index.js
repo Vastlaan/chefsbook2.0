@@ -133,5 +133,3 @@ export default class Connection {
         });
     }
 }
-
-export const db = new Connection().getDatabase();

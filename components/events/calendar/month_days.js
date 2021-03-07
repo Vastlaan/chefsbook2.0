@@ -53,15 +53,6 @@ export default function MonthDaysComponent({ startDate }) {
 
                 if (!day) {
                     return <EmptyDay key={`day-${i}-${day}`}></EmptyDay>;
-                } else if (arrayOfDaysWhenEvent.includes(day.toString())) {
-                    return (
-                        <Link
-                            key={`day-${i}-${day}`}
-                            href={`/events/details?day=${day}&month=${month}&year=${year}`}
-                        >
-                            <Day color="#6DAA6C">{day}</Day>
-                        </Link>
-                    );
                 } else if (day === currentDay) {
                     return (
                         <Link
@@ -69,6 +60,15 @@ export default function MonthDaysComponent({ startDate }) {
                             href={`/events/details?day=${day}&month=${month}&year=${year}`}
                         >
                             <Day color="skyblue">{day}</Day>
+                        </Link>
+                    );
+                } else if (arrayOfDaysWhenEvent.includes(day.toString())) {
+                    return (
+                        <Link
+                            key={`day-${i}-${day}`}
+                            href={`/events/details?day=${day}&month=${month}&year=${year}`}
+                        >
+                            <Day color="#6DAA6C">{day}</Day>
                         </Link>
                     );
                 } else {

@@ -50,6 +50,7 @@ import {
     RowNote,
     List,
     ListSmall,
+    CustomSelect,
 } from "./containers";
 
 export {
@@ -100,5 +101,6 @@ export {
     RowNote,
     List,
     ListSmall,
+    CustomSelect,
     DeleteNote,
 };

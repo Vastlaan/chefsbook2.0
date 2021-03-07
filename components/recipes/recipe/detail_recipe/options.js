@@ -16,8 +16,6 @@ export default function OptionsComponent({ recipe }) {
 
     const [displayModal, setDisplayModal] = useState(false);
 
-    console.log(recipe);
-
     function deleteRecipe() {
         fetch(
             `/api/recipes/deleteRecipe?id=${recipe.id}&path=${recipe.photo_url}`

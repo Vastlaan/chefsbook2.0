@@ -1,10 +1,12 @@
-import { db } from "../../../database";
+import Connection from "../../../database";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { serialize, parse } from "cookie";
 import { DateTime } from "luxon";
 
 export default async function handler(req, res) {
+    const db = new Connection().getDatabase();
+
     const { email, password } = req.body;
 
     try {
@@ -113,7 +115,9 @@ export default async function handler(req, res) {
                 ...{ preparations: preparations },
             },
         });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.error(e);
         return res.status(400).json({ error: "Hmm, Unable to log in" });
     }

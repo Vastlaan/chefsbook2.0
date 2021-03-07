@@ -1,4 +1,4 @@
-import { db } from "../../../database";
+import Connection, { db } from "../../../database";
 import checkCookie from "../../../utils/checkCookie";
 
 export default async function handler(req, res) {
@@ -7,7 +7,6 @@ export default async function handler(req, res) {
 
     const { fullName, email, schedule, id, week } = req.body;
 
-    console.log(fullName, email, schedule, id, week);
     if (!fullName || !schedule) {
         return res.status({
             error:
@@ -16,6 +15,8 @@ export default async function handler(req, res) {
     }
 
     try {
+        // create connection with database
+        const db = new Connection().getDatabase();
         await db("members")
             .where({
                 id: id,
@@ -29,7 +30,6 @@ export default async function handler(req, res) {
             .select("week_number")
             .where({ week_number: week, member_id: id });
 
-        console.log(weekExists);
         if (weekExists.length > 0) {
             await db("schedules")
                 .where({
@@ -71,7 +71,9 @@ export default async function handler(req, res) {
         res.status(200).json({
             members: members,
         });
+        db.destroy();
     } catch (e) {
+        db.destroy();
         console.error(e);
         return res.status(400).json({ error: "Something went wrong" });
     }

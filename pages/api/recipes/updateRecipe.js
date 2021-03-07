@@ -1,7 +1,7 @@
 import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
-import { db } from "../../../database";
+import Connection from "../../../database";
 import { validateMimeTypeMulter } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 import runMiddleware from "../../../utils/runMiddleware";
@@ -64,6 +64,8 @@ export default async function handler(req, res) {
                 ? `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.BUCKET_NAME}/${fileName}`
                 : photo_url, // if no file just assign empty string
         };
+        // create connection with database
+        const db = new Connection().getDatabase();
 
         await db("recipes").where({ id: saveToDatabase.id }).update({
             name: saveToDatabase.name,
@@ -78,7 +80,9 @@ export default async function handler(req, res) {
             .orderBy("created_at", "desc");
 
         res.status(200).json({ recipes: updatedRecipes });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.log(e);
         res.status(400).json({ error: "Something went wrong" });
     }

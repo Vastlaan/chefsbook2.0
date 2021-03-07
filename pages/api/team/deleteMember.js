@@ -1,4 +1,4 @@
-import { db } from "../../../database";
+import Connection, { db } from "../../../database";
 import checkCookie from "../../../utils/checkCookie";
 
 export default async function handler(req, res) {
@@ -6,6 +6,8 @@ export default async function handler(req, res) {
     const decoded = checkCookie(req, res);
 
     try {
+        // create connection with database
+        const db = new Connection().getDatabase();
         // delete post
         await db("members")
             .where({ id: req.query.id, user_id: decoded.id })
@@ -32,7 +34,9 @@ export default async function handler(req, res) {
         members = await appendSchedules(members);
         // send updated members
         res.status(200).json({ members: members });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.error(e);
         res.status(400).json({ error: "Something went wrong" });
     }

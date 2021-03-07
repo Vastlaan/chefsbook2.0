@@ -16,7 +16,7 @@ import { RiAddLine } from "react-icons/ri";
 
 export default function PreparationsComponent() {
     const { state, dispatch } = useContext(Context);
-    console.log(state.user.preparations);
+
     return (
         <MainGridComponent>
             <Dashboard>

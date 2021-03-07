@@ -2,10 +2,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import User from "../../../models/User";
-import { db } from "../../../database";
+import Connection from "../../../database";
 import { validateEmail, validatePassword } from "../../../validations";
 
 export default async function handler(req, res) {
+    // create connection with database
+    const db = new Connection().getDatabase();
+
     const { email, password } = JSON.parse(req.body);
     // validate email
     const isEmailValid = validateEmail(email);
@@ -63,10 +66,14 @@ export default async function handler(req, res) {
         });
         // setup cookie in response header
         res.setHeader("Set-Cookie", cookie);
+
         // return created user
-        return res.status(200).json({ user: payload });
+        res.status(200).json({ user: payload });
+
+        db.destroy();
     } catch (err) {
+        db.destroy();
         console.log(err);
-        return res.status(200).json({ error: err.toString() });
+        return res.status(200).json({ error: "Ups, something went wrong." });
     }
 }

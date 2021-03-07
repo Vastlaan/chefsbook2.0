@@ -54,7 +54,6 @@ export default function CreateRecipeComponent({ day, month, year }) {
             minute,
             description,
         };
-        console.log(dataToSend);
 
         fetch("/api/events/createEvent", {
             method: "POST",
@@ -75,7 +74,7 @@ export default function CreateRecipeComponent({ day, month, year }) {
                 dispatch({ type: "updateCreatedEvent", payload: data.event });
                 router.push("/events");
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.error(e));
     }
 
     return (

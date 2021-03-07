@@ -1,4 +1,4 @@
-import { db } from "../../../database";
+import Connection from "../../../database";
 import { validateText } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 
@@ -15,6 +15,9 @@ export default async function handler(req, res) {
     }
 
     try {
+        // create connection with database
+        const db = new Connection().getDatabase();
+
         const newMember = await db("members")
             .insert({
                 user_id: decoded.id,
@@ -53,7 +56,9 @@ export default async function handler(req, res) {
         res.status(200).json({
             members: members,
         });
+        db.destroy();
     } catch (e) {
+        db && db.destroy();
         console.error(e);
         return res.status({ error: "Something went wrong" });
     }
