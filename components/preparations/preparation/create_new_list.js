@@ -2,15 +2,8 @@ import { useState, useContext } from "react";
 import { DateTime } from "luxon";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import { Context } from "../../../store";
-import {
-    validateMimeType,
-    validateTitle,
-    validateText,
-    validateTime,
-    validateIngredients,
-} from "../../../validations";
+import { validateIngredients } from "../../../validations";
 import MainGridComponent from "../../main_grid";
 //fields
 import Day from "./fields/day";
@@ -24,25 +17,79 @@ import {
     Heading3,
     Heading6,
     FlexRow,
+    ButtonContainer,
     ButtonPrimary,
     Options,
     GoBack,
     Line,
+    Text2,
 } from "../../../styles";
 
 export default function CreateNewListComponent() {
-    const [dt, setDt] = useState(DateTime.now());
+    const router = useRouter();
+    const { state, dispatch } = useContext(Context);
+
+    const [dt, setDt] = useState(DateTime.now().plus({ day: 1 }));
 
     const [items, setItems] = useState([]);
     const [currentItem, setCurrentItem] = useState("");
 
     const [errors, setErrors] = useState({});
 
-    console.log(dt.day, "-", dt.month, "-", dt.year);
+    async function createList(e) {
+        e.preventDefault();
+
+        const isListValid = validateIngredients(items);
+        if (isListValid.type === "error") {
+            return setErrors(isListValid);
+        }
+        if (!dt) {
+            return router.push("/preparations");
+        }
+
+        const dataToSend = {
+            day: dt.day,
+            month: dt.month,
+            year: dt.year,
+            list: JSON.stringify(items),
+        };
+
+        try {
+            const res = await fetch("/api/preparations/createList", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataToSend),
+            });
+
+            const data = await res.json();
+            if (data.error) {
+                console.error(data.error);
+                return setErrors({
+                    type: "error",
+                    field: "items",
+                    message: "Something went wrong",
+                });
+            }
+            dispatch({
+                type: "updatePreparations",
+                payload: data.preparations,
+            });
+            return router.push("/preparations");
+        } catch (e) {
+            console.error(e);
+            return setErrors({
+                type: "error",
+                field: "items",
+                message: "Something went wrong",
+            });
+        }
+    }
 
     return (
         <MainGridComponent>
-            <Form1>
+            <Form1 onSubmit={createList}>
                 <Heading3>Create New List</Heading3>
                 <Line />
                 <Options marginTop="0">
@@ -56,6 +103,8 @@ export default function CreateNewListComponent() {
                     </Heading6>
                 </Options>
                 <Line />
+                <Text2>Choose the date:</Text2>
+                <br />
                 <FlexRow>
                     <Day dt={dt} setDt={setDt} />
                     <Month dt={dt} setDt={setDt} />
@@ -68,7 +117,12 @@ export default function CreateNewListComponent() {
                     currentItem={currentItem}
                     setCurrentItem={setCurrentItem}
                     errors={errors}
+                    dt={dt}
                 />
+                {errors.field === "general" && <small>{errors.message}</small>}
+                <ButtonContainer>
+                    <ButtonPrimary type="submit">Save List</ButtonPrimary>
+                </ButtonContainer>
             </Form1>
         </MainGridComponent>
     );

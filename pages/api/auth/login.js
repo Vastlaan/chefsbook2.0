@@ -77,13 +77,13 @@ export default async function handler(req, res) {
             .orderBy("year", "asc")
             .orderBy("month", "asc")
             .orderBy("day", "asc");
-        // get user preparations
+        // get preparations list
         const preparations = await db("preparations")
             .select("*")
-            .where({ user_id: user.id })
-            .orderBy("year", "asc")
-            .orderBy("month", "asc")
-            .orderBy("day", "asc");
+            .where({ user_id: id })
+            .orderByRaw("year::int ASC")
+            .orderByRaw("month::int ASC")
+            .orderByRaw("day::int ASC");
         // get members created by user
         let members = await db("members")
             .select("*")

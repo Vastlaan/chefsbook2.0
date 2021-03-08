@@ -117,3 +117,12 @@ export const DeleteNote = styled(PlainButton)`
         color: ${(p) => p.theme.white};
     }
 `;
+
+export const AddButton = styled(PlainButton)`
+    color: ${(p) => p.theme.secondary};
+    svg {
+        font-size: 2.7rem;
+        color: ${(p) => p.theme.secondary};
+        margin-right: 0.9rem;
+    }
+`;

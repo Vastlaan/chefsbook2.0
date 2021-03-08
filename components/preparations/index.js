@@ -35,7 +35,6 @@ export default function PreparationsComponent() {
                 <Line />
                 <FlexRow align="flex-start">
                     {state.user.preparations.map((preparation) => {
-                        console.log(preparation);
                         return (
                             <Preparation
                                 key={preparation.id}

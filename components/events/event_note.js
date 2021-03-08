@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DateTime } from "luxon";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { Context } from "../../store";
@@ -32,9 +33,11 @@ export default function EventNoteComponent({
                 <RowNote>
                     <RiCalendarEventLine />{" "}
                     <p>
-                        {`${addZero(date.day)}
-                            -${addZero(date.month)}
-                            -${date.year}`}
+                        {DateTime.fromObject({
+                            day: parseInt(date.day),
+                            month: parseInt(date.month),
+                            year: parseInt(date.year),
+                        }).toLocaleString(DateTime.DATE_FULL)}
                     </p>
                 </RowNote>
             )}

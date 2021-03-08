@@ -8,6 +8,7 @@ import {
     PlainButton,
     InputFlexible,
     DeleteNote,
+    AddButton,
 } from "./buttons";
 import { Line } from "./decorations";
 import {
@@ -31,6 +32,7 @@ import {
     LoginContainer,
     Login,
     Field,
+    IngredientField,
     Dashboard,
     ImageContainerSmall,
     ImageContainerLarge,
@@ -63,6 +65,7 @@ export {
     ButtonSecondary,
     LinkButton,
     PlainButton,
+    AddButton,
     InputFlexible,
     Line,
     Heading1,
@@ -82,6 +85,7 @@ export {
     LoginContainer,
     Login,
     Field,
+    IngredientField,
     Dashboard,
     ImageContainerSmall,
     ImageContainerLarge,

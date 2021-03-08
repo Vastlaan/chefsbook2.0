@@ -90,9 +90,9 @@ export default async function handler(req, res) {
         const preparations = await db("preparations")
             .select("*")
             .where({ user_id: id })
-            .orderBy("year", "asc")
-            .orderBy("month", "asc")
-            .orderBy("day", "asc");
+            .orderByRaw("year::int ASC")
+            .orderByRaw("month::int ASC")
+            .orderByRaw("day::int ASC");
 
         // close db connection
         await // send all user created data to the frontend

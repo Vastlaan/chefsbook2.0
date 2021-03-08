@@ -115,6 +115,13 @@ export function validateTime(time) {
     };
 }
 export function validateIngredients(ingredients) {
+    if (ingredients.length < 1) {
+        return {
+            type: "error",
+            field: "ingredients",
+            message: "List must not be empty",
+        };
+    }
     const isTooLong = ingredients.find((ingr) => ingr.length > 150);
     if (isTooLong) {
         return {

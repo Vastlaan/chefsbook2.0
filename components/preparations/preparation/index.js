@@ -1,5 +1,8 @@
-import { useState } from "react";
-import addZeroToUnit from "../../../utils/addZeroToUnit";
+import { useState, useContext } from "react";
+import { useRouter } from "next/router";
+import { Context } from "../../../store";
+import { DateTime } from "luxon";
+import Modal from "../../modals/modal_before_delete";
 import {
     List,
     ListSmall,
@@ -16,18 +19,39 @@ import {
 } from "react-icons/ri";
 
 export default function PreparationComponent({ details, members }) {
+    const router = useRouter();
+    const { state, dispatch } = useContext(Context);
+
     const listOfPreparations = JSON.parse(details.list);
 
     const [listOfMembers, renderListOfMembers] = useState(false);
+    const [displayModal, setDisplayModal] = useState(false);
+
+    async function deleteList() {
+        const res = await fetch(
+            `/api/preparations/deleteList?id=${details.id}`
+        );
+        const data = await res.json();
+        if (data.error) {
+            return console.error(data.error);
+        }
+        dispatch({
+            type: "updatePreparations",
+            payload: data.preparations,
+        });
+        return router.push("/preparations");
+    }
 
     return (
         <Note>
             <RowNote>
                 <RiCalendarEventLine />{" "}
                 <p>
-                    {`${addZeroToUnit(details.day)}
-                    -${addZeroToUnit(details.month)}
-                    -${details.year}`}
+                    {DateTime.fromObject({
+                        day: parseInt(details.day),
+                        month: parseInt(details.month),
+                        year: parseInt(details.year),
+                    }).toLocaleString(DateTime.DATE_FULL)}
                 </p>
             </RowNote>
             <List border>
@@ -35,7 +59,7 @@ export default function PreparationComponent({ details, members }) {
                     return <li key={`${i}-${item}`}>{item}</li>;
                 })}
             </List>
-            <DeleteNote>
+            <DeleteNote onClick={() => setDisplayModal(true)}>
                 <RiCloseFill />
             </DeleteNote>
             <Options>
@@ -60,6 +84,13 @@ export default function PreparationComponent({ details, members }) {
                         );
                     })}
                 </ListSmall>
+            )}
+            {displayModal && (
+                <Modal
+                    setModal={setDisplayModal}
+                    deleteItem={deleteList}
+                    message="Are you sure you want to delete this preparation list?"
+                />
             )}
         </Note>
     );

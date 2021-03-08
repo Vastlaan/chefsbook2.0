@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { Field, PlainButton } from "../../../../styles";
+import {
+    Field,
+    IngredientField,
+    PlainButton,
+    AddButton,
+} from "../../../../styles";
 import { TiDeleteOutline } from "react-icons/ti";
 import { RiAddCircleLine } from "react-icons/ri";
 
@@ -56,6 +61,7 @@ export default function Ingredients({
                     }}
                 />
                 <AddButton
+                    type="button"
                     onClick={(e) => {
                         if (!currentIngredient) {
                             return;
@@ -80,16 +86,6 @@ export default function Ingredients({
     );
 }
 
-const IngredientField = styled(Field)`
-    flex-direction: row;
-    justify-content: space-between;
-
-    input {
-        width: 25rem;
-        max-width: 25rem;
-    }
-`;
-
 const IngredientsList = styled.ul`
     padding: 1.4rem;
     margin: 0.9rem 0;
@@ -111,14 +107,5 @@ const IngredientsList = styled.ul`
             font-size: 1.4rem;
             color: orangered;
         }
-    }
-`;
-
-const AddButton = styled(PlainButton)`
-    color: ${(p) => p.theme.secondary};
-    svg {
-        font-size: 2.7rem;
-        color: ${(p) => p.theme.secondary};
-        margin-right: 0.9rem;
     }
 `;

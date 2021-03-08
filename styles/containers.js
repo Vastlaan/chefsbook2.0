@@ -123,6 +123,15 @@ export const Field = styled.div`
         color: ${(p) => p.theme.secondary};
     }
 `;
+export const IngredientField = styled(Field)`
+    flex-direction: row;
+    justify-content: space-between;
+
+    input {
+        width: 25rem;
+        max-width: 25rem;
+    }
+`;
 
 export const Dashboard = styled.div`
     display: flex;
@@ -379,7 +388,8 @@ export const TableGrid = styled.div`
 export const Note = styled.div`
     min-width: 35rem;
     padding: 1.4rem;
-    margin: 1.4rem;
+    margin: 1.4rem 0;
+    margin-right: 1.4rem;
     display: flex;
     flex-direction: column;
     background-color: ${(p) => p.theme.secondary};
