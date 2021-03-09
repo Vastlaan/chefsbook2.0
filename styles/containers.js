@@ -68,18 +68,8 @@ export const FlexCol = styled.div`
     align-items: ${(p) => (p.alignItems ? p.alignItems : "flex-start")};
 
     & > * {
-        margin: 1.4rem 0;
+        margin: ${(p) => (p.margin ? p.margin : "1.4rem 0")};
     }
-
-    ${() =>
-        respond(
-            "m",
-            `
-        & > * {
-            margin: unset;
-        }
-    `
-        )}
 `;
 export const FlexRow = styled.div`
     display: flex;
@@ -387,7 +377,7 @@ export const TableGrid = styled.div`
     width: fill-available;
     margin: 2.7rem 0rem;
     display: grid;
-    grid-template-columns: minmax(15rem, 15rem) minmax(19rem, 1fr);
+    grid-template-columns: minmax(15rem, 16rem) minmax(19rem, 1fr);
     overflow: auto;
 
     ${() =>

@@ -7,10 +7,11 @@ import {
     BigText,
     Line,
     ButtonPrimary,
-    ButtonContainer,
+    TopRow,
+    GoBack,
 } from "../../styles";
 import Recipe from "./recipe/overview_recipe";
-import { RiAddLine } from "react-icons/ri";
+import { RiAddLine, RiArrowGoBackLine } from "react-icons/ri";
 
 export default function YourRecipesComponent() {
     const {
@@ -24,14 +25,19 @@ export default function YourRecipesComponent() {
             <Dashboard>
                 <BigText>My Recipes:</BigText>
                 <Line />
-                <ButtonContainer>
+                <TopRow>
+                    <Link href="/">
+                        <GoBack>
+                            <RiArrowGoBackLine />
+                        </GoBack>
+                    </Link>
                     <Link href="/recipes/createNewRecipe">
                         <ButtonPrimary>
                             <RiAddLine />
                             Create New Recipe
                         </ButtonPrimary>
                     </Link>
-                </ButtonContainer>
+                </TopRow>
                 <Line />
 
                 {user.recipes &&

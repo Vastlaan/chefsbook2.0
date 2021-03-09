@@ -25,6 +25,7 @@ import {
     ButtonPrimary,
     Options,
     GoBack,
+    Line,
 } from "../../../styles";
 
 export default function CreateRecipeForm() {
@@ -106,6 +107,7 @@ export default function CreateRecipeForm() {
         <MainGridComponent>
             <Form1 onSubmit={createRecipe} onKeyDown={(e) => e.key != "Enter"}>
                 <Heading3>Create New Recipe</Heading3>
+                <Line />
                 <Options>
                     <Link href={`/recipes`}>
                         <GoBack>
@@ -113,6 +115,7 @@ export default function CreateRecipeForm() {
                         </GoBack>
                     </Link>
                 </Options>
+                <Line />
                 <Name title={title} setTitle={setTitle} errors={errors} />
                 <Ingredients
                     ingredients={ingredients}

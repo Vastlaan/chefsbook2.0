@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { RiArrowGoBackLine } from "react-icons/ri";
 import { Options, GoBack, ButtonPrimary } from "../../../styles";
-import { RiAddLine } from "react-icons/ri";
+import { RiAddLine, RiArrowGoBackLine } from "react-icons/ri";
 
 export default function EventOptions({ day, month, year }) {
     return (

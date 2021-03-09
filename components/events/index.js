@@ -1,9 +1,18 @@
 import { DateTime } from "luxon";
+import Link from "next/link";
 import MainGridComponent from "../main_grid";
 import Time from "./time";
 import Calendar from "./calendar";
 import CommingEvents from "./comming_events";
-import { Dashboard, BigText, Line, TopRow, Heading6 } from "../../styles";
+import {
+    Dashboard,
+    BigText,
+    Line,
+    TopRow,
+    Heading6,
+    GoBack,
+} from "../../styles";
+import { RiArrowGoBackLine } from "react-icons/ri";
 
 export default function EventsComponent() {
     return (
@@ -17,10 +26,16 @@ export default function EventsComponent() {
                     <Time />
                 </TopRow>
                 <Line />
+
                 <TopRow>
-                    <BigText>Calendar:</BigText>
+                    <Link href="/">
+                        <GoBack>
+                            <RiArrowGoBackLine />
+                        </GoBack>
+                    </Link>
                 </TopRow>
                 <Line />
+
                 <Calendar />
                 <Line />
                 <CommingEvents />

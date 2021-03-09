@@ -5,5 +5,5 @@ export const Line = styled.div`
     height: 1px;
     min-height: 1px;
     background-color: ${(p) => p.theme.grey3};
-    margin: 1.4rem 0;
+    margin: ${(p) => (p.margin ? p.margin : "1.4rem 0")};
 `;

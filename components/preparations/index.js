@@ -8,11 +8,12 @@ import {
     BigText,
     Line,
     TopRow,
-    ButtonContainer,
     ButtonPrimary,
     FlexRow,
+    GoBack,
+    Text3,
 } from "../../styles";
-import { RiAddLine } from "react-icons/ri";
+import { RiAddLine, RiArrowGoBackLine } from "react-icons/ri";
 
 export default function PreparationsComponent() {
     const { state, dispatch } = useContext(Context);
@@ -24,25 +25,37 @@ export default function PreparationsComponent() {
                     <BigText>Preparations:</BigText>
                 </TopRow>
                 <Line />
-                <ButtonContainer>
+                <TopRow>
+                    <Link href="/">
+                        <GoBack>
+                            <RiArrowGoBackLine />
+                        </GoBack>
+                    </Link>
                     <Link href="/preparations/createNewList">
                         <ButtonPrimary>
                             <RiAddLine />
                             Create New List
                         </ButtonPrimary>
                     </Link>
-                </ButtonContainer>
+                </TopRow>
                 <Line />
                 <FlexRow align="flex-start">
-                    {state.user.preparations.map((preparation) => {
-                        return (
-                            <Preparation
-                                key={preparation.id}
-                                details={preparation}
-                                members={state.user.members}
-                            />
-                        );
-                    })}
+                    {state.user.preparations.length > 0 ? (
+                        state.user.preparations.map((preparation) => {
+                            return (
+                                <Preparation
+                                    key={preparation.id}
+                                    details={preparation}
+                                    members={state.user.members}
+                                />
+                            );
+                        })
+                    ) : (
+                        <Text3 wide>
+                            You haven't created any preparation list yet. Please
+                            click the above button to Create New List.{" "}
+                        </Text3>
+                    )}
                 </FlexRow>
             </Dashboard>
         </MainGridComponent>

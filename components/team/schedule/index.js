@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import Link from "next/link";
 import { withTheme } from "styled-components";
 import { DateTime } from "luxon";
 import { Context } from "../../../store";
@@ -14,7 +15,9 @@ import {
     TopRow,
     BigText,
     Line,
+    GoBack,
 } from "../../../styles";
+import { RiArrowGoBackLine } from "react-icons/ri";
 
 function ScheduleComponent(props) {
     const { state } = useContext(Context);
@@ -51,17 +54,27 @@ function ScheduleComponent(props) {
     const weekStartingDay = {
         day: addZero(dt.startOf("week").day),
         month: addZero(dt.startOf("week").month),
+        year: addZero(dt.startOf("week").year),
     };
     const weekEndingDay = {
         day: addZero(dt.endOf("week").day),
         month: addZero(dt.endOf("week").month),
+        year: addZero(dt.endOf("week").year),
     };
     const weekNumber = dt.weekNumber;
 
     return (
-        <FlexCol>
+        <FlexCol margin="0 0 1.4rem 0">
             <TopRow>
                 <BigText>Team Schedule:</BigText>
+            </TopRow>
+            <Line />
+            <TopRow>
+                <Link href="/">
+                    <GoBack>
+                        <RiArrowGoBackLine />
+                    </GoBack>
+                </Link>
             </TopRow>
             <Line />
             <TableGrid>

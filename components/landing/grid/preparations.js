@@ -41,7 +41,7 @@ export default function PreparationsComponent({ preparations }) {
                                         day: parseInt(preparation.day),
                                         month: parseInt(preparation.month),
                                         year: parseInt(preparation.year),
-                                    }).toLocaleString(FULL_DATE)}
+                                    }).toLocaleString(DateTime.DATE_FULL)}
                                 </SmallText>
                             </TopRow>
                             <Line />

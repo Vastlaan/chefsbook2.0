@@ -40,6 +40,11 @@ export default function EventsGrid({ events, day, month, year }) {
             </FlexCol>
         );
     } else {
-        return <Text3>It seems you don't have any plans for today</Text3>;
+        return (
+            <Text3 wide>
+                It seems you don't have any plans for today. Click button above
+                to Create New Event.
+            </Text3>
+        );
     }
 }
