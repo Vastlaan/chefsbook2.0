@@ -46,13 +46,6 @@ export default function ControlersComponent() {
                     <Line />
                 </div>
             )}
-
-            <Link href="/posts">
-                <Subject>
-                    <RiMessage2Line />
-                    <Text2>My Posts</Text2>
-                </Subject>
-            </Link>
             <Link href="/events">
                 <Subject>
                     <RiCalendarEventLine />
@@ -124,7 +117,7 @@ const Subject = styled.div`
     svg {
         margin-right: 1.4rem;
         font-size: 3.3rem;
-        color: ${(p) => p.theme.secondary};
+        color: ${(p) => p.theme.primary};
 
         ${(p) => respond("m", `font-size: 2.2rem; color: ${p.theme.grey2};`)}
     }

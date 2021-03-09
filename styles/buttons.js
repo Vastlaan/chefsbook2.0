@@ -91,7 +91,7 @@ export const PlainButton = styled.button`
     }
 
     svg {
-        font-size: 2.2rem;
+        font-size: 2.7rem;
         color: ${(p) => p.theme.primary};
         transition: all 0.3s;
     }

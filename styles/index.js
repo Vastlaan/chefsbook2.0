@@ -26,6 +26,7 @@ import {
     Main,
     ContainerNarrow,
     Grid,
+    AppSection,
     FlexCol,
     FlexRow,
     TopRow,
@@ -53,6 +54,9 @@ import {
     List,
     ListSmall,
     CustomSelect,
+    Icon,
+    Column,
+    Row,
 } from "./containers";
 
 export {
@@ -79,6 +83,7 @@ export {
     Main,
     ContainerNarrow,
     Grid,
+    AppSection,
     FlexCol,
     FlexRow,
     TopRow,
@@ -107,4 +112,7 @@ export {
     ListSmall,
     CustomSelect,
     DeleteNote,
+    Icon,
+    Column,
+    Row,
 };

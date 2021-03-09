@@ -1,4 +1,4 @@
-import Connection, { db } from "../../../database";
+import Connection from "../../../database";
 import checkCookie from "../../../utils/checkCookie";
 
 export default async function handler(req, res) {

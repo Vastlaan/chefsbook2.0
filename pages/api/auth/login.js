@@ -80,7 +80,7 @@ export default async function handler(req, res) {
         // get preparations list
         const preparations = await db("preparations")
             .select("*")
-            .where({ user_id: id })
+            .where({ user_id: user.id })
             .orderByRaw("year::int ASC")
             .orderByRaw("month::int ASC")
             .orderByRaw("day::int ASC");

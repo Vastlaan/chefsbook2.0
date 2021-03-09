@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { fonts } from "../../styles";
+import { respond, fonts } from "../../styles";
 import ThemeControler from "./theme_controler";
 import UserControlers from "./user_controlers";
 
@@ -24,9 +24,11 @@ const Container = styled.nav`
     top: 0;
     left: 0;
     width: 100%;
-    padding: 0.9rem 2.7rem;
+    padding: 0.9rem;
     background-color: ${(p) => p.theme.blackAlways};
     display: flex;
+
+    ${() => respond("m", "padding: 0.9rem 2.7rem;")}
 `;
 const Name = styled.h1`
     font-family: ${fonts.heading};

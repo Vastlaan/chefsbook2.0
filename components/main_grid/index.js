@@ -26,6 +26,7 @@ const MainGrid = styled.div`
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
+    justify-content: flex-end;
     min-height: calc(100vh - 5rem);
     max-height: 100vh;
 
@@ -38,6 +39,7 @@ const MainGrid = styled.div`
             grid-template-columns: minmax(25rem, 30rem) 1fr;
             grid-template-rows: 80vh;
             grid-gap: 2.7rem;
+            justify-content: flex-start;
             `
         )}
 `;

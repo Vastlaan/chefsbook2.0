@@ -38,6 +38,29 @@ export const Grid = styled.div`
         )}
     ${() => respond("xxl", `padding: 6.7rem 2.7rem;`)}
 `;
+export const AppSection = styled.div`
+    box-shadow: 0 0 1rem rgba(79, 70, 69, 0.3);
+    border-radius: 5px;
+    margin: 2.7rem 0;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0 0 1rem rgba(79, 70, 69, 0.6);
+    }
+`;
+
+export const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+export const Row = styled.div`
+    display: flex;
+    align-itmes: center;
+`;
 
 export const FlexCol = styled.div`
     display: flex;
@@ -183,7 +206,7 @@ export const ImageContainerRound = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: ${(p) => (p.margin ? p.marign : "1.4rem 0")};
+    margin: ${(p) => (p.margin ? p.margin : "1.4rem 0")};
 
     img {
         width: 100%;
@@ -475,5 +498,14 @@ export const CustomSelect = styled.div`
             font-size: 1.4rem;
             color: ${(p) => p.theme.secondary};
         }
+    }
+`;
+export const Icon = styled.div`
+    display: flex;
+    align-items: center;
+    margin: ${(p) => (p.margin ? p.margin : "0 1.4rem 0 0")};
+    svg {
+        font-size: ${(p) => (p.size ? p.size : "1.6rem")};
+        color: ${(p) => (p.color ? p.color : p.theme.grey2)};
     }
 `;

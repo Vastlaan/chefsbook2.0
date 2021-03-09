@@ -19,7 +19,7 @@ export default function UserControlersComponent() {
             <Link href="/user/settings">
                 <PlainButton>
                     {state.user.account_photo_url ? (
-                        <ImageContainerRound dimension="2.7rem" margin="0">
+                        <ImageContainerRound dimension="3.3rem" margin="0">
                             <img
                                 src={state.user.account_photo_url}
                                 alt="user photo"

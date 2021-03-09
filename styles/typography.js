@@ -59,5 +59,5 @@ export const BigText = styled.p`
 export const SmallText = styled.p`
     font-size: 1.4rem;
     color: ${(p) => (p.color ? p.color : p.theme.grey3)};
-    max-width: 45rem;
+    max-width: ${(p) => (p.wide ? "100%" : "45rem")};
 `;
