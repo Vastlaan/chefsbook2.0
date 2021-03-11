@@ -89,10 +89,12 @@ function LoginComponent() {
                     <p>or</p>
                 </Field>
                 <Field>
-                    <ButtonGoogle color2="#1B1B1E">
-                        <FcGoogle />
-                        Sign in with Google
-                    </ButtonGoogle>
+                    <Link href="/api/auth/googleSignIn">
+                        <ButtonGoogle color2="#1B1B1E">
+                            <FcGoogle />
+                            Sign in with Google
+                        </ButtonGoogle>
+                    </Link>
                 </Field>
                 <Line />
             </Login>

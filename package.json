@@ -17,6 +17,7 @@
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",
     "dataloader": "^2.0.0",
+    "googleapis": "^67.1.1",
     "gsap": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.17",

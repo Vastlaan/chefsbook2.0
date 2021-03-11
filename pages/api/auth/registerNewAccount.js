@@ -38,17 +38,19 @@ export default async function handler(req, res) {
         const hash = await bcrypt.hash(password, saltRounds);
         const user = new User(email, hash);
         // create user
-        const createdUser = await db("users")
+        const createdUserArray = await db("users")
             .insert({
                 ...user.getUser(),
             })
             .returning("*");
+        const createdUser = createdUserArray[0];
         // create payload for JWT token
         const payload = {
             id: createdUser.id,
             email: createdUser.email,
             createdAt: createdUser.created_at,
         };
+
         // create token
         const token = await jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: 60 * 60 * 24 * 30,
