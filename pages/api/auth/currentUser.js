@@ -32,7 +32,8 @@ export default async function handler(req, res) {
             return sendError(res);
         }
 
-        const { id, email, created_at } = decoded;
+        const { id, email, createdAt } = decoded;
+
         // get other user data
         const otherUserData = await db("users")
             .select(
@@ -42,6 +43,9 @@ export default async function handler(req, res) {
                 "background_photo_url"
             )
             .where({ id: id });
+        if (!otherUserData) {
+            return sendError(res);
+        }
         const {
             name,
             surname,
@@ -102,7 +106,7 @@ export default async function handler(req, res) {
                 name,
                 surname,
                 email,
-                created_at,
+                created_at: createdAt,
                 account_photo_url,
                 background_photo_url,
                 posts,

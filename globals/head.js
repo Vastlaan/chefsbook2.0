@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-export default function HeadComponent({ title, description }) {
+export default function HeadComponent({ title, description, robots }) {
     return (
         <Head>
             <meta
@@ -22,6 +22,8 @@ export default function HeadComponent({ title, description }) {
             {/* <link rel="apple-touch-icon" href="/logo192.png" /> */}
 
             <link rel="cannonical" href="https://chefsbook.org" />
+
+            <meta name="robots" content={robots || "index, follow"} />
 
             <meta property="og:type" content="article" />
 

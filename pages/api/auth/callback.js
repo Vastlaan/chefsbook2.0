@@ -57,6 +57,8 @@ export default async function handler(req, res) {
             };
         }
 
+        console.log(payload);
+
         // create token
         const token = await jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: 60 * 60 * 24 * 30,

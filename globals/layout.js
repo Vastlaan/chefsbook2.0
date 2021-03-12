@@ -1,4 +1,5 @@
 import Navigation from "../components/navigation";
+import Footer from "../components/footer";
 import styled from "styled-components";
 
 export default function Layout({ children }) {
@@ -6,6 +7,7 @@ export default function Layout({ children }) {
         <LayoutContainer>
             <Navigation />
             {children}
+            <Footer />
         </LayoutContainer>
     );
 }

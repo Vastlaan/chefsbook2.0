@@ -14,7 +14,7 @@ export const Main = styled.main`
     background-size: cover;
     background-position: center 80%;
     min-height: calc(100vh - 5rem);
-    max-height: 100vh;
+    max-height: calc(100vh - 5rem);
     overflow: auto;
 `;
 export const ContainerNarrow = styled.div`
@@ -39,7 +39,7 @@ export const Grid = styled.div`
     ${() => respond("xxl", `padding: 6.7rem 2.7rem;`)}
 `;
 export const AppSection = styled.div`
-    box-shadow: 0 0 1rem rgba(79, 70, 69, 0.3);
+    box-shadow: 0 0 1rem rgba(79, 70, 69, 0.6);
     border-radius: 5px;
     margin: 2.7rem 0;
     padding: 1.4rem;
@@ -49,7 +49,7 @@ export const AppSection = styled.div`
     cursor: pointer;
 
     &:hover {
-        box-shadow: 0 0 1rem rgba(79, 70, 69, 0.6);
+        box-shadow: 0 0 1rem rgba(79, 70, 69, 0.9);
     }
 `;
 
@@ -151,12 +151,11 @@ export const Dashboard = styled.div`
     flex: 1;
     flex-direction: column;
     background-color: ${(p) => p.theme.black};
-    border-radius: 5px;
     padding: 2.7rem 1.4rem;
     padding-bottom: 9rem;
     overflow: auto;
     ${() => respond("s", "padding: 2.7rem;")}
-    ${() => respond("m", "padding-bottom: 4.7rem;")}
+    ${() => respond("m", "padding-bottom: 4.7rem; border-radius: 5px;")}
     small {
         font-size: 1rem;
         margin: 0.6rem 0;
@@ -283,13 +282,13 @@ export const Form1 = styled.form`
     flex: 1;
     flex-direction: column;
     background-color: ${(p) => p.theme.black};
-    border-radius: 5px;
+
     padding: 2.7rem 1.4rem;
     overflow: auto;
     padding-bottom: 9rem;
 
     ${() => respond("s", "padding: 2.7rem;")}
-    ${() => respond("m", "padding-bottom: unset;")}
+    ${() => respond("m", "padding-bottom: unset; border-radius: 5px;")}
 
     small {
         font-size: 1rem;

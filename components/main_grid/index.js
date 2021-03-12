@@ -18,7 +18,7 @@ export default function MainGridComponent({ children }) {
 
 const Container = styled(ContainerNarrow)`
     overflow: auto;
-    max-height: calc(100vh - 5rem);
+    max-height: calc(100vh - 10rem);
 `;
 
 const MainGrid = styled.div`
@@ -27,8 +27,6 @@ const MainGrid = styled.div`
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
-    min-height: calc(100vh - 5rem);
-    max-height: 100vh;
 
     ${() =>
         respond(

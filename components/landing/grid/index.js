@@ -45,7 +45,10 @@ const LandingGrid = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     align-items: stretch;
-    grid-gap: 2.7rem;
 
-    ${() => respond("l", "grid-template-columns: 1fr 1fr;")}
+    ${() =>
+        respond(
+            "l",
+            "grid-template-columns: 1fr 1fr; grid-column-gap: 2.7rem;"
+        )}
 `;

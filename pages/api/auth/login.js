@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         const payload = {
             id: user.id,
             email: user.email,
-            created_at: user.created_at,
+            createdAt: user.created_at,
         };
         // create JWT token
         const token = await jwt.sign(payload, process.env.JWT_SECRET, {
@@ -106,7 +106,7 @@ export default async function handler(req, res) {
 
         res.status(201).json({
             user: {
-                ...payload,
+                ...{ ...payload, created_at: payload.createdAt },
                 ...otherUserData[0],
                 ...{ posts: posts },
                 ...{ recipes: recipes },

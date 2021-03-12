@@ -36,7 +36,7 @@ export default function ImageComponent({
             </ImageContainerRound>
             <label htmlFor="photo">
                 <RiAddCircleLine />
-                {userAccountPhoto || userPhotoBlob
+                {userAccountPhoto || accountPhotoBlob
                     ? "Change Photo"
                     : "Add Photo"}
             </label>

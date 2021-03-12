@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
@@ -12,6 +13,7 @@ import {
     BigText,
     Line,
     FlexRow,
+    FlexCol,
     ButtonSecondary,
     SmallText,
     Form1,
@@ -21,6 +23,7 @@ import { DateTime } from "luxon";
 export default function UserSettingsComponent({ user }) {
     const { state, dispatch } = useContext(Context);
 
+    console.log(user, user.created_at);
     const created = DateTime.fromISO(user.created_at).toLocaleString();
 
     const [currentlyEdited, setCurrentlyEdited] = useState("");
@@ -139,6 +142,16 @@ export default function UserSettingsComponent({ user }) {
                         Save changes
                     </ButtonSecondary>
                 </FlexRow>
+                <Line />
+                <FlexCol>
+                    <SmallText>Additional informations:</SmallText>
+                    <Link href="/cookies">
+                        <SmallText underline>Cookie policy</SmallText>
+                    </Link>
+                    <Link href="/terms">
+                        <SmallText underline>Terms & Conditions</SmallText>
+                    </Link>
+                </FlexCol>
             </Form1>
         </MainGridComponent>
     );
