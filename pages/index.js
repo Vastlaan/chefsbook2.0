@@ -69,6 +69,7 @@ export async function getServerSideProps(ctx) {
             },
         };
     } catch (e) {
+        console.error(e);
         return {
             props: {
                 data: { error: e.toString() },

@@ -57,8 +57,6 @@ export default async function handler(req, res) {
             };
         }
 
-        console.log(payload);
-
         // create token
         const token = await jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: 60 * 60 * 24 * 30,
@@ -72,14 +70,18 @@ export default async function handler(req, res) {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             path: "/",
-            sameSite: "strict",
+            sameSite: "none",
         });
-        // setup cookie in response header
-        res.setHeader("Set-Cookie", cookie);
+        console.log("callback2: ", cookie);
 
-        // write redirection to /
-        res.writeHead(302, { Location: "/" });
-        res.send();
+        res.setHeader("Set-Cookie", cookie);
+        return res.redirect(302, `${process.env.HOST}/`);
+        // // setup cookie in response header
+        // res.setHeader("Set-Cookie", cookie);
+
+        // // write redirection to /
+        // res.writeHead(302, { Location: "/" });
+        // res.send();
     } catch (e) {
         console.log(e);
         db && db.destroy();

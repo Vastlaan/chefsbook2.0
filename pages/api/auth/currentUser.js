@@ -43,7 +43,7 @@ export default async function handler(req, res) {
                 "background_photo_url"
             )
             .where({ id: id });
-        if (!otherUserData) {
+        if (otherUserData.length === 0) {
             return sendError(res);
         }
         const {

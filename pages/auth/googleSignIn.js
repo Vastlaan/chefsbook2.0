@@ -1,6 +1,10 @@
-import { oauth2Client } from "../../../utils/googleClient";
+import { oauth2Client } from "../../utils/googleClient";
 
-export default async function handler(req, res) {
+export default function GoogleSignInPage() {
+    return <div>...fetching Google Account</div>;
+}
+
+export function getServerSideProps() {
     const scopes = [
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/userinfo.email",
@@ -12,6 +16,10 @@ export default async function handler(req, res) {
     });
     console.log("googleSingIn", url);
 
-    res.writeHead(302, { Location: `${url}` });
-    res.end();
+    return {
+        redirect: {
+            permanent: false,
+            destination: `${url}`,
+        },
+    };
 }

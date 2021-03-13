@@ -48,6 +48,9 @@ function LoginComponent() {
                 }
             });
     }
+    // async function signInToGoogle() {
+    //     const res = await fetch("/api/auth/googleSignIn");
+    // }
 
     return (
         <LoginContainer>
@@ -82,15 +85,21 @@ function LoginComponent() {
                 </Field>
                 <Field>
                     <Link href="/">
-                        <LinkButton>Forgot the password?</LinkButton>
+                        <LinkButton type="button">
+                            Forgot the password?
+                        </LinkButton>
                     </Link>
                 </Field>
                 <Field>
                     <p>or</p>
                 </Field>
                 <Field>
-                    <Link href="/api/auth/googleSignIn">
-                        <ButtonGoogle color2="#1B1B1E">
+                    <Link href="/auth/googleSignIn">
+                        <ButtonGoogle
+                            // onClick={signInToGoogle}
+                            type="button"
+                            color2="#1B1B1E"
+                        >
                             <FcGoogle />
                             Sign in with Google
                         </ButtonGoogle>
@@ -100,7 +109,7 @@ function LoginComponent() {
             </Login>
             <Register>
                 <Field>
-                    <Link href="/auth/createAccount">
+                    <Link type="button" href="/auth/createAccount">
                         <ButtonSecondary>Create Account</ButtonSecondary>
                     </Link>
                 </Field>

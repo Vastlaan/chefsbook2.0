@@ -1,7 +1,7 @@
 import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
-import Connection, { db } from "../../../database";
+import Connection from "../../../database";
 import {
     validateText,
     validateTitle,
