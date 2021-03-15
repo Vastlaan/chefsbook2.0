@@ -22,7 +22,6 @@ export default function RecipesComponent({ recipes }) {
             }
         }
     }
-    console.log(firstTwoRecipes);
 
     return (
         <AppSection>

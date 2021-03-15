@@ -2,7 +2,8 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { Context } from "../../../store";
 import { DateTime } from "luxon";
-import Modal from "../../modals/modal_before_delete";
+import ModalDelete from "../../modals/modal_before_delete";
+import ModalSendEmail from "../../modals/send_email";
 import {
     List,
     ListSmall,
@@ -25,7 +26,8 @@ export default function PreparationComponent({ details, members }) {
     const listOfPreparations = JSON.parse(details.list);
 
     const [listOfMembers, renderListOfMembers] = useState(false);
-    const [displayModal, setDisplayModal] = useState(false);
+    const [displayModalDelete, setDisplayModalDelete] = useState(false);
+    const [displayModalSendEmail, setDisplayModalSendEmail] = useState(false);
 
     async function deleteList() {
         const res = await fetch(
@@ -42,16 +44,30 @@ export default function PreparationComponent({ details, members }) {
         return router.push("/preparations");
     }
 
+    function createLocalDateString(day, month, year) {
+        return DateTime.fromObject({
+            day: parseInt(day),
+            month: parseInt(month),
+            year: parseInt(year),
+        }).toLocaleString(DateTime.DATE_FULL);
+    }
+
+    function arrayToString(array) {
+        let templateString = ``;
+        array.map((item) => (templateString = `${templateString} ${item},`));
+        return templateString;
+    }
+
     return (
         <Note>
             <RowNote>
                 <RiCalendarEventLine />{" "}
                 <p>
-                    {DateTime.fromObject({
-                        day: parseInt(details.day),
-                        month: parseInt(details.month),
-                        year: parseInt(details.year),
-                    }).toLocaleString(DateTime.DATE_FULL)}
+                    {createLocalDateString(
+                        details.day,
+                        details.month,
+                        details.year
+                    )}
                 </p>
             </RowNote>
             <List border>
@@ -59,15 +75,11 @@ export default function PreparationComponent({ details, members }) {
                     return <li key={`${i}-${item}`}>{item}</li>;
                 })}
             </List>
-            <DeleteNote onClick={() => setDisplayModal(true)}>
+            <DeleteNote onClick={() => setDisplayModalDelete(true)}>
                 <RiCloseFill />
             </DeleteNote>
             <Options>
-                <SendEmail
-                    onClick={() =>
-                        renderListOfMembers((prevState) => !prevState)
-                    }
-                >
+                <SendEmail onClick={() => setDisplayModalSendEmail(true)}>
                     <RiMailSendLine />
                 </SendEmail>
             </Options>
@@ -85,11 +97,24 @@ export default function PreparationComponent({ details, members }) {
                     })}
                 </ListSmall>
             )}
-            {displayModal && (
-                <Modal
-                    setModal={setDisplayModal}
+            {displayModalDelete && (
+                <ModalDelete
+                    setModal={setDisplayModalDelete}
                     deleteItem={deleteList}
                     message="Are you sure you want to delete this preparation list?"
+                />
+            )}
+            {displayModalSendEmail && (
+                <ModalSendEmail
+                    setModal={setDisplayModalSendEmail}
+                    title={`Preparation list for: ${createLocalDateString(
+                        details.day,
+                        details.month,
+                        details.year
+                    )}`}
+                    body={`Hey guys!
+Please don't forget about this tasks:
+${arrayToString(listOfPreparations)}`}
                 />
             )}
         </Note>

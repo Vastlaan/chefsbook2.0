@@ -18,26 +18,6 @@ export default function Ingredients({
     return (
         <Field>
             <label htmlFor="ingredients">Ingredients:</label>
-            {ingredients.length > 0 && (
-                <IngredientsList>
-                    {ingredients.map((each, i) => {
-                        return (
-                            <li key={`ingr-${i}-${each}`}>
-                                {each}
-                                <PlainButton
-                                    onClick={() =>
-                                        setIngredients((prevState) =>
-                                            prevState.filter((i) => i !== each)
-                                        )
-                                    }
-                                >
-                                    <TiDeleteOutline />
-                                </PlainButton>
-                            </li>
-                        );
-                    })}
-                </IngredientsList>
-            )}
 
             <IngredientField>
                 <input
@@ -78,6 +58,26 @@ export default function Ingredients({
                     Add
                 </AddButton>
             </IngredientField>
+            {ingredients.length > 0 && (
+                <IngredientsList>
+                    {ingredients.map((each, i) => {
+                        return (
+                            <li key={`ingr-${i}-${each}`}>
+                                {each}
+                                <PlainButton
+                                    onClick={() =>
+                                        setIngredients((prevState) =>
+                                            prevState.filter((i) => i !== each)
+                                        )
+                                    }
+                                >
+                                    <TiDeleteOutline />
+                                </PlainButton>
+                            </li>
+                        );
+                    })}
+                </IngredientsList>
+            )}
 
             {errors.field === "ingredients" ? (
                 <small>{errors.message}</small>
@@ -89,7 +89,7 @@ export default function Ingredients({
 const IngredientsList = styled.ul`
     padding: 1.4rem;
     margin: 0.9rem 0;
-    background-color: ${(p) => p.theme.grey3};
+    background-color: ${(p) => p.theme.secondary};
     border-radius: 5px;
     list-style: none;
 

@@ -9,6 +9,7 @@ import {
     ButtonPrimary,
     TopRow,
     GoBack,
+    Text3,
 } from "../../styles";
 import Recipe from "./recipe/overview_recipe";
 import { RiAddLine, RiArrowGoBackLine } from "react-icons/ri";
@@ -40,7 +41,7 @@ export default function YourRecipesComponent() {
                 </TopRow>
                 <Line />
 
-                {user.recipes &&
+                {user.recipes.length > 0 ? (
                     user.recipes.map((recipe, i) => {
                         return (
                             <Recipe
@@ -48,7 +49,13 @@ export default function YourRecipesComponent() {
                                 recipe={recipe}
                             />
                         );
-                    })}
+                    })
+                ) : (
+                    <Text3 wide>
+                        You haven't created any recipes yet. Please click the
+                        above button to Create New Recipe.{" "}
+                    </Text3>
+                )}
             </Dashboard>
         </MainGridComponent>
     );

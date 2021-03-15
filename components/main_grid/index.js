@@ -18,11 +18,13 @@ export default function MainGridComponent({ children }) {
 
 const Container = styled(ContainerNarrow)`
     overflow: auto;
+    min-height: calc(100vh - 10rem);
     max-height: calc(100vh - 10rem);
 `;
 
 const MainGrid = styled.div`
-    height: inherit;
+    min-height: calc(100vh - 10rem);
+    max-height: calc(100vh - 10rem);
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;

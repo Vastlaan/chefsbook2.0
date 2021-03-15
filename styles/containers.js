@@ -107,6 +107,7 @@ export const Field = styled.div`
     max-width: 45rem;
     display: flex;
     flex-direction: ${(p) => (p.direction ? p.direction : "column")};
+    align-items: ${(p) => (p.align ? p.align : "initial")};
     margin-bottom: 1.9rem;
     margin-top: ${(p) => (p.top ? p.top : "0")};
 

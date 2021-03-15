@@ -14,7 +14,6 @@ export default function GridComponent() {
         dispatch,
     } = useContext(Context);
 
-    console.log(user);
     return (
         <LandingGrid>
             <Link href="/events">
