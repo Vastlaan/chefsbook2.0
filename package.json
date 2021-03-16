@@ -21,6 +21,7 @@
     "dataloader": "^2.0.0",
     "googleapis": "^67.1.1",
     "gsap": "^3.6.0",
+    "html-pdf": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.17",
     "luxon": "^1.26.0",
