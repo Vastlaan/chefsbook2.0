@@ -11,6 +11,9 @@
   },
   "keywords": [],
   "author": "",
+  "browser": {
+    "html-pdf": false
+  },
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",

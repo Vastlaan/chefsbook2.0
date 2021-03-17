@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { TableRow } from "../../../styles";
+import { TableRow } from "../../../../styles";
 
 export default function DateComponent({
     theme,

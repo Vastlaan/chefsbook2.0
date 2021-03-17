@@ -1,5 +1,5 @@
-import { WeekdaysPanel, WeekdayPanelRow } from "../../../styles";
-import { WEEK_DAYS } from "../../../utils/weekDays";
+import { WeekdaysPanel, WeekdayPanelRow } from "../../../../styles";
+import { WEEK_DAYS } from "../../../../utils/weekDays";
 
 export default function DateComponent({ dt }) {
     return (

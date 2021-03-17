@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { TableRow, WeekdaysPanel, WeekdayPanelRow } from "../../../styles";
-import { WEEK_DAYS } from "../../../utils/weekDays";
+import { TableRow, WeekdaysPanel, WeekdayPanelRow } from "../../../../styles";
+import { WEEK_DAYS } from "../../../../utils/weekDays";
 
 export default function Plan({ member, theme, scheduleToRender, weekNumber }) {
     return (

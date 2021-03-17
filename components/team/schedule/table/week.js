@@ -1,4 +1,4 @@
-import { TableRow, PlainButton } from "../../../styles";
+import { TableRow, PlainButton } from "../../../../styles";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 export default function DateComponent({ theme, weekNumber, setWeek }) {

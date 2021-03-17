@@ -77,7 +77,7 @@ export default function SendEmailModal({ setModal, title, body }) {
 
                 <Email
                     selectedMembers={selectedMembers}
-                    title={tilte}
+                    title={title}
                     body={body}
                 />
 
@@ -133,10 +133,4 @@ const Box = styled.div`
     button {
         margin: 1.4rem 1.4rem 0 0;
     }
-`;
-const Email = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
 `;

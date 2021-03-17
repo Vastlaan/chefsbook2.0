@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { BigText, Text3, Text2, FlexRow } from "../../../styles";
 
 export default function EmailComponent({ selectedMembers, title, body }) {
@@ -27,3 +28,9 @@ export default function EmailComponent({ selectedMembers, title, body }) {
         </Email>
     );
 }
+const Email = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+`;

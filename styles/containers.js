@@ -87,6 +87,7 @@ export const FlexRow = styled.div`
 export const TopRow = styled.div`
     display: flex;
     align-items: center;
+    width: ${(p) => (p.width ? p.width : "auto")};
 `;
 
 export const LoginContainer = styled.div`
@@ -267,13 +268,26 @@ export const GoBack = styled(Option)`
 `;
 export const SendEmail = styled(Option)`
     svg {
-        color: ${(p) => p.theme.white};
+        color: ${(p) => (p.color ? p.color : p.theme.white)};
     }
     &:hover {
         cursor: pointer;
         color: ${(p) => p.theme.primaryDark};
         &::after {
             content: "send as email";
+        }
+    }
+`;
+export const Print = styled(Option)`
+    margin: ${(p) => (p.margin ? p.margin : "0 1.4rem")};
+    svg {
+        color: ${(p) => (p.color ? p.color : p.theme.primary)};
+    }
+    &:hover {
+        cursor: pointer;
+        color: ${(p) => p.theme.primaryDark};
+        &::after {
+            content: "print";
         }
     }
 `;
