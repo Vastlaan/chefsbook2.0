@@ -9,9 +9,8 @@ import Weekdays from "./weekdays";
 import Plan from "./plan";
 import { TableGrid, TableRow } from "../../../../styles";
 
-export default function TableGirdComponent({ props }) {
+export default function TableGirdComponent({ props, dt, setDt }) {
     const { state } = useContext(Context);
-    const [dt, setDt] = useState(DateTime.now());
 
     function setWeek(direction) {
         if (direction === "previous") {
