@@ -5,6 +5,11 @@ import checkCookie from "../../../utils/checkCookie";
 export default async function handler(req, res) {
     // authorize request
     const decoded = checkCookie(req, res);
+    if (decoded.error) {
+        return res.status(403).json({
+            error: "Not authorized.",
+        });
+    }
     // create connection with database
     const db = new Connection().getDatabase();
 
@@ -26,7 +31,7 @@ export default async function handler(req, res) {
             s3.deleteObject(params, function (error, data) {
                 if (error) {
                     db.destroy();
-                    res.status({ error: "Something went wrong" });
+                    return res.status({ error: "Something went wrong" });
                 }
                 console.log("Successfully deleted file", data);
             });

@@ -4,6 +4,11 @@ import checkCookie from "../../../utils/checkCookie";
 export default async function handler(req, res) {
     // authorize request
     const decoded = checkCookie(req, res);
+    if (decoded.error) {
+        return res.status(403).json({
+            error: "Not authorized.",
+        });
+    }
 
     // create connection with database
     const db = new Connection().getDatabase();

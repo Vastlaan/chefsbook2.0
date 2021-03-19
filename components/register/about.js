@@ -8,20 +8,21 @@ function About(props) {
         <Container>
             <Headline>
                 <Heading3>
-                    Register new account and change your work for better
+                    Register new account and significantly improve your daily
+                    tasks
                 </Heading3>
             </Headline>
             <Details>
+                <Text>Manage your kitchen from one place</Text>
+                <br />
                 <Text>
-                    Some dummy text to replace, first implement the data storage
+                    Track events your create, both reservations as well as
+                    important appointments
                 </Text>
                 <br />
                 <Text>
-                    Some dummy text to replace, first implement the data storage
-                </Text>
-                <br />
-                <Text>
-                    Some dummy text to replace, first implement the data storage
+                    Create schedules, add team members, send them emails with
+                    preparation lists or print their schedule
                 </Text>
                 <LinkButton href="/" color={props.theme.primaryDark}>
                     Already registered? Go to login page <BsArrowRight />

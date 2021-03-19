@@ -1,16 +1,8 @@
 import sgMail from "@sendgrid/mail";
-import checkCookie from "../../../utils/checkCookie";
 
 sgMail.setApiKey(process.env.SG_API_KEY);
 
 export default async function handler(req, res) {
-    // authorize request
-    const decoded = checkCookie(req, res);
-    if (decoded.error) {
-        return res.status(403).json({
-            error: "Not authorized.",
-        });
-    }
 
     const { recipients, title, body } = req.body;
 

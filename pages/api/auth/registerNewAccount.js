@@ -13,12 +13,14 @@ export default async function handler(req, res) {
     // validate email
     const isEmailValid = validateEmail(email);
     if (isEmailValid.type === "error") {
-        return res.status(400).json({ error: isEmailValid.message });
+        db.destroy();
+        return res.status(400).json(isEmailValid);
     }
     // validate password
     const isPasswordValid = validatePassword(password);
     if (isPasswordValid.type === "error") {
-        return res.status(400).json({ error: isPasswordValid.message });
+        db.destroy();
+        return res.status(400).json(isPasswordValid);
     }
 
     try {
@@ -29,9 +31,12 @@ export default async function handler(req, res) {
             .returning("*");
 
         if (userExist[0] && userExist[0].email) {
-            return res
-                .status(409)
-                .json({ error: "User with that email is already registered" });
+            db.destroy();
+            return res.status(409).json({
+                type: "error",
+                field: "email",
+                message: "User with that email is already registered",
+            });
         }
         // hash password
         const saltRounds = 10;
@@ -76,6 +81,10 @@ export default async function handler(req, res) {
     } catch (err) {
         db.destroy();
         console.log(err);
-        return res.status(200).json({ error: "Ups, something went wrong." });
+        return res.status(200).json({
+            type: "error",
+            field: "general",
+            message: "Something went wrong",
+        });
     }
 }

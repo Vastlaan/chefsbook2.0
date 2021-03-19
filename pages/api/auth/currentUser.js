@@ -12,6 +12,7 @@ export default async function handler(req, res) {
     const db = new Connection().getDatabase();
 
     if (!req.headers["set-cookie"]) {
+        db.destroy();
         return sendError(res);
     }
     // check if there is a token in a cookie
@@ -21,6 +22,7 @@ export default async function handler(req, res) {
     const token = parsedCookies[process.env.TOKEN_NAME];
 
     if (!token) {
+        db.destroy();
         return sendError(res);
     }
 
@@ -29,6 +31,7 @@ export default async function handler(req, res) {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if (!decoded) {
+            db.destroy();
             return sendError(res);
         }
 
@@ -44,6 +47,7 @@ export default async function handler(req, res) {
             )
             .where({ id: id });
         if (otherUserData.length === 0) {
+            db.destroy();
             return sendError(res);
         }
         const {
@@ -98,8 +102,7 @@ export default async function handler(req, res) {
             .orderByRaw("month::int ASC")
             .orderByRaw("day::int ASC");
 
-        // close db connection
-        await // send all user created data to the frontend
+        // send all user created data to the frontend
         res.status(200).json({
             user: {
                 id,
@@ -116,6 +119,7 @@ export default async function handler(req, res) {
                 preparations,
             },
         });
+
         db.destroy();
     } catch (error) {
         db && db.destroy();

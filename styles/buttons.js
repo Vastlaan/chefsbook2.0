@@ -68,6 +68,7 @@ export const LinkButton = styled.a`
     color: ${(p) => (p.color ? p.color : p.theme.grey2)};
     text-decoration: underline;
     transition: all 0.3s;
+    cursor: pointer;
 
     svg {
         margin: 0 0.9rem;

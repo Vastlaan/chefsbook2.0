@@ -14,17 +14,35 @@ export default async function handler(req, res) {
         const userArray = await db("users").where({ email });
         // retrive the user
         const user = userArray[0];
+        if (!user) {
+            db.destroy();
+            return res.status(400).json({
+                type: "error",
+                field: "email",
+                message: "Wrong credentials",
+            });
+        }
         // get users hash
         const hash = user.password;
         // if doesn't exist send error response
         if (!hash) {
-            return res.status(400).json({ error: "Ups, Unable to log in" });
+            db.destroy();
+            return res.status(400).json({
+                type: "error",
+                field: "password",
+                message: "Wrong credentials",
+            });
         }
         // check if password is valid
         const isValid = await bcrypt.compare(password, hash);
         // if not valid send error response
         if (!isValid) {
-            return res.status(400).json({ error: "Ach, Unable to log in" });
+            db.destroy();
+            return res.status(400).json({
+                type: "error",
+                field: "password",
+                message: "Wrong credentials",
+            });
         }
         // setup payload for JWT token
         const payload = {
@@ -119,6 +137,10 @@ export default async function handler(req, res) {
     } catch (e) {
         db && db.destroy();
         console.error(e);
-        return res.status(400).json({ error: "Hmm, Unable to log in" });
+        return res.status(400).json({
+            type: "error",
+            field: "password",
+            message: "Something went wrong",
+        });
     }
 }

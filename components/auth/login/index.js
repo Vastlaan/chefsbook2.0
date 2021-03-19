@@ -1,8 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../../store";
+import { Context } from "../../../store";
 import Link from "next/link";
 import styled, { withTheme } from "styled-components";
-import checkIfAuthorized from "../../utils/checkIfAuthorized";
+import Email from "../email";
+import Password from "../password";
+
 import {
     ButtonPrimary,
     ButtonSecondary,
@@ -11,20 +13,20 @@ import {
     LoginContainer,
     Login,
     Field,
-} from "../../styles";
+} from "../../../styles";
 import { FcGoogle } from "react-icons/fc";
 
 function LoginComponent() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const [errors, setErrors] = useState({});
 
     const { state, dispatch } = useContext(Context);
 
     function loginUser(e) {
         e.preventDefault();
 
-        setError("");
+        setErrors({});
 
         fetch(`/api/auth/login`, {
             method: "POST",
@@ -35,8 +37,8 @@ function LoginComponent() {
         })
             .then((res) => res.json())
             .then((data) => {
-                if (data.error) {
-                    return setError(data.error);
+                if (data.type === "error") {
+                    return setErrors(data);
                 } else {
                     if (data.user) {
                         // set login status to true
@@ -46,42 +48,34 @@ function LoginComponent() {
                         return router.push("/");
                     }
                 }
+            })
+            .catch((e) => {
+                console.error(e);
+                setErrors({
+                    type: "error",
+                    field: "password",
+                    message: "Something went wrong",
+                });
             });
     }
 
     return (
         <LoginContainer>
             <Login onSubmit={loginUser}>
-                <Field>
-                    <label htmlFor="email">E-mail:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="e-mail"
-                        autoComplete="username"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                    />
-                </Field>
-                <Field>
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="password"
-                        autoComplete="current-password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                    />
-                    {error ? <small>{error}</small> : null}
-                </Field>
+                <Email email={email} setEmail={setEmail} errors={errors} />
+
+                <Password
+                    password={password}
+                    setPassword={setPassword}
+                    errors={errors}
+                />
+
                 <Field top="2.7rem">
                     <ButtonPrimary type="submit">Log in</ButtonPrimary>
                 </Field>
+
                 <Field>
-                    <Link href="/">
+                    <Link href="/auth/restoreCredentials">
                         <LinkButton type="button">
                             Forgot the password?
                         </LinkButton>

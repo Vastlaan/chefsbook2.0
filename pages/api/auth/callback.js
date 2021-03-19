@@ -73,14 +73,9 @@ export default async function handler(req, res) {
             sameSite: "none",
         });
 
+        db.destroy();
         res.setHeader("Set-Cookie", cookie);
         return res.redirect(302, `${process.env.HOST}/`);
-        // // setup cookie in response header
-        // res.setHeader("Set-Cookie", cookie);
-
-        // // write redirection to /
-        // res.writeHead(302, { Location: "/" });
-        // res.send();
     } catch (e) {
         console.log(e);
         db && db.destroy();
