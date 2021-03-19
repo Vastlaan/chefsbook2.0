@@ -72,7 +72,6 @@ export default async function handler(req, res) {
             path: "/",
             sameSite: "none",
         });
-        console.log("callback2: ", cookie);
 
         res.setHeader("Set-Cookie", cookie);
         return res.redirect(302, `${process.env.HOST}/`);
