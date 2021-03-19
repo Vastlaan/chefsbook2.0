@@ -23,7 +23,6 @@ import { DateTime } from "luxon";
 export default function UserSettingsComponent({ user }) {
     const { state, dispatch } = useContext(Context);
 
-    console.log(user, user.created_at);
     const created = DateTime.fromISO(user.created_at).toLocaleString();
 
     const [currentlyEdited, setCurrentlyEdited] = useState("");
@@ -36,7 +35,6 @@ export default function UserSettingsComponent({ user }) {
 
     function updateUserProfile(e) {
         e.preventDefault();
-        console.log(email, name, surname, accountPhoto);
 
         let dataToSend = new FormData();
         if (email) {

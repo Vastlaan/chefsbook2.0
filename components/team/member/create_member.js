@@ -56,7 +56,6 @@ export default function TeamComponent() {
             email,
             schedule,
         };
-        console.log(dataToSend);
 
         // send to database
         try {

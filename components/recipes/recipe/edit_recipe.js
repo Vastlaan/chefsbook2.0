@@ -48,7 +48,7 @@ export default function EditRecipeForm({ id }) {
         const editableRecipe = state.user.recipes.find(
             (r) => Number(r.id) === Number(id)
         );
-        console.log(editableRecipe);
+
         setTitle(editableRecipe.name);
         setDescription(editableRecipe.description);
         setTime(editableRecipe.time);

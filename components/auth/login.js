@@ -48,9 +48,6 @@ function LoginComponent() {
                 }
             });
     }
-    // async function signInToGoogle() {
-    //     const res = await fetch("/api/auth/googleSignIn");
-    // }
 
     return (
         <LoginContainer>
