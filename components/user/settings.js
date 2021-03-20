@@ -1,156 +1,36 @@
-import { useState, useContext } from "react";
-import Link from "next/link";
-import styled from "styled-components";
-import { Context } from "../../store";
 import MainGridComponent from "../main_grid";
-import Email from "./fields/email";
-import Name from "./fields/name";
-import Surname from "./fields/surname";
-import AccountPhotoComponent from "./fields/account_photo";
-import { validateEmail, validateMimeType } from "../../validations";
-import {
-    respond,
-    BigText,
-    Line,
-    FlexRow,
-    FlexCol,
-    ButtonSecondary,
-    SmallText,
-    Form1,
-} from "../../styles";
+import Top from "./top";
+import UpdateUserProfile from "./update_profie";
+import AdditionalInfromations from "./additional_infromations";
+import ChangePassword from "./change_password";
+import DangerZone from "./danger_zone";
+import { Dashboard, Line } from "../../styles";
 import { DateTime } from "luxon";
 
 export default function UserSettingsComponent({ user }) {
-    const { state, dispatch } = useContext(Context);
-
     const created = DateTime.fromISO(user.created_at).toLocaleString();
-
-    const [currentlyEdited, setCurrentlyEdited] = useState("");
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [accountPhoto, setAccountPhoto] = useState(null);
-    const [accountPhotoBlob, setAccountPhotoBlog] = useState(null);
-    const [errors, setErrors] = useState([]);
-
-    function updateUserProfile(e) {
-        e.preventDefault();
-
-        let dataToSend = new FormData();
-        if (email) {
-            const isEmailValid = validateEmail(email);
-            if (isEmailValid.type === "error") {
-                return setErrors(isEmailValid);
-            }
-            dataToSend.append("email", email);
-        }
-        if (name) {
-            dataToSend.append("name", name);
-        }
-        if (surname) {
-            dataToSend.append("surname", surname);
-        }
-        if (accountPhoto) {
-            const isPhotoValid = validateMimeType(accountPhoto);
-            if (isPhotoValid.type === "error") {
-                return setErrors(isPhotoValid);
-            }
-            dataToSend.append("file", accountPhoto);
-        }
-
-        fetch("/api/user/updateUser", {
-            method: "POST",
-            body: dataToSend,
-        })
-            .then((res) => res.json())
-            .then((user) => {
-                if (user.error) {
-                    setErrors({
-                        type: "error",
-                        field: "general",
-                        message: user.error,
-                    });
-                }
-
-                dispatch({ type: "updateUser", payload: user });
-                return (window.location.href = "/");
-            })
-            .catch((e) => {
-                console.error(e);
-                setErrors({
-                    type: "error",
-                    field: "general",
-                    message: "Ups, something went wrong",
-                });
-            });
-    }
 
     return (
         <MainGridComponent>
-            <Form1 onSubmit={updateUserProfile}>
-                <BigText>Your Profile:</BigText>
-                <Line />
-
-                <Email
-                    email={email}
-                    setEmail={setEmail}
-                    currentlyEdited={currentlyEdited}
-                    setCurrentlyEdited={setCurrentlyEdited}
-                    userEmail={user.email}
-                />
+            <Dashboard>
+                <Top created={created} />
 
                 <Line />
 
-                <Name
-                    name={name}
-                    setName={setName}
-                    currentlyEdited={currentlyEdited}
-                    setCurrentlyEdited={setCurrentlyEdited}
-                    userName={user.name}
-                />
-                <Line />
-
-                <Surname
-                    surname={surname}
-                    setSurname={setSurname}
-                    currentlyEdited={currentlyEdited}
-                    setCurrentlyEdited={setCurrentlyEdited}
-                    userSurname={user.surname}
-                />
+                <UpdateUserProfile user={user} />
 
                 <Line />
 
-                <AccountPhotoComponent
-                    userAccountPhoto={user.account_photo_url}
-                    setAccountPhoto={setAccountPhoto}
-                    accountPhotoBlob={accountPhotoBlob}
-                    setAccountPhotoBlog={setAccountPhotoBlog}
-                    errors={errors}
-                    setErrors={setErrors}
-                />
+                <ChangePassword />
 
-                <FlexRow>
-                    <SmallText>
-                        Account created at: <span>{created}</span>
-                    </SmallText>
-                </FlexRow>
-                {errors.field === "general" && <small>{errors.message}</small>}
-                <FlexRow>
-                    <ButtonSecondary type="submit">
-                        Save changes
-                    </ButtonSecondary>
-                </FlexRow>
                 <Line />
-                <FlexCol>
-                    <SmallText>Additional informations:</SmallText>
-                    <Link href="/cookies">
-                        <SmallText underline>Cookie policy</SmallText>
-                    </Link>
-                    <Link href="/terms">
-                        <SmallText underline>Terms & Conditions</SmallText>
-                    </Link>
-                </FlexCol>
-            </Form1>
+
+                <DangerZone />
+
+                <Line />
+
+                <AdditionalInfromations />
+            </Dashboard>
         </MainGridComponent>
     );
 }

@@ -1,24 +1,7 @@
 import styled from "styled-components";
-import {
-    Field,
-    FlexRow,
-    PlainButton,
-    Edit,
-    InputFlexible,
-} from "../../../styles";
-import {
-    RiEditLine,
-    RiCheckboxCircleLine,
-    RiIndeterminateCircleLine,
-} from "react-icons/ri";
+import { Field, InputFlexible } from "../../../styles";
 
-export default function EmailField({
-    email,
-    setEmail,
-    currentlyEdited,
-    setCurrentlyEdited,
-    userEmail,
-}) {
+export default function EmailField({ email, userEmail }) {
     return (
         <FieldRow>
             <label htmlFor="email">E-mail:</label>
