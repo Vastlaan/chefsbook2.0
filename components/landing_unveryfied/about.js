@@ -104,7 +104,8 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 40vh;
+    min-height: 45vh;
+    max-height: 45vh;
     overflow: auto;
 `;
 const Headline = styled.div`
