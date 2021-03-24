@@ -9,6 +9,15 @@ export default async function handler(req, res) {
 
     try {
         const userIdArray = await db("users").select("id").where({ email });
+
+        if (userIdArray.length === 0) {
+            db.destroy();
+            return res.status(400).json({
+                type: "error",
+                field: "email",
+                message: "This e-mail address is not registered",
+            });
+        }
         const userId = userIdArray[0].id;
 
         if (!userId) {
@@ -29,7 +38,7 @@ export default async function handler(req, res) {
             title: "Chefsbook password restore",
             recipients: email,
             body: `Hi there!
-Hereby your new password: ${password}.
+Hereby your new password: ${password} .
 From this moment you can login with this password.
 We recommend to change it anyway in the settings after logging in.`,
         };

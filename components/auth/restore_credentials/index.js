@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Email from "../email";
+import Modal from "../../modals/successful";
 import {
     ButtonPrimary,
     ButtonSecondary,
@@ -12,6 +13,7 @@ import {
 } from "../../../styles";
 
 function RestoreCredentialsComponent() {
+    const [displayModal, setDisplayModal] = useState(false);
     const [email, setEmail] = useState("");
     const [errors, setErrors] = useState({});
 
@@ -31,10 +33,10 @@ function RestoreCredentialsComponent() {
         const data = await res.json();
 
         if (data.type === "error") {
-            setErrors(data);
+            return setErrors(data);
         }
 
-        console.log(data);
+        setDisplayModal(true);
     }
 
     return (
@@ -62,6 +64,12 @@ function RestoreCredentialsComponent() {
                     </Link>
                 </Field>
             </Login>
+            {displayModal && (
+                <Modal
+                    setModal={setDisplayModal}
+                    message="Your new password has been sent to your e-mail. It may take up to 45 minutes to recive it. Check also your SPAM box. If you don't recive any e-mail with new password within 2 hours, please repeat the procedure."
+                ></Modal>
+            )}
         </LoginContainer>
     );
 }
