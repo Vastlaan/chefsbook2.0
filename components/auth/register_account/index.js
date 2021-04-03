@@ -55,7 +55,7 @@ function RegisterAccountForm(props) {
         fetch("/api/auth/registerNewAccount", {
             method: "POST",
             headers: {
-                ContentType: "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ email, password }),
         })

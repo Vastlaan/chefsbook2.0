@@ -9,7 +9,8 @@ export default async function handler(req, res) {
     // create connection with database
     const db = new Connection().getDatabase();
 
-    const { email, password } = JSON.parse(req.body);
+    const { email, password } = req.body;
+
     // validate email
     const isEmailValid = validateEmail(email);
     if (isEmailValid.type === "error") {
