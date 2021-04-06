@@ -1,5 +1,5 @@
 import Connection from "../../../database";
-import { validateText } from "../../../validations";
+import { validateAllFields } from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 
 export default async function handler(req, res) {
@@ -14,9 +14,18 @@ export default async function handler(req, res) {
 
     // create connection with database
     const db = new Connection().getDatabase();
-    try {
-        const { year, month, day, hour, minute, description } = req.body;
 
+    const areAllFieldsValid = validateAllFields(req.body);
+
+    if (!areAllFieldsValid) {
+        return res.status(400).json({
+            error: "Invalid request. Missing or unpropriate fields",
+        });
+    }
+
+    const { year, month, day, hour, minute, description } = req.body;
+
+    try {
         const result = await db("events")
             .insert({
                 user_id: decoded.id,

@@ -141,3 +141,28 @@ export function validateIngredients(ingredients) {
         type: "valid",
     };
 }
+
+export function validateAllFields(body) {
+    const { year, month, day, hour, minute, description } = body;
+
+    if (!year || +year < 2021) {
+        return false;
+    }
+    if (!month || +month < 1 || +month > 12) {
+        return false;
+    }
+    if (!day || +day < 1 || +day > 31) {
+        return false;
+    }
+    if (!hour || +hour < 0 || +hour > 24) {
+        return false;
+    }
+    if (!minute || +minute < 0 || +minute > 60) {
+        return false;
+    }
+    if (!description) {
+        return false;
+    }
+
+    return true;
+}
