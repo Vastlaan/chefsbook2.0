@@ -166,3 +166,21 @@ export function validateAllFields(body) {
 
     return true;
 }
+
+export function validatePreparation(body) {
+    const { year, month, day, list } = body;
+    if (!year || +year < 2021) {
+        return false;
+    }
+    if (!month || +month < 1 || +month > 12) {
+        return false;
+    }
+    if (!day || +day < 1 || +day > 31) {
+        return false;
+    }
+    if (validateIngredients(list).type === "error") {
+        return false;
+    }
+
+    return true;
+}

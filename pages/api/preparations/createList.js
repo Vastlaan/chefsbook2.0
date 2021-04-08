@@ -1,5 +1,6 @@
 import Connection from "../../../database";
 import checkCookie from "../../../utils/checkCookie";
+import { validatePreparation } from "../../../validations";
 
 export default async function handler(req, res) {
     // authorize request
@@ -14,6 +15,12 @@ export default async function handler(req, res) {
     const db = new Connection().getDatabase();
     try {
         const { list, day, month, year } = req.body;
+
+        if (
+            !validatePreparation({ list: JSON.parse(list), day, month, year })
+        ) {
+            return res.status(400).json({ error: "Fields not valid" });
+        }
 
         await db("preparations")
             .insert({
