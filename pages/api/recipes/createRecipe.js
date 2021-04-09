@@ -2,7 +2,13 @@ import multer from "multer";
 import { s3 } from "../../../s3";
 import multerS3 from "multer-s3";
 import Connection from "../../../database";
-import { validateMimeTypeMulter } from "../../../validations";
+import {
+    validateMimeTypeMulter,
+    validateTime,
+    validateTitle,
+    validateIngredients,
+    validateText,
+} from "../../../validations";
 import checkCookie from "../../../utils/checkCookie";
 import runMiddleware from "../../../utils/runMiddleware";
 
@@ -51,6 +57,23 @@ export default async function handler(req, res) {
 
         // after request is being processed through middleware it appends the rest of the data, which are not a file, to the req.body
         const { name, description, time, ingredients } = req.body;
+
+        const isTitleValid = validateTitle(name);
+        if (isTitleValid.type === "error") {
+            return res.status(400).json({ error: "Data not valid" });
+        }
+        const isTimeValid = validateTime(time);
+        if (isTimeValid.type === "error") {
+            return res.status(400).json({ error: "Data not valid" });
+        }
+        const isIngredientsValid = validateIngredients(JSON.parse(ingredients));
+        if (isIngredientsValid.type === "error") {
+            return res.status(400).json({ error: "Data not valid" });
+        }
+        const isTextValid = validateText(description);
+        if (isTextValid.type === "error") {
+            return res.status(400).json({ error: "Data not valid" });
+        }
 
         const saveToDatabase = {
             user_id: decoded.id,

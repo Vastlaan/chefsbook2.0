@@ -14,6 +14,11 @@ export default async function handler(req, res) {
     const db = new Connection().getDatabase();
 
     try {
+        if (!req.query.id) {
+            return res.status(400).json({
+                error: "Bad request",
+            });
+        }
         // delete post
         await db("recipes")
             .where({ id: req.query.id, user_id: decoded.id })
